@@ -18,6 +18,10 @@ module test_bench_fifo;
             fifo_inst.run();
         join_none
 
+    end
+
+    always @(posedge clk) begin
+
         #5
         fifo_inst.dato_i = 'h6;
         $display("[%t] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_o);
@@ -48,9 +52,6 @@ module test_bench_fifo;
         fifo_inst.pop_i = 0;
         $display("[%t] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_o);
 
-    end
-
-    always @(posedge clk) begin
         if ($time > 1000) begin
             $display("Testbench: Tiempo limite alcanzado");
             $finish;
