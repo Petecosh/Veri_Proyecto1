@@ -2,7 +2,6 @@ class ambiente #(parameter devices = 4, parameter width = 16, parameter depth = 
 
     fifo #(.width(width), .depth(depth)) fifo_inst;
 
-
     function new();
         fifo_inst = new();
     endfunction
