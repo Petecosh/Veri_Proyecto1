@@ -22,30 +22,30 @@ module test_bench;
         join_none
 
         #5
-        fifo.dato_i = 'h6;
+        fifo_inst.dato_i = 'h6;
 
         #1
-        fifo.push_i = 1;
+        fifo_inst.push_i = 1;
         #1
-        fifo.push_i = 0;
+        fifo_inst.push_i = 0;
 
         #5
-        fifo.dato_i = 'hA;
+        fifo_inst.dato_i = 'hA;
         
         #1
-        fifo.push_i = 1;
+        fifo_inst.push_i = 1;
         #1
-        fifo.push_i = 0;
+        fifo_inst.push_i = 0;
 
         #5
-        fifo.pop_i = 1;
+        fifo_inst.pop_i = 1;
         #1
-        fifo.pop_i = 0;
+        fifo_inst.pop_i = 0;
 
         #5
-        fifo.pop_i = 1;
+        fifo_inst.pop_i = 1;
         #1
-        fifo.pop_i = 0;
+        fifo_inst.pop_i = 0;
 
     end
 
