@@ -20,6 +20,7 @@ module test_bench_fifo;
 
         #5
         fifo_inst.dato_i = 'h6;
+        print("[%t] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_o);
 
         #1
         fifo_inst.push_i = 1;
@@ -28,6 +29,7 @@ module test_bench_fifo;
 
         #5
         fifo_inst.dato_i = 'hA;
+        print("[%t] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_o);
         
         #1
         fifo_inst.push_i = 1;
@@ -38,11 +40,13 @@ module test_bench_fifo;
         fifo_inst.pop_i = 1;
         #1
         fifo_inst.pop_i = 0;
+        print("[%t] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_o);
 
         #5
         fifo_inst.pop_i = 1;
         #1
         fifo_inst.pop_i = 0;
+        print("[%t] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_o);
 
     end
 
