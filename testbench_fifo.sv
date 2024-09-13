@@ -1,24 +1,21 @@
 `timescale 1ns/1ps
 `include "fifo.sv"
-`include "ambiente.sv"
-`include "test.sv"
 
 
-module test_bench;
+module testbench_fifo;
 
     reg clk;
     parameter width = 16;
     parameter depth = 8;
-    parameter devices = 4;
-    test #(.width(width), .depth(depth), .devices(devices)) test_inst;
+    fifo #(.width(width), .depth(depth)) fifo_inst;
 
     always #5 clk = ~clk;
 
     initial begin
         clk = 0;
-        test_inst = new();
+        fifo_inst = new();
         fork
-            test_inst.run();
+            fifo_inst.run();
         join_none
 
         #5
