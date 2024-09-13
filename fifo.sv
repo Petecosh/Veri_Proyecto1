@@ -13,11 +13,11 @@ class fifo #(parameter width = 16, parameter depth = 8);
         forever begin
         
             if (push_i == 1) begin
-                emul_fifo.pushback(this.dato_i);
+                emul_fifo.push_back(this.dato_i);
             end
 
             if (pop_i == 1) begin
-                this.dato_o = emul_fifo.popfront();
+                this.dato_o = emul_fifo.pop_front();
             end
 
         end
