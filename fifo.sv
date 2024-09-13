@@ -1,5 +1,5 @@
 class fifo #(parameter width = 16, parameter depth = 8);
-    emul_fifo[$];
+    bit [width-1:0] emul_fifo[$];
     bit push_i;
     bit pop_i;
     bit [width-1:0] dato_i;
