@@ -2,7 +2,7 @@
 `include "fifo.sv"
 
 
-module testbench_fifo;
+module test_bench_fifo;
 
     reg clk;
     parameter width = 16;
