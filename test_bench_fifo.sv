@@ -13,11 +13,15 @@ module test_bench_fifo;
 
     initial begin
         clk = 0;
+
+        fifo_inst.push_i = 0;
+        fifo_inst.pop_i = 0;
+        fifo_inst.dato_i = 0;
+
         fifo_inst = new();
         fork
             fifo_inst.run();
         join_none
-
     end
 
     always @(posedge clk) begin
