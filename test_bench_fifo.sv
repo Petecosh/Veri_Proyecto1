@@ -1,6 +1,5 @@
 `timescale 1ns/1ps
 `include "fifo.sv"
-`include "ambiente.sv"
 `include "test.sv"
 
 
