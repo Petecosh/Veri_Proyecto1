@@ -42,6 +42,9 @@ class test #(parameter devices = 4, parameter width = 16, parameter depth = 8);
         fifo_inst.pop_i = 0;
         $display("[%t] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_o);
 
+        #20
+        $finish;
+
     endtask
 
 
