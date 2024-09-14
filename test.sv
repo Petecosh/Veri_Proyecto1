@@ -15,7 +15,7 @@ class test #(parameter devices = 4, parameter width = 16, parameter depth = 8);
         $display("hola");
         #5
         fifo_inst.dato_i = 'h6;
-        $display("[%t] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_o);
+        $display("[%t] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_i);
 
         #1
         fifo_inst.push_i = 1;
