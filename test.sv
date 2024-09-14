@@ -12,6 +12,7 @@ class test #(parameter devices = 4, parameter width = 16, parameter depth = 8);
         join_none
 
         // Pruebas
+        $display("hola");
         #5
         fifo_inst.dato_i = 'h6;
         $display("[%t] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_o);
