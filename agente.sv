@@ -1,6 +1,6 @@
 class agente #(parameter devices = 4, parameter width = 16);
-    pck_test_agnt instruccion_agente #(.devices(devices), .width(width));
-    pck_agnt_drv paquete_agnt_drv #(.width(width));
+    pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente;
+    pck_agnt_drv #(.width(width)) paquete_agnt_drv;
     tipo_mbx_agnt_drv agnt_drv_mbx;
     tipo_mbx_test_drv test_agnt_mbx;
 
