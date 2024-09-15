@@ -8,6 +8,7 @@ class test #(parameter devices = 4, parameter width = 16, parameter depth = 8);
 
     function new();
         driver_inst = new();
+        agnt_drv_mbx = new();
 
         driver_inst.agnt_drv_mbx = agnt_drv_mbx;
 
