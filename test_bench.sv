@@ -1,15 +1,16 @@
 `timescale 1ns/1ps
-`include "fifo.sv"
+`include "paquetes.sv"
+`include "driver.sv"
 `include "test.sv"
 
 
-module test_bench_fifo;
+module test_bench;
 
     reg clk;
     parameter width = 16;
     parameter depth = 8;
     parameter devices = 4;
-    test #(.devices(devices), .width(width), .depth(depth)) test_inst;
+    test #(.width(width), .depth(depth), .devices(devices)) test_inst;
 
     always #5 clk = ~clk;
 

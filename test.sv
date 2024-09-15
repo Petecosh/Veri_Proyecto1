@@ -1,48 +1,54 @@
 class test #(parameter devices = 4, parameter width = 16, parameter depth = 8);
 
-    fifo #(.width(width), .depth(depth)) fifo_inst;
+    driver #(.width(width), .depth(depth)) driver_inst;
+    pck_agnt_drv agnt_drv_mbx;
+
+    pck_agnt_drv #(.width(width)) pck_test_inst;
+
 
     function new();
-        fifo_inst = new();
+        driver_inst = new();
+
+        driver_inst.agnt_drv_mbx = agnt_drv_mbx;
+
     endfunction
 
     task run();
+        $display("[%g] El test fue inicializado", $time);
         fork
-            fifo_inst.run();
+            driver_inst.run();
         join_none
 
         // Pruebas
-        #5
-        fifo_inst.dato_i = 'h6;
-        $display("[%g] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_o);
+        pck_test_inst = new();
+        pck_test_inst.tipo = escritura;
+        pck_test_inst.dato_i = 'h6;
+        pck_test_inst.print("Test: Paquete creado");
+        agnt_drv_mbx.put(pck_test_inst);
 
-        #1
-        fifo_inst.push_i = 1;
-        #1
-        fifo_inst.push_i = 0;
+        #10
+        pck_test_inst = new();
+        pck_test_inst.tipo = escritura;
+        pck_test_inst.dato_i = 'h3;
+        pck_test_inst.print("Test: Paquete creado");
+        agnt_drv_mbx.put(pck_test_inst);
 
-        #5
-        fifo_inst.dato_i = 'hA;
-        $display("[%g] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_o);
-        
-        #1
-        fifo_inst.push_i = 1;
-        #1
-        fifo_inst.push_i = 0;
+        #10
+        pck_test_inst = new();
+        pck_test_inst.tipo = lectura;
+        pck_test_inst.dato_i = 'h1;
+        pck_test_inst.print("Test: Paquete creado");
+        agnt_drv_mbx.put(pck_test_inst);
 
-        #5
-        fifo_inst.pop_i = 1;
-        #1
-        fifo_inst.pop_i = 0;
-        $display("[%g] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_o);
+        #10
+        pck_test_inst = new();
+        pck_test_inst.tipo = lectura;
+        pck_test_inst.dato_i = 'h8;
+        pck_test_inst.print("Test: Paquete creado");
+        agnt_drv_mbx.put(pck_test_inst);
 
-        #5
-        fifo_inst.pop_i = 1;
-        #1
-        fifo_inst.pop_i = 0;
-        $display("[%g] Ultimo dato de la FIFO: %g", $time, fifo_inst.dato_o);
-
-        #20
+        #10
+        $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);
         $finish;
 
     endtask
