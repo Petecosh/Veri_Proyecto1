@@ -10,8 +10,8 @@ class pck_agnt_drv #(parameter width = 16);
     rand tipo_trans tipo;
 
     function new(bit[width-1:0] dto_i = 0, bit[width-1:0] dto_o = 0, tipo_trans tpo = lectura);
-        this.dato_i = dto;
-        this.dato_o = dto;
+        this.dato_i = dto_i;
+        this.dato_o = dto_o;
         this.tipo = tpo;
     endfunction
 
