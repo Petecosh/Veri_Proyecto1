@@ -3,6 +3,7 @@ class driver #(parameter width = 16, parameter depth = 8);
     bit [width-1:0] emul_fifo_i[$];
     bit [width-1:0] emul_fifo_o[$];
     bit pending;
+    
 
     function new();
         this.emul_fifo_i = {};
