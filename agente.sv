@@ -16,17 +16,17 @@ class agente #(parameter devices = 4, parameter width = 16);
                 case (instruccion_agente.tipo)
 
                     lectura: begin
-                        pck_agnt_drv = new();
-                        pck_agnt_drv.tipo = instruccion_agente.tipo;
-                        pck_agnt_drv.print("Agente: Transaccion creada");
+                        paquete_agnt_drv = new();
+                        paquete_agnt_drv.tipo = instruccion_agente.tipo;
+                        paquete_agnt_drv.print("Agente: Transaccion creada");
                         agnt_drv_mbx.put(pck_agnt_drv);
                     end
 
                     escritura: begin
-                        pck_agnt_drv = new();
-                        pck_agnt_drv.dato_i = instruccion_agente.dato;
-                        pck_agnt_drv.tipo = instruccion_agente.tipo;
-                        pck_agnt_drv.print("Agente: Transaccion creada");
+                        paquete_agnt_drv = new();
+                        paquete_agnt_drv.dato_i = instruccion_agente.dato;
+                        paquete_agnt_drv.tipo = instruccion_agente.tipo;
+                        paquete_agnt_drv.print("Agente: Transaccion creada");
                         agnt_drv_mbx.put(pck_agnt_drv);
                     end
                     
