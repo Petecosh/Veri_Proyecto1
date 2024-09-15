@@ -18,7 +18,7 @@ class test #(parameter devices = 4, parameter width = 16);
     endfunction
 
     task run();
-        $display("[%g] El test fue inicializado", $time);
+        $display("[%g] Test inicializado", $time);
         fork
             ambiente_inst.run();
         join_none

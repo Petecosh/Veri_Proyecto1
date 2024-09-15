@@ -16,6 +16,7 @@ class ambiente #(parameter devices = 4, parameter width = 16);
 
         // Apuntar mailboxes
         driver_inst.agnt_drv_mbx = agnt_drv_mbx;
+        agente_inst.agnt_drv_mbx = agnt_drv_mbx;
         agente_inst.test_agnt_mbx = test_agnt_mbx;
 
     endfunction 
