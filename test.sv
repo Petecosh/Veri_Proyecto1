@@ -1,10 +1,10 @@
-class test #(parameter devices = 4, parameter width = 16, parameter depth = 8);
+class test #(parameter devices = 4, parameter width = 16);
 
     ambiente #(.devices(devices), .width(width)) ambiente_inst;
 
     pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente;
 
-    tipo_mbx_test_agnt test_agnt_mbx; 
+    tipo_mbx_test_agnt test_agnt_mbx;
 
 
     function new();

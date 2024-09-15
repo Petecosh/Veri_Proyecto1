@@ -2,7 +2,7 @@
 `include "paquetes.sv"
 `include "driver.sv"
 `include "agente.sv"
-`include "ambiente.sv"i
+`include "ambiente.sv"
 `include "test.sv"
 
 
@@ -10,9 +10,8 @@ module test_bench;
 
     reg clk;
     parameter width = 16;
-    parameter depth = 8;
     parameter devices = 4;
-    test #(.width(width), .depth(depth), .devices(devices)) test_inst;
+    test #(.devices(devices), .width(width)) test_inst;
 
     always #5 clk = ~clk;
 
