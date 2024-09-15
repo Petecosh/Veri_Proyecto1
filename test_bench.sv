@@ -1,6 +1,8 @@
 `timescale 1ns/1ps
 `include "paquetes.sv"
 `include "driver.sv"
+`include "agente.sv"
+`include "ambiente.sv"i
 `include "test.sv"
 
 
