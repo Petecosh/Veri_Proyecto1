@@ -25,7 +25,7 @@ class ambiente #(parameter devices = 4, parameter width = 16);
             driver_inst.run();
             agente_inst.run();
         join_none
-        $display("[%t] Ambiente inicializado", $time);
+        $display("[%g] Ambiente inicializado", $time);
     endtask
 
 endclass

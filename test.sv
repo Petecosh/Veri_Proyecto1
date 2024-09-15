@@ -24,6 +24,7 @@ class test #(parameter devices = 4, parameter width = 16);
         join_none
 
         // Pruebas
+        #10
         instruccion_agente = new();
         instruccion_agente.tipo = escritura;
         instruccion_agente.dato = 'h6;

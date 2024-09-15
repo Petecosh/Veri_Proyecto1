@@ -11,6 +11,9 @@ class driver #(parameter width = 16);
     endfunction
 
     task run();
+
+        $display("[%g] Driver inicializado", $time);
+
         forever begin
 
             pck_agnt_drv #(.width(width)) paquete;

@@ -6,7 +6,7 @@ class agente #(parameter devices = 4, parameter width = 16);
 
     task run();
 
-        $display("[%g] El agente fue inicializado", $time);
+        $display("[%g] Agente inicializado", $time);
 
         forever begin
             #1
