@@ -23,5 +23,5 @@ endclass
 
 // Mailboxes
 
-typedef mailbox #(pck_agnt_drv) agnt_drv_mbx;
+typedef mailbox #(pck_agnt_drv) tipo_mbx_agnt_drv;
 

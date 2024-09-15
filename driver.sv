@@ -1,5 +1,5 @@
 class driver #(parameter width = 16, parameter depth = 8);
-    pck_agnt_drv agnt_drv_mbx;
+    tipo_mbx_agnt_drv agnt_drv_mbx;
     bit [width-1:0] emul_fifo_i[$];
     bit [width-1:0] emul_fifo_o[$];
     bit pending;

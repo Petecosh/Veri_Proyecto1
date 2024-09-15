@@ -1,7 +1,7 @@
 class test #(parameter devices = 4, parameter width = 16, parameter depth = 8);
 
     driver #(.width(width), .depth(depth)) driver_inst;
-    pck_agnt_drv agnt_drv_mbx;
+    tipo_mbx_agnt_drv agnt_drv_mbx;
 
     pck_agnt_drv #(.width(width)) pck_test_inst;
 
