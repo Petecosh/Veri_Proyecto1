@@ -1,9 +1,8 @@
-class driver #(parameter width = 16, parameter depth = 8);
+class driver #(parameter width = 16);
     tipo_mbx_agnt_drv agnt_drv_mbx;
     bit [width-1:0] emul_fifo_i[$];
     bit [width-1:0] emul_fifo_o[$];
     bit pending;
-    
 
     function new();
         this.emul_fifo_i = {};
@@ -26,12 +25,12 @@ class driver #(parameter width = 16, parameter depth = 8);
 
                 lectura: begin
                     paquete.dato_o = emul_fifo_i.pop_front();
-                    paquete.print("Driver: Lectura");
+                    paquete.print("Driver Ejecución: Lectura");
                 end
 
                 escritura: begin
                     emul_fifo_i.push_back(paquete.dato_i);
-                    paquete.print("Driver: Escritura");
+                    paquete.print("Driver Ejecución: Escritura");
                     pending = 1;
                 end
                 

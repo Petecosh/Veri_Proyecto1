@@ -1,14 +1,29 @@
-class ambiente #(parameter devices = 4, parameter width = 16, parameter depth = 8);
+class ambiente #(parameter devices = 4, parameter width = 16);
 
-    fifo #(.width(width), .depth(depth)) fifo_inst;
+    driver #(.width(width)) driver_inst;
+    agente #(.devices(devices), .width(width)) agente_inst;
+
+    tipo_mbx_agnt_drv agnt_drv_mbx;
+    tipo_mbx_test_agnt test_agnt_mbx;
 
     function new();
-        fifo_inst = new();
-    endfunction
+
+        driver_inst = new();
+        agente_inst = new();
+
+        agnt_drv_mbx = new();
+        test_agnt_mbx = new();
+
+        // Apuntar mailboxes
+        driver_inst.agnt_drv_mbx = agnt_drv_mbx;
+        agente_inst.test_agnt_mbx = test_agnt_mbx;
+
+    endfunction 
 
     virtual task run();
         fork
-            fifo_inst.run();
+            driver_inst.run();
+            agente_inst.run();
         join_none
         $display("[%t] Ambiente inicializado", $time);
     endtask

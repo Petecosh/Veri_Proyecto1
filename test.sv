@@ -1,52 +1,53 @@
 class test #(parameter devices = 4, parameter width = 16, parameter depth = 8);
 
-    driver #(.width(width), .depth(depth)) driver_inst;
-    tipo_mbx_agnt_drv agnt_drv_mbx;
+    ambiente #(.devices(devices), .width(width)) ambiente_inst;
 
-    pck_agnt_drv #(.width(width)) pck_test_inst;
+    pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente;
+
+    tipo_mbx_test_agnt test_agnt_mbx; 
 
 
     function new();
-        driver_inst = new();
-        agnt_drv_mbx = new();
 
-        driver_inst.agnt_drv_mbx = agnt_drv_mbx;
+        test_agnt_mbx = new();
+
+        ambiente_inst = new();
+
+        ambiente_inst.agente_inst.test_agnt_mbx = test_agnt_mbx;
 
     endfunction
 
     task run();
         $display("[%g] El test fue inicializado", $time);
         fork
-            driver_inst.run();
+            ambiente_inst.run();
         join_none
 
         // Pruebas
-        pck_test_inst = new();
-        pck_test_inst.tipo = escritura;
-        pck_test_inst.dato_i = 'h6;
-        pck_test_inst.print("Test: Paquete creado");
-        agnt_drv_mbx.put(pck_test_inst);
+        instruccion_agente = new();
+        instruccion_agente.tipo = escritura;
+        instruccion_agente.dato = 'h6;
+        instruccion_agente.print("Test: Paquete al agente creado")
+        test_agnt_mbx.put(instruccion_agente);
 
         #10
-        pck_test_inst = new();
-        pck_test_inst.tipo = escritura;
-        pck_test_inst.dato_i = 'h3;
-        pck_test_inst.print("Test: Paquete creado");
-        agnt_drv_mbx.put(pck_test_inst);
+        instruccion_agente = new();
+        instruccion_agente.tipo = escritura;
+        instruccion_agente.dato = 'h6;
+        instruccion_agente.print("Test: Paquete al agente creado")
+        test_agnt_mbx.put(instruccion_agente);
 
         #10
-        pck_test_inst = new();
-        pck_test_inst.tipo = lectura;
-        pck_test_inst.dato_i = 'h1;
-        pck_test_inst.print("Test: Paquete creado");
-        agnt_drv_mbx.put(pck_test_inst);
+        instruccion_agente = new();
+        instruccion_agente.tipo = lectura;
+        instruccion_agente.print("Test: Paquete al agente creado")
+        test_agnt_mbx.put(instruccion_agente);
 
         #10
-        pck_test_inst = new();
-        pck_test_inst.tipo = lectura;
-        pck_test_inst.dato_i = 'h8;
-        pck_test_inst.print("Test: Paquete creado");
-        agnt_drv_mbx.put(pck_test_inst);
+        instruccion_agente = new();
+        instruccion_agente.tipo = escritura;
+        instruccion_agente.print("Test: Paquete al agente creado")
+        test_agnt_mbx.put(instruccion_agente);
 
         #10
         $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);

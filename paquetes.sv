@@ -1,9 +1,9 @@
 
-// Tipos de transaccion para el bus
+// Tipo Transaccion Fifo
 typedef enum {lectura, escritura} tipo_trans;
 
 
-// Paquete que recibe el driver desde el agente
+// Paquete Agente -> Driver
 class pck_agnt_drv #(parameter width = 16);
     rand bit [width-1:0] dato_i;
     rand bit [width-1:0] dato_o;
@@ -21,7 +21,24 @@ class pck_agnt_drv #(parameter width = 16);
 
 endclass
 
+// Paquete Test -> Agente
+class pck_test_agnt #(parameter devices = 4, parameter width = 16);
+    bit [width-1:0] dato;
+    tipo_trans tipo;
+
+    function new(bit[width-1:0] dto = 0, tipo_trans tpo = lectura);
+        this.dato = dto;
+        this.tipo = tpo;
+    endfunction
+
+    function void print(string tag = "");
+        $display("[%g] %s Tipo = %s Dato = 0x%h" , $time, tag, this.tipo, this.dato);
+    endfunction
+endclass
+
 // Mailboxes
 
 typedef mailbox #(pck_agnt_drv) tipo_mbx_agnt_drv;
+
+typedef mailbox #(pck_test_agnt) tipo_mbx_test_agnt;
 
