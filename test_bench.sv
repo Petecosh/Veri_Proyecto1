@@ -12,15 +12,18 @@ module test_bench;
     parameter width = 16;
     parameter devices = 4;
     test #(.devices(devices), .width(width)) test_inst;
+    int x [4]=[1,2,3,4];
 
     always #5 clk = ~clk;
 
     initial begin
+        
         clk = 0;
         test_inst = new();
         fork
             test_inst.run();
         join_none
+        $display("[%g] Test: Se alcanza el tiempo limite de la prueba", x[2]);
     end
 
     always @(posedge clk) begin

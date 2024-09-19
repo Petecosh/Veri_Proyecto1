@@ -1,24 +1,24 @@
 class ambiente #(parameter devices = 4, parameter width = 16);
 
-    driver #(.width(width)) driver_inst;
+    driver #(.width(width)) driver_inst[devices];
     agente #(.devices(devices), .width(width)) agente_inst;
 
-    tipo_mbx_agnt_drv agnt_drv_mbx;
+    tipo_mbx_agnt_drv agnt_drv_mbx[devices];
     tipo_mbx_test_agnt test_agnt_mbx;
 
     function new();
 
-        driver_inst = new();
-        agente_inst = new();
-
-        agnt_drv_mbx = new();
         test_agnt_mbx = new();
-
+        agente_inst = new();
         // Apuntar mailboxes
-        driver_inst.agnt_drv_mbx = agnt_drv_mbx;
-        agente_inst.agnt_drv_mbx = agnt_drv_mbx;
+        for (int i = 0; i <= devices; i++)begin
+            driver_inst[i] = new();
+            agnt_drv_mbx[i] = new();    
+            driver_inst.agnt_drv_mbx[i] = agnt_drv_mbx[i];
+            agente_inst.agnt_drv_mbx[i] = agnt_drv_mbx[i];
+        end
         agente_inst.test_agnt_mbx = test_agnt_mbx;
-
+        
     endfunction 
 
     virtual task run();

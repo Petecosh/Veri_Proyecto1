@@ -26,27 +26,31 @@ class test #(parameter devices = 4, parameter width = 16);
         // Pruebas
         #10
         instruccion_agente = new();
+        instruccion_agente.origen=0;
         instruccion_agente.tipo = escritura;
-        instruccion_agente.dato = 'h9;
+        instruccion_agente.dato = 'h1;
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
 
         #10
         instruccion_agente = new();
         instruccion_agente.tipo = escritura;
-        instruccion_agente.dato = 'h6;
+        instruccion_agente.origen=1;
+        instruccion_agente.dato = 'h2;
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
 
         #10
         instruccion_agente = new();
         instruccion_agente.tipo = lectura;
+        instruccion_agente.origen=0;
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
 
         #10
         instruccion_agente = new();
         instruccion_agente.tipo = lectura;
+        instruccion_agente.origen=1;
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
 
