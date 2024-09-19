@@ -14,7 +14,7 @@ class ambiente #(parameter devices = 4, parameter width = 16);
         for (int i = 0; i < devices; i++)begin
             driver_inst[i] = new();
             agnt_drv_mbx[i] = new();    
-            driver_inst.agnt_drv_mbx[i] = agnt_drv_mbx[i];
+            driver_inst[i].agnt_drv_mbx[i] = agnt_drv_mbx[i];
             agente_inst.agnt_drv_mbx[i] = agnt_drv_mbx[i];
         end
         agente_inst.test_agnt_mbx = test_agnt_mbx;
