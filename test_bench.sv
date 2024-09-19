@@ -19,12 +19,13 @@ module test_bench;
     initial begin
         x[0]=1;
         x[1]=5;
+        $display("[%d] Test:", x[1]);
         clk = 0;
         test_inst = new();
         fork
             test_inst.run();
         join_none
-        $display("[%d] Test: Se alcanza el tiempo limite de la prueba", x[1]);
+        
     end
 
     always @(posedge clk) begin
