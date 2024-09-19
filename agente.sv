@@ -11,8 +11,8 @@ class agente #(parameter devices = 4, parameter width = 16);
         forever begin
             #1
             if (test_agnt_mbx.num() > 0) begin
-                $display("[%g] Agente,%d: Se recibe una instruccion", $time,instruccion_agente.origen);
                 test_agnt_mbx.get(instruccion_agente);
+                $display("[%g] Agente,%d: Se recibe una instruccion", $time,instruccion_agente.origen);
                 case (instruccion_agente.tipo)
 
                     lectura: begin
