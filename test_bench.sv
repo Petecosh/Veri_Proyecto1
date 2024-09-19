@@ -17,8 +17,8 @@ module test_bench;
     always #5 clk = ~clk;
 
     initial begin
-        x=[0]=1;
-        x=[1]=5;
+        x[0]=1;
+        x[1]=5;
         clk = 0;
         test_inst = new();
         fork
