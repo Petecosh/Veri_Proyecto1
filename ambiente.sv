@@ -24,7 +24,7 @@ class ambiente #(parameter devices = 4, parameter width = 16);
     virtual task run();
         fork
             for (int i = 0; i < devices; i++)begin
-                driver_inst.run();
+                driver_inst[i].run();
             end
             agente_inst.run();
         join_none
