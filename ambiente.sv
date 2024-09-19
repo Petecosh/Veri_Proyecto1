@@ -11,7 +11,7 @@ class ambiente #(parameter devices = 4, parameter width = 16);
         test_agnt_mbx = new();
         agente_inst = new();
         // Apuntar mailboxes
-        for (int i = 0; i <= devices; i++)begin
+        for (int i = 0; i < devices; i++)begin
             driver_inst[i] = new();
             agnt_drv_mbx[i] = new();    
             driver_inst.agnt_drv_mbx[i] = agnt_drv_mbx[i];
