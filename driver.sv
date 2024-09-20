@@ -1,6 +1,5 @@
 class driver #(parameter width = 16);
     tipo_mbx_agnt_drv agnt_drv_mbx;
-    tipo_mbx_agnt_drv drv_test_mbx;
     bit [width-1:0] emul_fifo_i[$];
     bit [width-1:0] emul_fifo_o[$];
     bit pending;
@@ -30,7 +29,6 @@ class driver #(parameter width = 16);
                 lectura: begin
                     paquete.dato_o = emul_fifo_i.pop_front();
                     paquete.print("Driver Ejecución: Lectura");
-                    agnt_drv_mbx.put(paquete);
                 end
 
                 escritura: begin

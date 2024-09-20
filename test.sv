@@ -32,7 +32,7 @@ class test #(parameter devices = 4, parameter width = 16);
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
 
-        #15
+        #10
         instruccion_agente = new();
         instruccion_agente.tipo = escritura;
         instruccion_agente.origen=1;
@@ -53,7 +53,6 @@ class test #(parameter devices = 4, parameter width = 16);
         instruccion_agente.origen=0;
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
-        
 
         #1000
         $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);
