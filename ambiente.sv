@@ -10,22 +10,33 @@ class ambiente #(parameter devices = 4, parameter width = 16);
 
         test_agnt_mbx = new();
         agente_inst = new();
-        // Apuntar mailboxes
-        for (int i = 0; i < devices; i++)begin
+
+        for (int i = 0; i < devices; i++) begin
             driver_inst[i] = new();
-            agnt_drv_mbx[i] = new();    
+            agnt_drv_mbx[i] = new();
+        end        
+
+        // Apuntar mailboxes
+
+        for (int i = 0; i < devices; i++) begin
             driver_inst[i].agnt_drv_mbx = agnt_drv_mbx[i];
             agente_inst.agnt_drv_mbx[i] = agnt_drv_mbx[i];
         end
+
         agente_inst.test_agnt_mbx = test_agnt_mbx;
         
-    endfunction 
+    endfunction
 
     virtual task run();
         fork
-            for (int i = 0; i < devices; i++)begin
+            
+            for (int i = 0; i < devices; i++) begin
                 driver_inst[i].run();
             end
+
+            driver_inst[0].run();
+            driver_inst[1].run()
+
             agente_inst.run();
         join_none
         $display("[%g] Ambiente inicializado", $time);
