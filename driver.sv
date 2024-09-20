@@ -101,7 +101,11 @@ class driver #(parameter width = 16);
         fork
             this.escribir();
             this.leer();
-            this.actualizar_FIFO_i();
+            begin
+                this.actualizar_FIFO_i();
+                $display("mamahuevo");
+            end
+            $display("mamahuevos");
             this.actualizar_FIFO_o();
             this.revisar_FIFO_in();
         join_none
