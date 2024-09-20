@@ -51,9 +51,9 @@ class agente #(parameter devices = 4, parameter width = 16);
 
         begin
             //drivers
-            drv_test_mbx.get(paquete1);
+            agnt_drv_mbx.get(paquete1);
             $display("[%g] test,%d: ", $time,paquete1.dato_o);
-            drv_test_mbx.get(paquete1);
+            agnt_drv_mbx.get(paquete1);
             $display("[%g] test,%d: ", $time,paquete1.dato_o);
         end
 
