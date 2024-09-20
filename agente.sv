@@ -47,9 +47,7 @@ class agente #(parameter devices = 4, parameter width = 16);
             pck_agnt_drv #(.width(width)) paquete1;
             drv_test_mbx.get(paquete1);
             $display("[%g] test,%d: ", $time,paquete1);
-            pck_agnt_drv #(.width(width)) paquete2;
-            drv_test_mbx.get(paquete2);
-            $display("[%g] test,%d: ", $time,paquete2);
+            drv_test_mbx.get(paquete1);
         end
 
         join_any
