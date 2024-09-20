@@ -6,9 +6,6 @@ class agente #(parameter devices = 4, parameter width = 16);
     int num_transacciones;
     tipo_mbx_test_agnt test_agnt_mbx;
     int max_retardo;
-    constrain ndatos_ran{
-
-    }
     bit [3:0] origen;
     bit [3:0] receptor;
     bit [width-1:0]data_envio;
