@@ -1,6 +1,7 @@
 class agente #(parameter devices = 4, parameter width = 16);
     pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente;
     pck_agnt_drv #(.width(width)) paquete_agnt_drv[devices];
+    pck_agnt_drv #(.width(width)) paquete1;
     tipo_mbx_agnt_drv agnt_drv_mbx[devices];
     tipo_mbx_test_agnt test_agnt_mbx;
     //
@@ -44,7 +45,7 @@ class agente #(parameter devices = 4, parameter width = 16);
 
         begin
             //drivers
-            pck_agnt_drv #(.width(width)) paquete1;
+            
             drv_test_mbx.get(paquete1);
             $display("[%g] test,%d: ", $time,paquete1);
             drv_test_mbx.get(paquete1);
