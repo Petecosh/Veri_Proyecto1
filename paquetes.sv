@@ -33,7 +33,7 @@ class pck_agnt_drv #(parameter devices = 4,parameter width = 16);
     endfunction
 
     function void print(string tag = "");
-        $display("[%g] %s Dato = 0x%h" , $time, tag, this.dato);
+        $display("[%g] %s Dato = 0x%h, origen = 0x%h" , $time, tag, this.dato,this.origen);
     endfunction
 
 endclass
