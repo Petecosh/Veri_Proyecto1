@@ -21,6 +21,7 @@ class driver #(parameter width = 16);
     endfunction
 
     task escribir();
+    $display("sip esc run");
         forever begin
             pck_agnt_drv #(.width(width)) paquete_drv;
 
@@ -40,6 +41,7 @@ class driver #(parameter width = 16);
     endtask
 
     task leer();
+    $display("sip leer run");
         forever begin
             // Si la FIFO out tiene algo
             if (emul_fifo_o.size() != 0) begin
@@ -52,6 +54,7 @@ class driver #(parameter width = 16);
     endtask
 
     task actualizar_FIFO_i();
+    $display("sip actufifoi run");
         forever begin
             // Si DUT pide pop 
             @(posedge vif.clk);
@@ -65,6 +68,7 @@ class driver #(parameter width = 16);
     endtask
 
     task actualizar_FIFO_o();
+    $display("sip fifoo run");
         forever begin
             // Si DUT pide push
             @(posedge vif.clk);
@@ -76,6 +80,7 @@ class driver #(parameter width = 16);
     endtask
 
     task revisar_FIFO_in();
+    $display("sip fifoi run");
         // Revisar si hay algo pendiente en la FIFO entrada
         forever begin
             @(posedge vif.clk);
