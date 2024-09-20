@@ -20,6 +20,8 @@ class pck_agnt_drv #(parameter width = 16);
     endfunction
 
 endclass
+
+
 // Paquete Driver -> Checker
 class pck_drv_chkr #(parameter width = 16);
     rand bit [width-1:0] dato_i;
@@ -52,9 +54,11 @@ class pck_test_agnt #(parameter devices = 4, parameter width = 16);
     endfunction
 
     function void print(string tag = "");
-        $display("[%g] %s Tipo = %s Dato = 0x%h" , $time, tag, this.tipo, this.dato);
+        $display("[%g] %s Tipo = %s Dato = 0x%h Origen = 0x%h" , $time, tag, this.tipo, this.dato, this.origen);
     endfunction
 endclass
+
+
 //Paquete chercker scoreboard
 class pck_drv_sb #(parameter width = 16);
     bit [width-1:0] dato_enviado;
