@@ -35,7 +35,7 @@ class ambiente #(parameter devices = 4, parameter width = 16);
             end
 
             driver_inst[0].run();
-            driver_inst[1].run()
+            driver_inst[1].run();
 
             agente_inst.run();
         join_none
