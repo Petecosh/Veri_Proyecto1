@@ -53,10 +53,7 @@ endclass
 // Paquete Test -> Agente
 class pck_test_agnt #(parameter devices = 4, parameter width = 16);
     bit [width-1:0] dato;
-<<<<<<< Updated upstream
     tipo_agente tipo;
-=======
->>>>>>> Stashed changes
     rand int origen;
 
     function new(bit[width-1:0] dto = 0, tipo_trans tpo = lectura, int org = 0);
