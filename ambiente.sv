@@ -24,10 +24,12 @@ class ambiente #(parameter devices = 4, parameter width = 16);
         end
 
         agente_inst.test_agnt_mbx = test_agnt_mbx;
+        $display("sip ambiente");
         
     endfunction
 
     virtual task run();
+        $display("sip ambiente runnig");
         fork
             
             for (int i = 0; i < devices; i++) begin

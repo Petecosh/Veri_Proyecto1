@@ -17,6 +17,7 @@ class driver #(parameter width = 16);
         this.emul_fifo_o = {};
         this.identificador_drv = 0;
         //pending = 0;
+        $display("sip driver");
     endfunction
 
     task escribir();
@@ -91,6 +92,7 @@ class driver #(parameter width = 16);
 
     // Correr los otros tasks
     task run();
+        $display("sip drv run");
         fork
             this.escribir();
             this.leer();

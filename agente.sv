@@ -14,7 +14,7 @@ class agente #(parameter devices = 4, parameter width = 16);
         end
         num_transacciones = 2;
         max_retardo = 10;
-
+        $display("sip agente");
     endfunction
 
     task run();
