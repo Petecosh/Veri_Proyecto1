@@ -32,7 +32,7 @@ class driver #(parameter width = 16);
 
 
             // Escribir en la FIFO entrada
-            emul_fifo_i.push_back(paquete_drv.dato_i);
+            emul_fifo_i.push_back(paquete_drv.dato);
             paquete_drv.print("Driver Ejecución: Escritura");
             pending = 1;
         end 
