@@ -4,18 +4,18 @@ class driver #(parameter width = 16);
     bit [width-1:0] emul_fifo_i[$];
     bit [width-1:0] emul_fifo_o[$];
     int identificador_drv;
-    bit pending;
-    bit pop_DUT;
-    bit push_DUT;
-    bit [width-1:0] dato_i_DUT;
-    bit [width-1:0] dato_o_DUT;
+    //bit pending;
+    //bit pop_DUT;
+    //bit push_DUT;
+    //bit [width-1:0] dato_i_DUT;
+    //bit [width-1:0] dato_o_DUT;
     virtual bus_if #() vif;
 
     function new();
         this.emul_fifo_i = {};
         this.emul_fifo_o = {};
         this.identificador_drv = 0;
-        pending = 0;
+        //pending = 0;
     endfunction
 
     task escribir();
@@ -34,7 +34,6 @@ class driver #(parameter width = 16);
             // Escribir en la FIFO entrada
             emul_fifo_i.push_back(paquete_drv.dato);
             paquete_drv.print("Driver Ejecución: Escritura");
-            pending = 1;
         end 
     endtask
 
@@ -53,8 +52,8 @@ class driver #(parameter width = 16);
     task actualizar_FIFO_i();
         forever begin
             // Si DUT pide pop 
-            if (pop_DUT) begin
-                dato_i_DUT = emul_fifo_i.pop_front();
+            if (vif.pop) begin
+                vif.D_pop = emul_fifo_i.pop_front();
                 $display("[%g] Driver FIFO in: DUT saco dato", $time);
             end
         end
@@ -63,8 +62,8 @@ class driver #(parameter width = 16);
     task actualizar_FIFO_o();
         forever begin
             // Si DUT pide push
-            if (push_DUT) begin
-                emul_fifo_o.push_back(dato_o_DUT);
+            if (vif.push) begin
+                emul_fifo_o.push_back(vif.D_push);
                 $display("[%g] Driver FIFO out: DUT metio dato", $time);
             end
         end
@@ -73,11 +72,11 @@ class driver #(parameter width = 16);
     task revisar_FIFO_in();
         // Revisar si hay algo pendiente en la FIFO entrada
         if (emul_fifo_i.size() != 0) begin
-                pending = 1;
+                vif.pndng = 1;
                 $display("[%g] Driver FIFO in: Pending en 1", $time);
                     
         end else begin
-                pending = 0;
+                vif.pndng = 0;
                 $display("[%g] Driver FIFO in: Pending en 0", $time);
         end
     endtask
