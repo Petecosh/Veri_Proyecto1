@@ -30,7 +30,7 @@ class driver #(parameter width = 16);
                 lectura: begin
                     paquete.dato_o = emul_fifo_i.pop_front();
                     paquete.print("Driver Ejecución: Lectura");
-                    drv_test_mbx.put(emul_fifo_i);
+                    drv_test_mbx.put(paquete);
                 end
 
                 escritura: begin
