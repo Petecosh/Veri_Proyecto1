@@ -8,15 +8,17 @@ class pck_agnt_drv #(parameter width = 16);
     rand bit [width-1:0] dato_i;
     rand bit [width-1:0] dato_o;
     rand tipo_trans tipo;
+    int origen;
 
-    function new(bit[width-1:0] dto_i = 0, bit[width-1:0] dto_o = 0, tipo_trans tpo = lectura);
+    function new(bit[width-1:0] dto_i = 0, bit[width-1:0] dto_o = 0, tipo_trans tpo = lectura,int org = 0);
         this.dato_i = dto_i;
         this.dato_o = dto_o;
         this.tipo = tpo;
+        this.origen = org;
     endfunction
 
     function void print(string tag = "");
-        $display("[%g] %s Tipo = %s Dato_i = 0x%h Dato_o = 0x%h" , $time, tag, this.tipo, this.dato_i, this.dato_o);
+        $display("[%g] %s Tipo = %s Dato_i = 0x%h Dato_o = 0x%h Origen%h" , $time, tag, this.tipo, this.dato_i, this.dato_o, this.origen);
     endfunction
 
 endclass

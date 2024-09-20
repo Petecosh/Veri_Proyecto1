@@ -18,6 +18,7 @@ class agente #(parameter devices = 4, parameter width = 16);
                     lectura: begin
                         paquete_agnt_drv[instruccion_agente.origen] = new();
                         paquete_agnt_drv[instruccion_agente.origen].tipo = instruccion_agente.tipo;
+                        paquete_agnt_drv[instruccion_agente.origen].origen = instruccion_agente.origen;
                         paquete_agnt_drv[instruccion_agente.origen].print("Agente: Transaccion creada");
                         agnt_drv_mbx[instruccion_agente.origen].put(paquete_agnt_drv[instruccion_agente.origen]);
                     end
@@ -26,6 +27,7 @@ class agente #(parameter devices = 4, parameter width = 16);
                         paquete_agnt_drv[instruccion_agente.origen] = new();
                         paquete_agnt_drv[instruccion_agente.origen].dato_i = instruccion_agente.dato;
                         paquete_agnt_drv[instruccion_agente.origen].tipo = instruccion_agente.tipo;
+                        paquete_agnt_drv[instruccion_agente.origen].origen = instruccion_agente.origen;
                         paquete_agnt_drv[instruccion_agente.origen].print("Agente: Transaccion creada");
                         agnt_drv_mbx[instruccion_agente.origen].put(paquete_agnt_drv[instruccion_agente.origen]);
                     end

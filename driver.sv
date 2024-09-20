@@ -2,12 +2,15 @@ class driver #(parameter width = 16);
     tipo_mbx_agnt_drv agnt_drv_mbx;
     bit [width-1:0] emul_fifo_i[$];
     bit [width-1:0] emul_fifo_o[$];
+    int identificador_drv;
     bit pending;
 
     function new();
         this.emul_fifo_i = {};
         this.emul_fifo_o = {};
+        this.identificador_drv = 0;
         pending = 0;
+
     endfunction
 
     task run();
@@ -21,6 +24,7 @@ class driver #(parameter width = 16);
             $display("[%g] El driver espera por una transaccion", $time);
 
             agnt_drv_mbx.get(paquete);
+            identificador_drv=paquete.origen;
             paquete.print("Driver: Transaccion recibida");
             $display("[%g] Transacciones pendientes en el mbx agnt_drv = %g", $time, agnt_drv_mbx.num());
 
@@ -29,12 +33,14 @@ class driver #(parameter width = 16);
                 lectura: begin
                     paquete.dato_o = emul_fifo_i.pop_front();
                     paquete.print("Driver Ejecución: Lectura");
+
                 end
 
                 escritura: begin
                     emul_fifo_i.push_back(paquete.dato_i);
                     paquete.print("Driver Ejecución: Escritura");
                     pending = 1;
+                    mail.put(paquete)
                 end
                 
                 default: begin
