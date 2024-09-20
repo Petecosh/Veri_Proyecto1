@@ -9,6 +9,7 @@ class driver #(parameter width = 16);
     bit push_DUT;
     bit [width-1:0] dato_i_DUT;
     bit [width-1:0] dato_o_DUT;
+    virtual bus_if #() vif;
 
     function new();
         this.emul_fifo_i = {};

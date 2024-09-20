@@ -2,6 +2,21 @@
 // Tipo Transaccion Agente
 typedef enum {Random, especifica, erronea} tipo_agente;
 
+// Interfaz
+interface bus_if #(parameter bits = 1, parameter drvrs = 4, parameter pckg_sz = 16, parameter broadcast = {8{1'b1}})
+(
+    input clk
+);
+    
+    logic reset;
+    logic pndng[bits-1:0][drvrs-1:0];
+    logic push[bits-1:0][drvrs-1:0]; 
+    logic pop[bits-1:0][drvrs-1:0];
+    logic [pckg_sz-1:0] D_pop[bits-1:0][drvrs-1:0];
+    logic [pckg_sz-1:0] D_push[bits-1:0][drvrs-1:0];
+
+endinterface
+
 
 // Paquete Agente -> Driver
 class pck_agnt_drv #(parameter width = 16);
@@ -38,7 +53,10 @@ endclass
 // Paquete Test -> Agente
 class pck_test_agnt #(parameter devices = 4, parameter width = 16);
     bit [width-1:0] dato;
+<<<<<<< Updated upstream
     tipo_agente tipo;
+=======
+>>>>>>> Stashed changes
     rand int origen;
 
     function new(bit[width-1:0] dto = 0, tipo_trans tpo = lectura, int org = 0);
