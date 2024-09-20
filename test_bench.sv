@@ -18,14 +18,16 @@ module test_bench;
     initial begin
         clk = 0;
         test_inst = new();
+        $display("[%g] Test inicializado", $time);
         fork
             test_inst.run();
         join_none
+        
     end
 
     always @(posedge clk) begin
         if ($time > 1000) begin
-            $display("Testbench: Tiempo limite alcanzado");
+            $display("[%g] Testbench: Tiempo limite alcanzado", $time);
             $finish;
         end
     end
