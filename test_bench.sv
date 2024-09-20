@@ -16,7 +16,7 @@ module test_bench;
     parameter broadcast = {8{1'b1}};
     test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;
 
-    bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast));
+    bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if(.clk(clk));
 
     always #5 clk = ~clk;
 
