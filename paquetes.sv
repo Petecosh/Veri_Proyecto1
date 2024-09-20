@@ -1,24 +1,20 @@
 
-// Tipo Transaccion Fifo
-typedef enum {lectura, escritura} tipo_trans;
+// Tipo Transaccion Agente
+typedef enum {random, especifica, erronea} tipo_agente;
 
 
 // Paquete Agente -> Driver
 class pck_agnt_drv #(parameter width = 16);
-    rand bit [width-1:0] dato_i;
-    rand bit [width-1:0] dato_o;
-    rand tipo_trans tipo;
-    int origen;
+    rand bit [width-1:0] dato;
+    rand int origen;
 
-    function new(bit[width-1:0] dto_i = 0, bit[width-1:0] dto_o = 0, tipo_trans tpo = lectura,int org = 0);
-        this.dato_i = dto_i;
-        this.dato_o = dto_o;
-        this.tipo = tpo;
+    function new(bit[width-1:0] dto = 0, int org = 0);
+        this.dato = dto;
         this.origen = org;
     endfunction
 
     function void print(string tag = "");
-        $display("[%g] %s Tipo = %s Dato_i = 0x%h Dato_o = 0x%h Origen%h" , $time, tag, this.tipo, this.dato_i, this.dato_o, this.origen);
+        $display("[%g] %s Dato = 0x%h" , $time, tag, this.dato);
     endfunction
 
 endclass
@@ -26,19 +22,14 @@ endclass
 
 // Paquete Driver -> Checker
 class pck_drv_chkr #(parameter width = 16);
-    rand bit [width-1:0] dato_i;
-    rand bit [width-1:0] dato_o;
-    rand bit [7:0] receptor;
-    rand tipo_trans tipo;
+    rand bit [width-1:0] dato;
 
-    function new(bit[width-1:0] dto_i = 0, bit[width-1:0] dto_o = 0, tipo_trans tpo = lectura);
-        this.dato_i = dto_i;
-        this.dato_o = dto_o;
-        this.tipo = tpo;
+    function new(bit[width-1:0] dto_i = 0, bit[width-1:0] dto_o = 0);
+        this.dato = dto;
     endfunction
 
     function void print(string tag = "");
-        $display("[%g] %s Tipo = %s Dato_i = 0x%h Dato_o = 0x%h" , $time, tag, this.tipo, this.dato_i, this.dato_o);
+        $display("[%g] %s Dato = 0x%h" , $time, tag, this.dato);
     endfunction
 
 endclass
