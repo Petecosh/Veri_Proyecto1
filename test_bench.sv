@@ -12,16 +12,13 @@ module test_bench;
     parameter width = 16;
     parameter devices = 4;
     test #(.devices(devices), .width(width)) test_inst;
-    int x [3];
 
     always #5 clk = ~clk;
 
     initial begin
-        x[0]=1;
-        x[1]=5;
-        $display("[%d] Test:", x[1]);
         clk = 0;
         test_inst = new();
+        $display("[%g] Test inicializado", $time);
         fork
             test_inst.run();
         join_none
@@ -30,7 +27,7 @@ module test_bench;
 
     always @(posedge clk) begin
         if ($time > 1000) begin
-            $display("Testbench: Tiempo limite alcanzado");
+            $display("[%g] Testbench: Tiempo limite alcanzado", $time);
             $finish;
         end
     end

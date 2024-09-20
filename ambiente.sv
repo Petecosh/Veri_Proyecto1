@@ -30,14 +30,15 @@ class ambiente #(parameter devices = 4, parameter width = 16);
     virtual task run();
         fork
             
-            for (int i = 0; i < devices; i++) begin
-                driver_inst[i].run();
-            end
+            //for (int i = 0; i < devices; i++) begin
+            //    driver_inst[i].run();
+            //end
 
             driver_inst[0].run();
             driver_inst[1].run();
 
             agente_inst.run();
+            
         join_none
         $display("[%g] Ambiente inicializado", $time);
     endtask
