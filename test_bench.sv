@@ -14,7 +14,7 @@ module test_bench;
     parameter devices = 4;
     parameter bits = 1;
     parameter broadcast = {8{1'b1}}
-    test #(.devices(devices), .width(width)) test_inst;
+    test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;
 
     bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast));
 
