@@ -54,9 +54,9 @@ class driver #(parameter width = 16);
         forever begin
             // Si DUT pide pop 
             @(posedge vif.clk);
-            if (vif.pop[origen]) begin
+            if (vif.pop[0][id]) begin
                 bit [width-1:0] auxiliar = emul_fifo_i.pop_front();
-                vif.D_pop[0][origen] = auxiliar;
+                vif.D_pop[0][id] = auxiliar;
                 //vif.D_pop = emul_fifo_i.pop_front();
                 $display("[%g] Driver FIFO in: DUT saco dato", $time);
             end
@@ -67,8 +67,8 @@ class driver #(parameter width = 16);
         forever begin
             // Si DUT pide push
             @(posedge vif.clk);
-            if (vif.push[origen]) begin
-                emul_fifo_o.push_back(vif.D_push[0][origen]);
+            if (vif.push[0][id]) begin
+                emul_fifo_o.push_back(vif.D_push[0][id]);
                 $display("[%g] Driver FIFO out: DUT metio dato", $time);
             end
         end
@@ -79,11 +79,11 @@ class driver #(parameter width = 16);
         forever begin
             @(posedge vif.clk);
             if (emul_fifo_i.size() != 0) begin
-                    vif.pndng = 1;
+                    vif.pndng[0][id] = 1;
                     //$display("[%g] Driver FIFO in: Pending en 1", $time);
                         
             end else begin
-                    vif.pndng = 0;
+                    vif.pndng[0][id] = 0;
                     //$display("[%g] Driver FIFO in: Pending en 0", $time);
             end
         end
