@@ -6,6 +6,12 @@ class agente #(parameter devices = 4, parameter width = 16);
     tipo_mbx_test_agnt test_agnt_mbx;
     //
     tipo_mbx_agnt_drv drv_test_mbx;
+    function new();
+
+        paquete1 = new();
+
+
+    endfunction
     task run();
 
         $display("[%g] Agente inicializado", $time);
@@ -46,9 +52,9 @@ class agente #(parameter devices = 4, parameter width = 16);
         begin
             //drivers
             drv_test_mbx.get(paquete1);
-            $display("[%g] test,%d: ", $time,paquete1);
+            $display("[%g] test,%d: ", $time,paquete1.dato_o);
             drv_test_mbx.get(paquete1);
-            $display("[%g] test,%d: ", $time,paquete1);
+            $display("[%g] test,%d: ", $time,paquete1.dato_o);
         end
 
         join_any
