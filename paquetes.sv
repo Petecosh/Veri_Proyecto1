@@ -43,7 +43,7 @@ endclass
 class pck_drv_chkr #(parameter width = 16);
     rand bit [width-1:0] dato;
 
-    function new(bit[width-1:0] dto_i = 0, bit[width-1:0] dto_o = 0);
+    function new(bit[width-1:0] dto = 0);
         this.dato = dto;
     endfunction
 
