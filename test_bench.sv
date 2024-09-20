@@ -35,6 +35,8 @@ module test_bench;
         clk = 0;
         test_inst = new();
         $display("[%g] Test inicializado", $time);
+        test_inst._if = _if;
+        test_inst.ambiente_inst.driver_inst = _if;
         fork
             test_inst.run();
         join_none
