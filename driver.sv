@@ -73,11 +73,11 @@ class driver #(parameter width = 16);
         // Revisar si hay algo pendiente en la FIFO entrada
         if (emul_fifo_i.size() != 0) begin
                 vif.pndng = 1;
-                $display("[%g] Driver FIFO in: Pending en 1", $time);
+                //$display("[%g] Driver FIFO in: Pending en 1", $time);
                     
         end else begin
                 vif.pndng = 0;
-                $display("[%g] Driver FIFO in: Pending en 0", $time);
+                //$display("[%g] Driver FIFO in: Pending en 0", $time);
         end
     endtask
 
