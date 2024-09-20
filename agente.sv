@@ -6,16 +6,15 @@ class agente #(parameter devices = 4, parameter width = 16);
     int num_transacciones;
     tipo_mbx_test_agnt test_agnt_mbx;
     int max_retardo;
-    bit [3:0] origen;
-    bit [3:0] receptor;
     bit [width-1:0]data_envio;
-
+    int origen
     function new;
         for (int i = 0; i < devices; i++) begin
             paquete_agnt_drv[i] = new();
         end
         num_transacciones = 2;
         max_retardo = 10;
+
     endfunction
 
     task run();
@@ -33,17 +32,12 @@ class agente #(parameter devices = 4, parameter width = 16);
 
                     Random: begin
                         for (int i = 0; i < num_transacciones; i++) begin
-                            paquete_agnt_drv = new;
                             //instruccion_agente.max_retardo = max_retardo;
-                            origen = $urandom_range(devices, 0);
-                            receptor = $urandom_range(devices, 0);
-                            paquete_agnt_drv[origen].randomize();
-                            paquete_agnt_drv[origen].origen = origen;
-                            data_envio = {receptor, paquete_agnt_drv[origen].dato[width-9:0]}; 
-                            paquete_agnt_drv[origen].dato = data_envio;             
-                            paquete_agnt_drv[origen].print("Agente: Transaccion creada");
-
-                            agnt_drv_mbx[origen].put(paquete_agnt_drv[origen]);
+                            paquete_agnt_drv[instruccion_agente.origen] = new();
+                            paquete_agnt_drv[instruccion_agente.origen].randomize(); 
+                            paquete_agnt_drv[instruccion_agente.origen].origen = instruccion_agente.origen; 
+                            paquete_agnt_drv[instruccion_agente.origen].print("Agente: Transaccion creada");
+                            agnt_drv_mbx[instruccion_agente.origen].put(paquete_agnt_drv[instruccion_agente.origen]);
 
                         end
                     end

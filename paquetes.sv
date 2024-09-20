@@ -19,9 +19,13 @@ endinterface
 
 
 // Paquete Agente -> Driver
-class pck_agnt_drv #(parameter width = 16);
+class pck_agnt_drv #(parameter devices = 4,parameter width = 16);
     rand bit [width-1:0] dato;
-    rand int origen;
+    int origen;
+
+    constraint random_val{   
+        0<= dato[width-1:width-8] <= devices;
+    }
 
     function new(bit[width-1:0] dto = 0, int org = 0);
         this.dato = dto;
@@ -52,11 +56,14 @@ endclass
 
 // Paquete Test -> Agente
 class pck_test_agnt #(parameter devices = 4, parameter width = 16);
-    bit [width-1:0] dato;
+    rand bit [width-1:0] dato;
     tipo_agente tipo;
-    rand int origen;
+    rand bit [4:0] origen;
 
-    function new(bit[width-1:0] dto = 0, tipo_trans tpo = lectura, int org = 0);
+    constraint random_val{   
+        0<= origen <= devices;
+    }
+    function new(bit[width-1:0] dto = 0, tipo_agente tpo = Random, int org = 0);
         this.dato = dto;
         this.tipo = tpo;
         this.origen = org;

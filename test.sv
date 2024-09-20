@@ -26,6 +26,7 @@ class test #(parameter devices = 4, parameter width = 16);
         // Pruebas
         #10
         instruccion_agente = new();
+        instruccion_agente.randomize();
         instruccion_agente.tipo = Random;
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
