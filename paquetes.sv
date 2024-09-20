@@ -1,6 +1,6 @@
 
 // Tipo Transaccion Agente
-typedef enum {random, especifica, erronea} tipo_agente;
+typedef enum {Random, especifica, erronea} tipo_agente;
 
 
 // Paquete Agente -> Driver
@@ -38,7 +38,7 @@ endclass
 // Paquete Test -> Agente
 class pck_test_agnt #(parameter devices = 4, parameter width = 16);
     bit [width-1:0] dato;
-    tipo_trans tipo;
+    tipo_agente tipo;
     rand int origen;
 
     function new(bit[width-1:0] dto = 0, tipo_trans tpo = lectura, int org = 0);
