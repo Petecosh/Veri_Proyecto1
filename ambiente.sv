@@ -33,7 +33,7 @@ class ambiente #(parameter devices = 4, parameter width = 16);
             for (int i = 0; i < devices; i++) begin
                 fork
                     driver_inst[i].run();
-                join
+                join_none
             end
 
             agente_inst.run();
