@@ -60,9 +60,9 @@ class pck_test_agnt #(parameter devices = 4, parameter width = 16);
     tipo_agente tipo;
     rand bit [4:0] origen;
 
-    constraint random_val{   
-        0<= origen <= devices;
-    }
+    //constraint random_val{   
+    //    0<= origen <= devices;
+    //}
     function new(bit[width-1:0] dto = 0, tipo_agente tpo = Random, int org = 0);
         this.dato = dto;
         this.tipo = tpo;
