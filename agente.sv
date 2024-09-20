@@ -3,11 +3,12 @@ class agente #(parameter devices = 4, parameter width = 16);
     pck_agnt_drv #(.width(width)) paquete_agnt_drv[devices];
     tipo_mbx_agnt_drv agnt_drv_mbx[devices];
     tipo_mbx_test_agnt test_agnt_mbx;
-
+    //
+    tipo_mbx_agnt_drv drv_test_mbx;
     task run();
 
         $display("[%g] Agente inicializado", $time);
-
+        fork
         forever begin
             #1
             if (test_agnt_mbx.num() > 0) begin
@@ -40,6 +41,20 @@ class agente #(parameter devices = 4, parameter width = 16);
             end
 
         end
+
+        begin
+            //drivers
+            pck_agnt_drv #(.width(width)) paquete1;
+            drv_test_mbx.get(paquete1);
+            $display("[%g] test,%d: ", $time,paquete1);
+            pck_agnt_drv #(.width(width)) paquete2;
+            drv_test_mbx.get(paquete2);
+            $display("[%g] test,%d: ", $time,paquete2);
+        end
+
+        join_any
+
+        
 
     endtask
 
