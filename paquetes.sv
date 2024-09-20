@@ -1,6 +1,6 @@
 
 // Tipo Transaccion Agente
-typedef enum {Random, especifica, erronea} tipo_agente;
+typedef enum {Random, Especifica, Erronea} tipo_agente;
 
 // Interfaz
 interface bus_if #(parameter bits = 1, parameter drvrs = 4, parameter pckg_sz = 16, parameter broadcast = {8{1'b1}})
