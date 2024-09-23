@@ -40,7 +40,6 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     endtask
 
     task leer();
-    $display("sip leer run");
         forever begin
             // Si la FIFO out tiene algo
             @(posedge vif.clk);
@@ -54,7 +53,6 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     endtask
 
     task actualizar_FIFO_i();
-    $display("sip actufifoi run");
         forever begin
             // Si DUT pide pop 
             @(posedge vif.clk);
@@ -68,7 +66,6 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     endtask
 
     task actualizar_FIFO_o();
-    $display("sip fifoo run");
         forever begin
             // Si DUT pide push
             @(posedge vif.clk);
@@ -80,7 +77,6 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     endtask
 
     task revisar_FIFO_in();
-    $display("sip fifoi run");
         // Revisar si hay algo pendiente en la FIFO entrada
         forever begin
             @(posedge vif.clk);
@@ -97,7 +93,6 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
 
     // Correr los otros tasks
     task run();
-        $display("sip drv run");
         fork
             this.escribir();
             this.leer();
