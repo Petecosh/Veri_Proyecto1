@@ -6,7 +6,7 @@ class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, pa
 
     tipo_mbx_test_agnt test_agnt_mbx;
 
-    virtual bus_if #(.bits(), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if;
+    //virtual bus_if #(.bits(), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if;
 
     function new();
 
