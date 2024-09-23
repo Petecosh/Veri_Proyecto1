@@ -1,11 +1,12 @@
-class test #(parameter devices = 4, parameter width = 16);
+class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
 
-    ambiente #(.devices(devices), .width(width)) ambiente_inst;
+    ambiente #(.bits(bits), .devices(devices), .width(width)) ambiente_inst;
 
     pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente;
 
     tipo_mbx_test_agnt test_agnt_mbx;
 
+    virtual bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if;
 
     function new();
 
@@ -24,37 +25,16 @@ class test #(parameter devices = 4, parameter width = 16);
         join_none
 
         // Pruebas
-        #10
-        instruccion_agente = new();
-        instruccion_agente.origen = 0;
-        instruccion_agente.tipo = escritura;
-        instruccion_agente.dato = 'h1;
-        instruccion_agente.print("Test: Paquete al agente creado");
-        test_agnt_mbx.put(instruccion_agente);
-
-        #10
-        instruccion_agente = new();
-        instruccion_agente.tipo = escritura;
-        instruccion_agente.origen = 1;
-        instruccion_agente.dato = 'h2;
-        instruccion_agente.print("Test: Paquete al agente creado");
-        test_agnt_mbx.put(instruccion_agente);
-
-        #10
-        instruccion_agente = new();
-        instruccion_agente.tipo = lectura;
-        instruccion_agente.origen = 1;
-        instruccion_agente.print("Test: Paquete al agente creado");
-        test_agnt_mbx.put(instruccion_agente);
-
-        #10
-        instruccion_agente = new();
-        instruccion_agente.tipo = lectura;
-        instruccion_agente.origen = 0;
-        instruccion_agente.print("Test: Paquete al agente creado");
-        test_agnt_mbx.put(instruccion_agente);
-
         #1000
+        instruccion_agente = new();
+        //instruccion_agente.randomize();
+        instruccion_agente.dato=16'h103;
+        instruccion_agente.origen=2;
+        instruccion_agente.tipo = Random;
+        instruccion_agente.print("Test: Paquete al agente creado");
+        test_agnt_mbx.put(instruccion_agente);
+        
+        #10000
         $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);
         $finish;
 
