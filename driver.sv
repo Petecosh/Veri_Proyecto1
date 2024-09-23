@@ -28,6 +28,7 @@ class driver #(parameter width = 16);
 
     task escribir();
     $display("sip esc run");
+    $display(emul_fifo_o.size());
         forever begin
             pck_agnt_drv #(.width(width)) paquete_drv;
 
@@ -48,7 +49,6 @@ class driver #(parameter width = 16);
 
     task leer();
     $display("sip leer run");
-    $display(emul_fifo_o.size());
         forever begin
             // Si la FIFO out tiene algo
             if (emul_fifo_o.size() != 0) begin
