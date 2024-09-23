@@ -112,7 +112,7 @@ class driver #(parameter width = 16);
         $display("sip drv run");
         fork
             this.escribir();
-            this.leer();
+            //this.leer();
             //this.actualizar_FIFO_i();
             //this.actualizar_FIFO_o();
             //this.revisar_FIFO_in();
