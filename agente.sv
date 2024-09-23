@@ -57,7 +57,7 @@ class agente #(parameter devices = 4, parameter width = 16);
                         end
                     end
 
-                    end
+                    
 
                     Erronea: begin
 
