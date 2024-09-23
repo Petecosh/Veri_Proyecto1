@@ -1,6 +1,7 @@
 class agente #(parameter devices = 4, parameter width = 16);
     pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente;
     pck_agnt_drv #(.width(width)) paquete_agnt_drv[devices];
+    pck_agnt_drv #(.width(width)) ori;
     tipo_mbx_agnt_drv agnt_drv_mbx[devices];
 
     int num_transacciones;
@@ -32,6 +33,20 @@ class agente #(parameter devices = 4, parameter width = 16);
 
                     Random: begin
                         for (int i = 0; i < num_transacciones; i++) begin
+                            ori = new();
+                            ori.randomize();
+                            ori.dato = {paquete_agnt_drv.recpetor, paquete_agnt_drv.payload};
+                            //instruccion_agente.max_retardo = max_retardo;
+                            paquete_agnt_drv[ori.origen] = new();
+                            paquete_agnt_drv[ori.origen] = ori;
+                            paquete_agnt_drv[ori.origen].print("Agente: Transaccion creada");
+                            agnt_drv_mbx[ori.origen].put(paquete_agnt_drv[ori.origen]);
+
+                        end
+                    end
+
+                    Especifica: begin
+                        for (int i = 0; i < num_transacciones; i++) begin
                             //instruccion_agente.max_retardo = max_retardo;
                             paquete_agnt_drv[instruccion_agente.origen] = new();
                             paquete_agnt_drv[instruccion_agente.origen].dato = instruccion_agente.dato;
@@ -41,8 +56,6 @@ class agente #(parameter devices = 4, parameter width = 16);
 
                         end
                     end
-
-                    Especifica: begin
 
                     end
 
