@@ -23,12 +23,9 @@ class driver #(parameter width = 16);
         this.push_DUT = 0;
         this.dato_i_DUT = 0;
         this.dato_o_DUT = 0;
-        $display("sip driver");
     endfunction
 
     task escribir();
-    $display("sip esc run");
-    $display(emul_fifo_o.size());
         forever begin
             pck_agnt_drv #(.width(width)) paquete_drv;
 
@@ -56,6 +53,8 @@ class driver #(parameter width = 16);
                 paquete_chkr.dato = emul_fifo_o.pop_front(); // Lo saco
                 paquete_chkr.print("Driver Ejecución: Lectura");
                 //drv_chkr_mbx.put(paquete_chkr);
+            end else begin
+                $display("NO hay ni picha");
             end
         end
     endtask
@@ -113,7 +112,7 @@ class driver #(parameter width = 16);
         $display("sip drv run");
         fork
             this.escribir();
-            //this.leer();
+            this.leer();
             //this.actualizar_FIFO_i();
             //this.actualizar_FIFO_o();
             //this.revisar_FIFO_in();
