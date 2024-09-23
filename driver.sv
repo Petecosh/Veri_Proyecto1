@@ -54,6 +54,7 @@ class driver #(parameter width = 16);
                 paquete_chkr.dato = emul_fifo_o.pop_front(); // Lo saco
                 paquete_chkr.print("Driver Ejecución: Lectura");
                 //drv_chkr_mbx.put(paquete_chkr);
+            end
         end
     endtask
 
