@@ -31,7 +31,7 @@ class pck_agnt_drv #(parameter devices = 4,parameter width = 16);
     function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0);
         this.dato = dto;
         this.origen = org;
-        this.recpetor = rec:
+        this.recpetor = rec;
         this.payload = pay;
         
     endfunction
