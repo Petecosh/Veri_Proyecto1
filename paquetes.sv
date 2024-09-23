@@ -20,13 +20,13 @@ endinterface
 // Paquete Agente -> Driver
 class pck_agnt_drv #(parameter devices = 4,parameter width = 16);
     bit [width-1:0] dato;
-    rand bit [drvrs-1:0] origen;   //El dispositivo desde el cual se envia el paquete
+    rand bit [devices-1:0] origen;   //El dispositivo desde el cual se envia el paquete
     rand bit [7:0] recpetor;           //La direccion del dispositivo destino del paquete
-    rand bit [pckg_sz-9:0] payload;
+    rand bit [width-9:0] payload;
 
     //constraint retardo {retardo < max_retardo; retardo>0;}
-    constraint direccion {recpetor < drvrs; recpetor >=0; recpetor != origen;}
-    constraint dispositivo {origen < drvrs; origen >= 0;}
+    constraint direccion {recpetor < devices; recpetor >=0; recpetor != origen;}
+    constraint dispositivo {origen < devices; origen >= 0;}
 
     function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0);
         this.dato = dto;
