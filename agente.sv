@@ -35,7 +35,7 @@ class agente #(parameter devices = 4, parameter width = 16);
                         for (int i = 0; i < num_transacciones; i++) begin
                             ori = new();
                             ori.randomize();
-                            ori.dato = {paquete_agnt_drv.recpetor, paquete_agnt_drv.payload};
+                            ori.dato = {ori.recpetor, ori.payload};
                             //instruccion_agente.max_retardo = max_retardo;
                             paquete_agnt_drv[ori.origen] = new();
                             paquete_agnt_drv[ori.origen] = ori;
