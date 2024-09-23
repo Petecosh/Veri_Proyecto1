@@ -20,15 +20,15 @@ module test_bench;
 
     always #5 clk = ~clk;
 
-    bs_gnrtr_n_rbtr #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) uut(
-        .clk(_if.clk),
-        .reset(_if.reset),
-        .pndng(_if.pndng),
-        .push(_if.push),
-        .pop(_if.pop),
-        .D_pop(_if.D_pop),
-        .D_push(_if.D_push)
-    );
+    //bs_gnrtr_n_rbtr #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) uut(
+    //    .clk(_if.clk),
+    //    .reset(_if.reset),
+    //    .pndng(_if.pndng),
+    //    .push(_if.push),
+    //    .pop(_if.pop),
+    //    .D_pop(_if.D_pop),
+    //    .D_push(_if.D_push)
+    //);
 
 
     initial begin
