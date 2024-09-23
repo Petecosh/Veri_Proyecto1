@@ -1,12 +1,12 @@
 class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
 
-    ambiente #(.devices(devices), .width(width)) ambiente_inst;
+    ambiente #(.bits(bits), .devices(devices), .width(width)) ambiente_inst;
 
     pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente;
 
     tipo_mbx_test_agnt test_agnt_mbx;
 
-    virtual bus_if #(.bits(), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if;
+    virtual bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if;
 
     function new();
 

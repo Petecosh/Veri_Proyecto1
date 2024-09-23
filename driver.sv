@@ -1,4 +1,4 @@
-class driver #(parameter width = 16);
+class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     tipo_mbx_agnt_drv agnt_drv_mbx;
     tipo_mbx_drv_chkr drv_chkr_mbx;
     bit [width-1:0] emul_fifo_i[$];
@@ -9,7 +9,7 @@ class driver #(parameter width = 16);
     bit push_DUT;
     bit [width-1:0] dato_i_DUT;
     bit [width-1:0] dato_o_DUT;*/
-    virtual bus_if #() vif;
+    virtual bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width)) vif;
 
     int id;
 
