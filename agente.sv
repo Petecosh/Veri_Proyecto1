@@ -13,7 +13,7 @@ class agente #(parameter devices = 4, parameter width = 16);
         for (int i = 0; i < devices; i++) begin
             paquete_agnt_drv[i] = new();
         end
-        num_transacciones = 1;
+        num_transacciones = 2;
         max_retardo = 10;
         $display("sip agente");
     endfunction
@@ -39,7 +39,7 @@ class agente #(parameter devices = 4, parameter width = 16);
                             //instruccion_agente.max_retardo = max_retardo;
                             paquete_agnt_drv[ori.origen] = new();
                             paquete_agnt_drv[ori.origen] = ori;
-                            paquete_agnt_drv[ori.origen].print("Agente: Transaccion creada");
+                            paquete_agnt_drv[ori.origen].print("Agente: Random Transaccion creada");
                             agnt_drv_mbx[ori.origen].put(paquete_agnt_drv[ori.origen]);
 
                         end
@@ -51,7 +51,7 @@ class agente #(parameter devices = 4, parameter width = 16);
                             paquete_agnt_drv[instruccion_agente.origen] = new();
                             paquete_agnt_drv[instruccion_agente.origen].dato = instruccion_agente.dato;
                             paquete_agnt_drv[instruccion_agente.origen].origen = instruccion_agente.origen; 
-                            paquete_agnt_drv[instruccion_agente.origen].print("Agente: Transaccion creada");
+                            paquete_agnt_drv[instruccion_agente.origen].print("Agente: Especifica Transaccion creada");
                             agnt_drv_mbx[instruccion_agente.origen].put(paquete_agnt_drv[instruccion_agente.origen]);
 
                         end
