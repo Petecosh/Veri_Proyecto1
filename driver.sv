@@ -4,12 +4,12 @@ class driver #(parameter width = 16);
     bit [width-1:0] emul_fifo_i[$];
     bit [width-1:0] emul_fifo_o[$];
     int identificador_drv;
-    bit pending;
+    /*bit pending;
     bit pop_DUT;
     bit push_DUT;
     bit [width-1:0] dato_i_DUT;
-    bit [width-1:0] dato_o_DUT;
-    //virtual bus_if #() vif;
+    bit [width-1:0] dato_o_DUT;*/
+    virtual bus_if #() vif;
 
     int id;
 
@@ -18,11 +18,6 @@ class driver #(parameter width = 16);
         this.emul_fifo_i = {};
         this.emul_fifo_o = {};
         this.identificador_drv = 0;
-        this.pending = 0;
-        this.pop_DUT = 0;
-        this.push_DUT = 0;
-        this.dato_i_DUT = 0;
-        this.dato_o_DUT = 0;
     endfunction
 
     task escribir();
@@ -48,7 +43,7 @@ class driver #(parameter width = 16);
     $display("sip leer run");
         forever begin
             // Si la FIFO out tiene algo
-            //@(posedge vif.clk);
+            @(posedge vif.clk);
             if (emul_fifo_o.size() != 0) begin
                 pck_drv_chkr #(.width(width)) paquete_chkr;
                 paquete_chkr.dato = emul_fifo_o.pop_front(); // Lo saco
@@ -111,8 +106,8 @@ class driver #(parameter width = 16);
         $display("sip drv run");
         fork
             this.escribir();
-            //this.leer();
-            this.actualizar_FIFO_i();
+            this.leer();
+            //this.actualizar_FIFO_i();
             //this.actualizar_FIFO_o();
             //this.revisar_FIFO_in();
         join_none
