@@ -55,7 +55,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     task actualizar_FIFO_i();
         forever begin
             // Si DUT pide pop 
-            @(posedge vif.clk);
+            @(negedge vif.clk);
             if (vif.pop[0][id]) begin
                 bit [width-1:0] auxiliar = emul_fifo_i.pop_front();
                 vif.D_pop[0][id] = auxiliar;
