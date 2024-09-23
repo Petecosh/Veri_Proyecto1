@@ -9,7 +9,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     bit push_DUT;
     bit [width-1:0] dato_i_DUT;
     bit [width-1:0] dato_o_DUT;*/
-    virtual bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width)) vif;
+    virtual bus_if #(.bits(bits), .drvrs(drvrs), .pckg_sz(width)) vif;
 
     int id;
 
