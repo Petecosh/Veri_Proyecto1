@@ -43,10 +43,15 @@ module test_bench;
         fork
             test_inst.run();
         join_none
+
+        _if.reset = 1;
+        #1
+        _if.reset = 0;
         
     end
 
     always @(posedge clk) begin
+
         if ($time > 1000) begin
             $display("[%g] Testbench: Tiempo limite alcanzado", $time);
             $finish;
