@@ -113,9 +113,9 @@ class driver #(parameter width = 16);
         fork
             this.escribir();
             this.leer();
-            this.actualizar_FIFO_i();
-            this.actualizar_FIFO_o();
-            this.revisar_FIFO_in();
+            //this.actualizar_FIFO_i();
+            //this.actualizar_FIFO_o();
+            //this.revisar_FIFO_in();
         join_none
         $display("[%g] Driver inicializado", $time);
     endtask
