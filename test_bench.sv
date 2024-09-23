@@ -35,10 +35,10 @@ module test_bench;
         clk = 0;
         test_inst = new();
         $display("[%g] Test inicializado", $time);
-        test_inst._if = _if;
-        for (int i = 0; i < devices; i++) begin
-            test_inst.ambiente_inst.driver_inst[i] = _if;
-        end
+        //test_inst._if = _if;
+        //for (int i = 0; i < devices; i++) begin
+        //    test_inst.ambiente_inst.driver_inst[i] = _if;
+        //end
         
         fork
             test_inst.run();
