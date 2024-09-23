@@ -61,7 +61,7 @@ class driver #(parameter width = 16);
             if (vif.pop[0][id]) begin
                 bit [width-1:0] auxiliar = emul_fifo_i.pop_front();
                 vif.D_pop[0][id] = auxiliar;
-                vif.D_pop = emul_fifo_i.pop_front();
+                vif.D_pop[0][id] = emul_fifo_i.pop_front();
                 $display("[%g] Driver FIFO in: DUT saco dato", $time);
             end
         end
