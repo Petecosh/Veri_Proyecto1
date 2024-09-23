@@ -17,19 +17,23 @@ interface bus_if #(parameter bits = 1, parameter drvrs = 4, parameter pckg_sz = 
 
 endinterface
 
-
 // Paquete Agente -> Driver
 class pck_agnt_drv #(parameter devices = 4,parameter width = 16);
-    rand bit [width-1:0] dato;
-    int origen;
+    bit [width-1:0] dato;
+    rand bit [devices-1:0] origen;   //El dispositivo desde el cual se envia el paquete
+    rand bit [7:0] recpetor;           //La direccion del dispositivo destino del paquete
+    rand bit [width-9:0] payload;
 
-    constraint random_val{   
-        0<= dato[width-1:width-8] <= devices;
-    }
+    //constraint retardo {retardo < max_retardo; retardo>0;}
+    constraint direccion {recpetor < devices; recpetor >=0; recpetor != origen;}
+    constraint dispositivo {origen < devices; origen >= 0;}
 
-    function new(bit[width-1:0] dto = 0, int org = 0);
+    function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0);
         this.dato = dto;
         this.origen = org;
+        this.recpetor = rec;
+        this.payload = pay;
+        
     endfunction
 
     function void print(string tag = "");
