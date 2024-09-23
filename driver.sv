@@ -48,14 +48,12 @@ class driver #(parameter width = 16);
     $display("sip leer run");
         forever begin
             // Si la FIFO out tiene algo
+            //@(posedge vif.clk);
             if (emul_fifo_o.size() != 0) begin
                 pck_drv_chkr #(.width(width)) paquete_chkr;
                 paquete_chkr.dato = emul_fifo_o.pop_front(); // Lo saco
                 paquete_chkr.print("Driver Ejecución: Lectura");
                 //drv_chkr_mbx.put(paquete_chkr);
-            end else begin
-                $display("NO hay ni picha");
-            end
         end
     endtask
 
@@ -112,8 +110,8 @@ class driver #(parameter width = 16);
         $display("sip drv run");
         fork
             this.escribir();
-            this.leer();
-            //this.actualizar_FIFO_i();
+            //this.leer();
+            this.actualizar_FIFO_i();
             //this.actualizar_FIFO_o();
             //this.revisar_FIFO_in();
         join_none
