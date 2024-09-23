@@ -58,7 +58,7 @@ endclass
 class pck_test_agnt #(parameter devices = 4, parameter width = 16);
     bit [width-1:0] dato;
     tipo_agente tipo;
-    rand int [4:0] origen;
+    rand bit [4:0] origen;
 
     constraint random_val{   
         0<= origen <= devices;
