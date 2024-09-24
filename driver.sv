@@ -92,6 +92,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
 
     // Correr los otros tasks
     task run();
+        vif.D_pop[0][id] = 0;
         fork
             this.escribir();
             this.leer();
