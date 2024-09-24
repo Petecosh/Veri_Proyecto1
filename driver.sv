@@ -56,6 +56,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     task actualizar_FIFO_i();
         forever begin
             // Si DUT pide pop 
+            vif.D_pop[0][id] = emul_fifo_i[0];
             @(negedge vif.clk);
             if (vif.pop[0][id]) begin
                 vif.D_pop[0][id] = emul_fifo_i.pop_front();
@@ -92,7 +93,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
 
     // Correr los otros tasks
     task run();
-        vif.D_pop[0][id] = 0;
+        vif.D_pop[0][id] =0;
         fork
             this.escribir();
             this.leer();
