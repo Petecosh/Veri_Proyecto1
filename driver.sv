@@ -96,7 +96,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
         vif.D_pop[0][id] =0;
         fork
             this.escribir();
-            this.leer();
+            //this.leer();
             this.actualizar_FIFO_i();
             this.actualizar_FIFO_o();
             this.revisar_FIFO_in();
