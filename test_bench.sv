@@ -45,7 +45,7 @@ module test_bench;
         join_none
 
         _if.reset = 1;
-        #2
+        #20
         _if.reset = 0;
         
     end
