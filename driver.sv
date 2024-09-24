@@ -15,8 +15,8 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
 
     function new(input int ident);
         id = ident;
-        this.emul_fifo_i = {0};
-        this.emul_fifo_o = {0};
+        this.emul_fifo_i = {};
+        this.emul_fifo_o = {};
         this.identificador_drv = 0;
     endfunction
 
@@ -53,6 +53,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     endtask
 
     task actualizar_FIFO_i();
+     emul_fifo_i.push_back(16'h0);
         forever begin
             // Si DUT pide pop 
             @(negedge vif.clk);
