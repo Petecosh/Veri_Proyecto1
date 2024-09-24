@@ -59,7 +59,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
             vif.D_pop[0][id] = emul_fifo_i[0];
             @(negedge vif.clk);
             if (vif.pop[0][id]) begin
-                vif.D_pop[0][id] = emul_fifo_i.pop_front();
+                emul_fifo_i.pop_front();
                 $display("[%g] Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);
             end
         end
