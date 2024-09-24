@@ -45,9 +45,9 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
             // Si la FIFO out tiene algo
             @(posedge vif.clk);
             if (emul_fifo_o.size() != 0) begin
-                pck_drv_chkr #(.width(width)) paquete_chkr;
-                paquete_chkr.dato = emul_fifo_o.pop_front(); // Lo saco
-                paquete_chkr.print("Driver Ejecución: Lectura");
+                //pck_drv_chkr #(.width(width)) paquete_chkr;
+                //paquete_chkr.dato = emul_fifo_o.pop_front(); // Lo saco
+                //paquete_chkr.print("Driver Ejecución: Lectura");
                 //drv_chkr_mbx.put(paquete_chkr);
             end
         end
