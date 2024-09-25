@@ -17,11 +17,11 @@ class ambiente #(parameter bits = 1, parameter devices = 4, parameter width = 16
         for (int i = 0; i < devices; i++) begin
             driver_inst[i] = new(i);
             agnt_drv_mbx[i] = new();
-            drv_chkr_mbx = new($);
+            
         end        
 
         // Apuntar mailboxes
-
+        drv_chkr_mbx = new($);
         for (int i = 0; i < devices; i++) begin
             driver_inst[i].agnt_drv_mbx = agnt_drv_mbx[i];
             agente_inst.agnt_drv_mbx[i] = agnt_drv_mbx[i];
