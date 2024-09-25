@@ -31,15 +31,15 @@ class checkr #(parameter width = 16, parameter devices = 4);
                             
                             index[contador0] = paquete_chkr.origen; 
                             keys[contador0] = paquete_chkr;
-                            $display("[%g]  = %h, dato%h", $time,index[contador0],keys[contador0]);
+                            $display("[%g]  = %h, dato%h", $time,index[contador0],keys[contador0].dato);
                             contador0++;
                             
                         end
                         1'b1: begin
                             
                             for (int j = 0; j <= contador0; j++) begin
-                                if (keys[j] == paquete_chkr)begin
-                                    $display("[%g] dato checkaeado org = %h, dato%h", $time,index[j],keys[j]);
+                                if (keys[j].dato == paquete_chkr)begin
+                                    $display("[%g] dato checkaeado org = %h, dato%h", $time,index[j],keys[j].dato);
                                     index.delete(j);
                                     keys.delete(j);
                                     contador0 = contador0-1;
