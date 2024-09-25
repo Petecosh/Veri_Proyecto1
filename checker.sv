@@ -38,7 +38,6 @@ class checkr #(parameter width = 16, parameter devices = 4);
                     
                     for (int j = 0; j <= contador0; j++) begin
                             if (keys[j] == paquete_chkr)begin
-                                to_sc[contador]=index[j];
                                 $display("[%g] dato checkaeado org = %h, dato%h", $time,index[j],keys[j]);
                                 index.delete(j);
                                 keys.delete(j);
