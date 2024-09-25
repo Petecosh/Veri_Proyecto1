@@ -1,5 +1,5 @@
 class checkr #(parameter width = 16, parameter devices = 4);
-    pck_drv_chkr #(.width(width)) paquete_chkr;
+    
     tipo_mbx_drv_chkr drv_chkr_mbx;
     pck_drv_chkr keys[$];
     int index[$];
@@ -24,6 +24,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
             if (i < devices) i++;
             else i = 0;
             */
+            pck_drv_chkr #(.width(width)) paquete_chkr;
             drv_chkr_mbx.get(paquete_chkr);
             case (paquete_chkr.accion)
                  
