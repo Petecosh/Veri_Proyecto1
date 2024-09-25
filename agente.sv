@@ -13,7 +13,7 @@ class agente #(parameter devices = 4, parameter width = 16);
         for (int i = 0; i < devices; i++) begin
             paquete_agnt_drv[i] = new();
         end
-        num_transacciones = 2;
+        num_transacciones = 10;
         max_retardo = 10;
         $display("sip agente");
     endfunction
