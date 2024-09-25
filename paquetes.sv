@@ -48,7 +48,7 @@ class pck_drv_chkr #(parameter width = 16);
     bit [width-1:0] dato;
     bit accion;
     int origen;
-    function new(bit[width-1:0] dto = 0, bit ac = 0, orig = 0);
+    function new(bit[width-1:0] dto = 0, bit ac = 0, int orig = 0);
         this.dato = dto;
         this.accion = ac; 
         this.origen = orig;
