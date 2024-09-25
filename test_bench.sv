@@ -5,6 +5,7 @@
 `include "Library.sv"
 `include "ambiente.sv"
 `include "test.sv"
+`include "checker.sv"
 
 
 module test_bench;
