@@ -10,12 +10,12 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     bit [width-1:0] dato_i_DUT;
     bit [width-1:0] dato_o_DUT;*/
     virtual bus_if #(.bits(bits), .drvrs(drvrs), .pckg_sz(width)) vif;
-    //pck_drv_chkr #(.width(width)) paquete_chkr;
+    pck_drv_chkr #(.width(width)) paquete_chkr;
 
     int id;
 
     function new(input int ident);
-    
+        
         id = ident;
         this.emul_fifo_i = {};
         this.emul_fifo_o = {};
@@ -47,7 +47,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
             // Si la FIFO out tiene algo
             @(posedge vif.clk);
             if (emul_fifo_o.size() != 0) begin
-                
+                paquete_chkr = new();
                 paquete_chkr.accion=1'b1;
                 paquete_chkr.dato = emul_fifo_o.pop_front(); // Lo saco
                 paquete_chkr.print("monitor lee");
@@ -60,11 +60,12 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
         forever begin
             // Si DUT pide pop 
             vif.D_pop[0][id] = emul_fifo_i[0];
-            pck_drv_chkr #(.width(width)) paquete_chkr;
+            
             @(negedge vif.clk);
             if (vif.pop[0][id]) begin
                 emul_fifo_i.pop_front();
-                $display("[%g]  Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);         
+                $display("[%g]  Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);   
+                paquete_chkr = new();      
                 paquete_chkr.accion=1'b0;
                 paquete_chkr.dato = vif.D_pop[0][id]; // Lo saco
                 paquete_chkr.origen = id;
