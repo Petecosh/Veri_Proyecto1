@@ -38,7 +38,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
                         1'b1: begin
                             
                             for (int j = 0; j <= contador0; j++) begin
-                                if (keys[j].dato == paquete_chkr)begin
+                                if (keys[j].dato == paquete_chkr.dato)begin
                                     $display("[%g] dato checkaeado org = %h, dato%h", $time,index[j],keys[j].dato);
                                     index.delete(j);
                                     keys.delete(j);
