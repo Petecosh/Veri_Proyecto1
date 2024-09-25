@@ -6,7 +6,7 @@ class ambiente #(parameter bits = 1, parameter devices = 4, parameter width = 16
 
     tipo_mbx_agnt_drv agnt_drv_mbx[devices];
     tipo_mbx_test_agnt test_agnt_mbx;
-    tipo_mbx_drv_chkr drv_chkr_mbx;
+    tipo_mbx_drv_chkr drv_chkr_mbx[devices];
 
     function new();
 
@@ -17,20 +17,19 @@ class ambiente #(parameter bits = 1, parameter devices = 4, parameter width = 16
         for (int i = 0; i < devices; i++) begin
             driver_inst[i] = new(i);
             agnt_drv_mbx[i] = new();
-            
+            drv_chkr_mbx[i] = new();
         end        
-        drv_chkr_mbx = new();
+        
         // Apuntar mailboxes
         
         for (int i = 0; i < devices; i++) begin
             driver_inst[i].agnt_drv_mbx = agnt_drv_mbx[i];
             agente_inst.agnt_drv_mbx[i] = agnt_drv_mbx[i];
-            driver_inst[i].drv_chkr_mbx = drv_chkr_mbx;
+            driver_inst[i].drv_chkr_mbx = drv_chkr_mbx[i];
+            checkr_inst.drv_chkr_mbx[i] = drv_chkr_mbx[i];
             
         end
         
-        checkr_inst.drv_chkr_mbx = drv_chkr_mbx;
-
         agente_inst.test_agnt_mbx = test_agnt_mbx;
         $display("sip ambiente");
         
