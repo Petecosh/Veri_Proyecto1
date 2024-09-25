@@ -25,11 +25,12 @@ class ambiente #(parameter bits = 1, parameter devices = 4, parameter width = 16
         for (int i = 0; i < devices; i++) begin
             driver_inst[i].agnt_drv_mbx = agnt_drv_mbx[i];
             agente_inst.agnt_drv_mbx[i] = agnt_drv_mbx[i];
+            driver_inst[i].drv_chkr_mbx = drv_chkr_mbx;
             
         end
-        driver_inst.drv_chkr_mbx = drv_chkr_mbx;
-        checkr_inst.drv_chkr_mbx = drv_chkr_mbx;
         
+        checkr_inst.drv_chkr_mbx = drv_chkr_mbx;
+
         agente_inst.test_agnt_mbx = test_agnt_mbx;
         $display("sip ambiente");
         
