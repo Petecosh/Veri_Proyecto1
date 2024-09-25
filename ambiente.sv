@@ -1,8 +1,8 @@
 class ambiente #(parameter bits = 1, parameter devices = 4, parameter width = 16);
-
+    checkr #(.width(width), .devices(devices)) checkr_inst;
     driver #(.bits(bits), .drvrs(devices), .width(width)) driver_inst[devices];
     agente #(.devices(devices), .width(width)) agente_inst;
-    checkr #(.width(width), .devices(devices)) checkr_inst;
+    
 
     tipo_mbx_agnt_drv agnt_drv_mbx[devices];
     tipo_mbx_test_agnt test_agnt_mbx;
