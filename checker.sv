@@ -7,6 +7,9 @@ class checkr #(parameter width = 16, parameter devices = 4);
 
     
     function new();
+    for (int q = 0; q < devices; q++) begin
+            drv_chkr_mbx[q] = new();
+        end
         this.keys = {};
         this.index = {};
         this.contador0 = 0;
