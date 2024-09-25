@@ -10,6 +10,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     bit [width-1:0] dato_i_DUT;
     bit [width-1:0] dato_o_DUT;*/
     virtual bus_if #(.bits(bits), .drvrs(drvrs), .pckg_sz(width)) vif;
+    pck_drv_chkr #(.width(width)) paquete_chkr;
 
     int id;
 
@@ -42,7 +43,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
 
     task leer();
         forever begin
-            pck_drv_chkr #(.width(width), .devices(drvrs)) paquete_chkr;
+            
             // Si la FIFO out tiene algo
             @(posedge vif.clk);
             if (emul_fifo_o.size() != 0) begin
