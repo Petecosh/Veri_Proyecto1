@@ -62,17 +62,10 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
             // Si DUT pide pop...
             @(negedge vif.clk);
             if (vif.pop[0][id]) begin
-<<<<<<< Updated upstream
-                $display("[%g]  Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);   
-                paquete_chkr = new();      
-                paquete_chkr.accion=1'b0;
-                paquete_chkr.dato = emul_fifo_i.pop_front();; // Lo saco
-=======
-                emul_fifo_i.pop_front(); // Sale de FIFO in
+                 // Sale de FIFO in
                 $display("[%g]  Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);         
                 paquete_chkr.accion=1'b0;
-                paquete_chkr.dato = vif.D_pop[0][id]; // Agrego lo que salió al paquete hacia el checker
->>>>>>> Stashed changes
+                paquete_chkr.dato = emul_fifo_i.pop_front(); // Agrego lo que salió al paquete hacia el checker
                 paquete_chkr.origen = id;
                 drv_chkr_mbx.put(paquete_chkr);
                 
