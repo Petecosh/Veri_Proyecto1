@@ -63,7 +63,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
             @(negedge vif.clk);
             if (vif.pop[0][id]) begin
                 // Sale de FIFO in
-                paquete_chkr= new();
+                paquete_chkr = new();
                 $display("[%g]  Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);         
                 paquete_chkr.accion=1'b0;
                 paquete_chkr.dato = emul_fifo_i.pop_front(); // Agrego lo que salió al paquete hacia el checker
