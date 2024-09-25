@@ -46,7 +46,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
             @(posedge vif.clk);
             if (emul_fifo_o.size() != 0) begin
                 pck_drv_chkr #(.width(width), .devices(devices)) paquete_chkr;
-                paquete_chkr.acc=1'b1;
+                paquete_chkr.accion=1'b1;
                 paquete_chkr.dato = emul_fifo_o.pop_front(); // Lo saco
                 paquete_chkr.print("monitor lee");
                 drv_chkr_mbx.put(paquete_chkr);
@@ -64,7 +64,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
                 $display("[%g] Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);
                 //avisar checker
                 pck_drv_chkr #(.width(width), .devices(devices)) paquete_chkr;
-                paquete_chkr.acc=1'b0;
+                paquete_chkr.accion=1'b0;
                 paquete_chkr.dato = vif.D_pop[0][id]; // Lo saco
                 paquete_chkr.origen = id;
                 drv_chkr_mbx.put(paquete_chkr);
