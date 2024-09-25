@@ -8,17 +8,9 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     pck_drv_chkr #(.width(width)) paquete_chkr;                        // Paquete hacia el checker
 
     function new(input int ident);
-<<<<<<< Updated upstream
-        
-        id = ident;
-        this.emul_fifo_i = {};
-        this.emul_fifo_o = {};
-        this.identificador_drv = 0;
-=======
         id = ident;            // Crear una variable ident, viene de un ciclo for que saca número 0,1,2..
         this.emul_fifo_i = {}; // Inicializar FIFO in
         this.emul_fifo_o = {}; // Inicializar FIFO out
->>>>>>> Stashed changes
     endfunction
 
     // Se encarga de escribir
