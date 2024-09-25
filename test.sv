@@ -25,15 +25,18 @@ class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, pa
         join_none
 
         // Pruebas
-        #1000
+        #40
         instruccion_agente = new();
-        //instruccion_agente.randomize();
-        //instruccion_agente.dato=16'h103;
-        //instruccion_agente.origen=2;
         instruccion_agente.tipo = Random;
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
-        
+        #20
+        instruccion_agente = new();
+        instruccion_agente.tipo = Especifica;
+        instruccion_agente.dato = 16'b1111_1111_1111_1111;
+        instruccion_agente.origen = 1'b1;
+        instruccion_agente.print("Test: Paquete al agente creado");
+        test_agnt_mbx.put(instruccion_agente);
         #10000
         $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);
         $finish;
