@@ -63,11 +63,11 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
                 emul_fifo_i.pop_front();
                 $display("[%g] Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);
                 //avisar checker
-                pck_drv_chkr #(.width(width), .devices(drvrs)) paquete_chkr2;
-                paquete_chkr2.accion=1'b0;
-                paquete_chkr2.dato = vif.D_pop[0][id]; // Lo saco
-                paquete_chkr2.origen = id;
-                drv_chkr_mbx.put(paquete_chkr2);
+                pck_drv_chkr #(.width(width), .devices(drvrs)) paquete_chkr;
+                paquete_chkr.accion=1'b0;
+                paquete_chkr.dato = vif.D_pop[0][id]; // Lo saco
+                paquete_chkr.origen = id;
+                drv_chkr_mbx.put(paquete_chkr);
             end
         end
     endtask

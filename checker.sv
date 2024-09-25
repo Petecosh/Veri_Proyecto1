@@ -1,5 +1,5 @@
 class checkr #(parameter width = 16, parameter devices = 4);
-    pck_drv_chkr paquete_chkr;
+    pck_drv_chkr #(.width(width), .devices(drvrs)) paquete_chkr;
     tipo_mbx_drv_chkr drv_chkr_mbx;
     pck_drv_chkr keys[$];
     int index[$];
