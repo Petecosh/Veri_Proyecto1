@@ -1,6 +1,6 @@
 class checkr #(parameter width = 16, parameter devices = 4);
     
-    tipo_mbx_drv_chkr drv_chkr_mbx;
+    tipo_mbx_drv_chkr drv_chkr_mbx[devices];
     pck_drv_chkr keys[$];
     int index[$];
     int contador1;

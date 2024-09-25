@@ -41,7 +41,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
                 paquete_chkr.accion=1'b1;
                 paquete_chkr.dato = emul_fifo_o.pop_front(); // Lo saco
                 paquete_chkr.print("Monitor leyo un dato");
-                drv_chkr_mbx[id].put(paquete_chkr); // Se coloca lo que se leyo dentro del mailbox hacia checker
+                drv_chkr_mbx.put(paquete_chkr); // Se coloca lo que se leyo dentro del mailbox hacia checker
             end
         end
     endtask
@@ -60,7 +60,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
                 paquete_chkr.accion=1'b0;
                 paquete_chkr.dato = emul_fifo_i.pop_front(); // Agrego lo que salió al paquete hacia el checker
                 paquete_chkr.origen = id;
-                drv_chkr_mbx[id].put(paquete_chkr);
+                drv_chkr_mbx.put(paquete_chkr);
                 
             end
         end
