@@ -12,14 +12,14 @@ class ambiente #(parameter bits = 1, parameter devices = 4, parameter width = 16
 
         test_agnt_mbx = new();
         agente_inst = new();
-        checkr_inst = new();
+        
 
         for (int i = 0; i < devices; i++) begin
             driver_inst[i] = new(i);
             agnt_drv_mbx[i] = new();
             drv_chkr_mbx[i] = new();
         end        
-        
+        checkr_inst = new();
         // Apuntar mailboxes
         
         for (int i = 0; i < devices; i++) begin
@@ -29,7 +29,7 @@ class ambiente #(parameter bits = 1, parameter devices = 4, parameter width = 16
             checkr_inst.drv_chkr_mbx[i] = drv_chkr_mbx[i];
             
         end
-        
+
         agente_inst.test_agnt_mbx = test_agnt_mbx;
         $display("sip ambiente");
         
