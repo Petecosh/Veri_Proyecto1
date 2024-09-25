@@ -3,8 +3,10 @@
 `include "driver.sv"
 `include "agente.sv"
 `include "Library.sv"
+`include "checker.sv"
 `include "ambiente.sv"
 `include "test.sv"
+
 
 
 module test_bench;

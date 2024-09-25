@@ -45,10 +45,13 @@ endclass
 
 // Paquete Driver -> Checker
 class pck_drv_chkr #(parameter width = 16);
-    rand bit [width-1:0] dato;
-
-    function new(bit[width-1:0] dto = 0);
+    bit [width-1:0] dato;
+    bit accion;
+    int origen;
+    function new(bit[width-1:0] dto = 0, bit ac = 0, int orig = 0);
         this.dato = dto;
+        this.accion = ac; 
+        this.origen = orig;
     endfunction
 
     function void print(string tag = "");
@@ -121,7 +124,7 @@ endclass
 
 typedef mailbox #(pck_agnt_drv) tipo_mbx_agnt_drv;
 
-typedef mailbox #(pck_agnt_drv) tipo_mbx_drv_chkr;
+typedef mailbox #(pck_drv_chkr) tipo_mbx_drv_chkr;
 
 typedef mailbox #(pck_drv_sb) tipo_mbx_chkr_sb;
 
