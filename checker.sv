@@ -32,7 +32,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
                     index[contador0] = paquete_chkr.origen; 
                     keys[contador0] = paquete_chkr;
                     contador0++;
-                
+                    $display("[%g]  = %h, dato%h", $time,index[i],keys[i]);
                 end
                 1'b1: begin
                     
