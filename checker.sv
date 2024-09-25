@@ -17,7 +17,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
         $display("[%g] Chekcer inicializado", $time);
 
         forever begin
-            for (int h; h<=devices;h++)begin
+            for (int h=0; h<=devices;h++)begin
                 if (drv_chkr_mbx[h].num()>0)begin
                     pck_drv_chkr #(.width(width)) paquete_chkr;
                     drv_chkr_mbx[h].get(paquete_chkr);
