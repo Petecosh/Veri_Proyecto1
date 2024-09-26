@@ -42,6 +42,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
                 paquete_chkr.dato = emul_fifo_o.pop_front(); // Sacar el dato de FIFO out
                 paquete_chkr.print("Monitor leyo un dato");
                 drv_chkr_mbx.put(paquete_chkr);              // Se coloca lo que se leyo hacia checker
+                paquete_chkr.print("si lo envie puto");
             end
         end
     endtask
