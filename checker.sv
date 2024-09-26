@@ -28,7 +28,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
                     case (paquete_chkr.accion)
                         
                         1'b0: begin
-                            if (paquete_chkr.dato[width-1:width-8] < devices || paquete_chkr.dato[width-1:width-8] != 8'hffff)begin
+                            if ((paquete_chkr.dato[width-1:width-8] < devices) || (paquete_chkr.dato[width-1:width-8] == 8'hffff))begin
                                 index[contador0] = paquete_chkr.origen; 
                                 keys[contador0] = paquete_chkr;
                                 contador0++;
