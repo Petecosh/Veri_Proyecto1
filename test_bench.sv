@@ -16,12 +16,13 @@ module test_bench;
     parameter devices = 4;
     parameter bits = 1;
     parameter broadcast = {8{1'b1}};
-    test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;
+    test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
 
-    bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if(.clk(clk));
+    bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if(.clk(clk));   // Interfaz
 
-    always #5 clk = ~clk;
+    always #5 clk = ~clk;   // Clock
 
+    // Instancia del DUT
     bs_gnrtr_n_rbtr #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) uut(
         .clk(_if.clk),
         .reset(_if.reset),
@@ -34,18 +35,20 @@ module test_bench;
 
 
     initial begin
-        clk = 0;
-        test_inst = new();
-        $display("[%g] Test inicializado", $time);
-        test_inst._if = _if;
-        for (int i = 0; i < devices; i++) begin
+        clk = 0;                                                     // Clock en 0
+        test_inst = new();                                           // Inicializar la instancia del test
+        $display("[%g] Test inicializado", $time);                   
+        test_inst._if = _if;                                         // Asociar la interfaz de afuera con la interfaz dentro del test
+        for (int i = 0; i < devices; i++) begin                      // Ciclo para conectar las instancias de los drivers a la interfaz
             test_inst.ambiente_inst.driver_inst[i].vif = _if;
         end
         
         fork
-            test_inst.run();
+            test_inst.run();       // Correr el test
         join_none
 
+
+        // Reset
         _if.reset = 1;
         #20
         _if.reset = 0;
