@@ -21,7 +21,6 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
             $display("[%g] El driver espera por una transaccion", $time);
             agnt_drv_mbx.get(paquete_drv);                                 // Sacar mensaje del mailbox
             paquete_drv.print("Driver: Transaccion recibida");
-            $display("[%g] Transacciones pendientes en el mbx agnt_drv = %g", $time, agnt_drv_mbx.num());
 
             emul_fifo_i.push_back(paquete_drv.dato);                       // Escribir en la FIFO in
             paquete_drv.print("Driver Ejecucion: Escritura");
