@@ -33,7 +33,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
                                 keys[contador0] = paquete_chkr;
                                 contador0++;
                             end
-                            else begin
+                            else if (paquete_chkr.dato[width-1:width-8] != 8'hffff) begin
                                 $display("[%g] dato con direccion erronea: org = %h, dato =%h", $time,paquete_chkr.origen,paquete_chkr.dato);
                                 $finish;
                             end
