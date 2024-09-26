@@ -25,7 +25,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
                 $display("[%g] cantidad de mensajes %d en el mail%d",$time,drv_chkr_mbx[h].num(),h);
                 if (drv_chkr_mbx[h].num()>0)begin
                     pck_drv_chkr #(.width(width)) paquete_chkr;
-                    drv_chkr_mbx[h].try_get(paquete_chkr);
+                    drv_chkr_mbx[h].get(paquete_chkr);
                     case (paquete_chkr.accion)
                         
                         1'b0: begin
