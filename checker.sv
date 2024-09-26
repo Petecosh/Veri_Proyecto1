@@ -3,7 +3,9 @@ class checkr #(parameter width = 16, parameter devices = 4);
     tipo_mbx_drv_chkr drv_chkr_mbx[devices];
     pck_drv_chkr keys[$];
     int index[$];
-    int contador0;
+    int Procesos_erroneos[$];
+    int con_index;
+    int con_err;
 
     
     function new();
@@ -12,7 +14,9 @@ class checkr #(parameter width = 16, parameter devices = 4);
         end
         this.keys = {};
         this.index = {};
-        this.contador0 = 0;
+        this.Procesos_erroneos = {};
+        this.con_index = 0;
+        this.con_err = 0;
 
     endfunction
     task run();
@@ -28,22 +32,46 @@ class checkr #(parameter width = 16, parameter devices = 4);
                     case (paquete_chkr.accion)
                         
                         1'b0: begin
+                            $display("[%g] Checker recive: org = %h, dato%h", $time,paquete_chkr.origen,paquete_chkr.dato);
                             
-                            index[contador0] = paquete_chkr.origen; 
-                            keys[contador0] = paquete_chkr;
-                            contador0++;
+                            if (paquete_chkr.dato[width-1:width-8] == 8'hffff) begin
+                                for (int i = 0; i < devices-1; i++) begin
+                                    index[con_index] = paquete_chkr.origen; 
+                                    keys[con_index] = paquete_chkr;
+                                con_index++;
+                                end
+                            end
+                            else if (paquete_chkr.dato[width-1:width-8] < devices) begin
+                                index[con_index] = paquete_chkr.origen; 
+                                keys[con_index] = paquete_chkr;
+                                con_index++;
+                            end
+                            else begin
+                                $display("[%g] dato con direccion erronea: org = %h, dato =%h", $time,paquete_chkr.origen,paquete_chkr.dato);
+                                Procesos_erroneos[con_err] = paquete_chkr.dato;
+                                con_err++;
+                            end
                             
                         end
                         1'b1: begin
-                            
-                            for (int j = 0; j < contador0; j++) begin
+                           for (int j = 0; j < con_index; j++) begin
+                                
                                 if (keys[j].dato == paquete_chkr.dato)begin
-                                    $display("[%g] dato checkaeado org = %h, dato%h", $time,index[j],keys[j].dato);
+                                    $display("[%g] Dato checkaeado: org = %h, dato%h", $time,index[j],keys[j].dato);
                                     index.delete(j);
                                     keys.delete(j);
-                                    contador0 = contador0-1;
+                                    con_index = con_index-1;
                                 end
+                                else if (j >= con_index) begin
+                                    $display("[%g] Nadie envio ese dato: dato =%h", $time,paquete_chkr.dato);
+                                    Procesos_erroneos[con_err] = paquete_chkr.dato;
+                                    con_err++;
+                                end
+                                #20;
                             end
+                        end
+                        default: begin
+                            $display("[%g] WHAT: org = %h, dato%h", $time,paquete_chkr.origen,paquete_chkr.dato);
                         end
                     endcase
                 end
