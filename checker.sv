@@ -28,20 +28,28 @@ class checkr #(parameter width = 16, parameter devices = 4);
                     case (paquete_chkr.accion)
                         
                         1'b0: begin
-                            
-                            index[contador0] = paquete_chkr.origen; 
-                            keys[contador0] = paquete_chkr;
-                            contador0++;
-                            
+                            if (paquete_chkr.dato[width-1:width-8] < devices)begin
+                                index[contador0] = paquete_chkr.origen; 
+                                keys[contador0] = paquete_chkr;
+                                contador0++;
+                            end
+                            else begin
+                                $display("[%g] dato con direccion erronea: org = %h, dato =%h", $time,paquete_chkr.origen,paquete_chkr.dato);
+                                $finish;
+                            end
                         end
                         1'b1: begin
                             
                             for (int j = 0; j < contador0; j++) begin
                                 if (keys[j].dato == paquete_chkr.dato)begin
-                                    $display("[%g] dato checkaeado org = %h, dato%h", $time,index[j],keys[j].dato);
+                                    $display("[%g] Dato checkaeado: org = %h, dato%h", $time,index[j],keys[j].dato);
                                     index.delete(j);
                                     keys.delete(j);
                                     contador0 = contador0-1;
+                                end
+                                else if (j == contador0) begin
+                                    $display("[%g] Nadie envio ese dato: dato =%h", $time,paquete_chkr.dato);
+                                    $finish;
                                 end
                             end
                         end

@@ -36,7 +36,7 @@ class agente #(parameter devices = 4, parameter width = 16);
                             ori = new();
                             ori.randomize();
                             ori.dato = {ori.recpetor, ori.payload};
-                            //instruccion_agente.max_retardo = max_retardo;
+                            //ori.max_retardo = max_retardo;
                             paquete_agnt_drv[ori.origen] = new();
                             paquete_agnt_drv[ori.origen] = ori;
                             paquete_agnt_drv[ori.origen].print("Agente: Random Transaccion creada");
@@ -47,8 +47,8 @@ class agente #(parameter devices = 4, parameter width = 16);
 
                     Especifica: begin
                         for (int i = 0; i < num_transacciones; i++) begin
-                            //instruccion_agente.max_retardo = max_retardo;
                             paquete_agnt_drv[instruccion_agente.origen] = new();
+                            //instruccion_agente.max_retardo = max_retardo;
                             paquete_agnt_drv[instruccion_agente.origen].dato = instruccion_agente.dato;
                             paquete_agnt_drv[instruccion_agente.origen].origen = instruccion_agente.origen; 
                             paquete_agnt_drv[instruccion_agente.origen].print("Agente: Especifica Transaccion creada");
@@ -60,7 +60,17 @@ class agente #(parameter devices = 4, parameter width = 16);
                     
 
                     Erronea: begin
+                        for (int i = 0; i < num_transacciones; i++) begin
+                            ori = new();
+                            ori.randomize();
+                            ori.dato = {devices+1, ori.payload};
+                            //ori.max_retardo = max_retardo;
+                            paquete_agnt_drv[ori.origen] = new();
+                            paquete_agnt_drv[ori.origen] = ori;
+                            paquete_agnt_drv[ori.origen].print("Agente: Random Transaccion creada");
+                            agnt_drv_mbx[ori.origen].put(paquete_agnt_drv[ori.origen]);
 
+                        end
                     end
                     
                     default: begin
