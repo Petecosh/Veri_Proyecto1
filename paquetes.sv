@@ -1,4 +1,3 @@
-
 // Tipo Transaccion Agente
 typedef enum {Random, Especifica, Erronea} tipo_agente;
 
@@ -20,18 +19,18 @@ endinterface
 // Paquete Agente -> Driver
 class pck_agnt_drv #(parameter devices = 4,parameter width = 16);
     bit [width-1:0] dato;
-    rand bit [devices-1:0] origen;   //El dispositivo desde el cual se envia el paquete
-    rand bit [7:0] recpetor;           //La direccion del dispositivo destino del paquete
-    rand bit [width-9:0] payload;
+    rand bit [devices-1:0] origen;   // Dispositivo origen
+    rand bit [7:0] receptor;         // Dispositivo destino
+    rand bit [width-9:0] payload;    // Mensaje
 
-    //constraint retardo {retardo < max_retardo; retardo>0;}
-    constraint direccion {recpetor < devices; recpetor >=0; recpetor != origen;}
+    constraint direccion {receptor < devices; receptor >=0; receptor != origen;}
     constraint dispositivo {origen < devices; origen >= 0;}
+    //constraint retardo {retardo < max_retardo; retardo>0;}
 
     function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0);
         this.dato = dto;
         this.origen = org;
-        this.recpetor = rec;
+        this.receptor = rec;
         this.payload = pay;
         
     endfunction
@@ -45,9 +44,10 @@ endclass
 
 // Paquete Driver -> Checker
 class pck_drv_chkr #(parameter width = 16);
-    bit [width-1:0] dato;
-    bit accion;
-    int origen;
+    bit [width-1:0] dato;   // Dato enviado
+    bit accion;             // Avisa si el dato es enviado hacia el DUT o recibido desde el DUT
+    int origen;             // Dispositivo origen
+    
     function new(bit[width-1:0] dto = 0, bit ac = 0, int orig = 0);
         this.dato = dto;
         this.accion = ac; 
@@ -63,9 +63,9 @@ endclass
 
 // Paquete Test -> Agente
 class pck_test_agnt #(parameter devices = 4, parameter width = 16);
-    bit [width-1:0] dato;
-    tipo_agente tipo;
-    rand bit [4:0] origen;
+    bit [width-1:0] dato;   // Dato enviado
+    tipo_agente tipo;       // Tipo de instruccion para el agente
+    rand bit [4:0] origen;  // Dispositivo origen
 
     function new(bit[width-1:0] dto = 0, tipo_agente tpo = Random, int org = 0);
         this.dato = dto;
@@ -79,8 +79,8 @@ class pck_test_agnt #(parameter devices = 4, parameter width = 16);
 endclass
 
 
-//Paquete chercker scoreboard
-class pck_drv_sb #(parameter width = 16);
+// Paquete Checker -> Scoreboard
+class pck_chkr_sb #(parameter width = 16);
     bit [width-1:0] dato_enviado;
     int tiempo_push;
     int tiempo_pop;
@@ -117,13 +117,12 @@ class pck_drv_sb #(parameter width = 16);
     endfunction
 endclass
 
+// Paquete Test -> Scoreboard
+
 // Mailboxes
 
-typedef mailbox #(pck_agnt_drv) tipo_mbx_agnt_drv;
-
-typedef mailbox #(pck_drv_chkr) tipo_mbx_drv_chkr;
-
-typedef mailbox #(pck_drv_sb) tipo_mbx_chkr_sb;
-
-typedef mailbox #(pck_test_agnt) tipo_mbx_test_agnt;
+typedef mailbox #(pck_agnt_drv) tipo_mbx_agnt_drv;    // Mailbox agente -> driver
+typedef mailbox #(pck_drv_chkr) tipo_mbx_drv_chkr;    // Mailbox driver -> checker
+typedef mailbox #(pck_chkr_sb) tipo_mbx_chkr_sb;       // Mailbox checker -> scoreboard
+typedef mailbox #(pck_test_agnt) tipo_mbx_test_agnt;  // Mailbox test -> agente
 

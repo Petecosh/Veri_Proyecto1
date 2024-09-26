@@ -1,27 +1,21 @@
 class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
-
-    ambiente #(.bits(bits), .devices(devices), .width(width)) ambiente_inst;
-
-    pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente;
-
-    tipo_mbx_test_agnt test_agnt_mbx;
-
-    virtual bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if;
+    ambiente #(.bits(bits), .devices(devices), .width(width)) ambiente_inst;                     // Instancia del ambiente
+    pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente;                        // Instruccion hacia el agente
+    tipo_mbx_test_agnt test_agnt_mbx;                                                            // Mailbox test -> agente
+    virtual bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if;  // Interfaz
 
     function new();
 
-        test_agnt_mbx = new();
-
-        ambiente_inst = new();
-
-        ambiente_inst.agente_inst.test_agnt_mbx = test_agnt_mbx;
+        test_agnt_mbx = new();                                      // Inicialziar el mbx test -> agente
+        ambiente_inst = new();                                      // Inicializar la instancia del ambiente
+        ambiente_inst.agente_inst.test_agnt_mbx = test_agnt_mbx;    // Apuntar el mbx test -> agente
 
     endfunction
 
     task run();
         $display("[%g] Test inicializado", $time);
         fork
-            ambiente_inst.run();
+            ambiente_inst.run();        // Correr el ambiente
         join_none
 
         // Pruebas
