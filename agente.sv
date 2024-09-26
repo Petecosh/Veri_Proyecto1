@@ -9,9 +9,6 @@ class agente #(parameter devices = 4, parameter width = 16);
     int max_retardo;                                                      // Retardo maximo
 
     function new();
-        for (int i = 0; i < devices; i++) begin  // Por cada dispositivo del DUT
-            paquete_agnt_drv[i] = new();         // se crea un paquete para cada mailbox
-        end
         num_transacciones = 3;                   // Se define 3 transacciones como maximo
         max_retardo = 10;                        // Se define 10 como el retardo maximo
     endfunction

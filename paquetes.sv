@@ -80,7 +80,7 @@ endclass
 
 
 // Paquete Checker -> Scoreboard
-class pck_drv_sb #(parameter width = 16);
+class pck_chkr_sb #(parameter width = 16);
     bit [width-1:0] dato_enviado;
     int tiempo_push;
     int tiempo_pop;
@@ -121,11 +121,8 @@ endclass
 
 // Mailboxes
 
-typedef mailbox #(pck_agnt_drv) tipo_mbx_agnt_drv;
-
-typedef mailbox #(pck_drv_chkr) tipo_mbx_drv_chkr;
-
-typedef mailbox #(pck_drv_sb) tipo_mbx_chkr_sb;
-
-typedef mailbox #(pck_test_agnt) tipo_mbx_test_agnt;
+typedef mailbox #(pck_agnt_drv) tipo_mbx_agnt_drv;    // Mailbox agente -> driver
+typedef mailbox #(pck_drv_chkr) tipo_mbx_drv_chkr;    // Mailbox driver -> checker
+typedef mailbox #(pck_drv_sb) tipo_mbx_chkr_sb;       // Mailbox checker -> scoreboard
+typedef mailbox #(pck_test_agnt) tipo_mbx_test_agnt;  // Mailbox test -> agente
 
