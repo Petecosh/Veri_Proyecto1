@@ -46,15 +46,12 @@ class agente #(parameter devices = 4, parameter width = 16);
                     end
 
                     Especifica: begin
-                        for (int i = 0; i < num_transacciones; i++) begin
-                            paquete_agnt_drv[instruccion_agente.origen] = new();
-                            //instruccion_agente.max_retardo = max_retardo;
-                            paquete_agnt_drv[instruccion_agente.origen].dato = instruccion_agente.dato;
-                            paquete_agnt_drv[instruccion_agente.origen].origen = instruccion_agente.origen; 
-                            paquete_agnt_drv[instruccion_agente.origen].print("Agente: Especifica Transaccion creada");
-                            agnt_drv_mbx[instruccion_agente.origen].put(paquete_agnt_drv[instruccion_agente.origen]);
-
-                        end
+                        paquete_agnt_drv[instruccion_agente.origen] = new();
+                        //instruccion_agente.max_retardo = max_retardo;
+                        paquete_agnt_drv[instruccion_agente.origen].dato = instruccion_agente.dato;
+                        paquete_agnt_drv[instruccion_agente.origen].origen = instruccion_agente.origen; 
+                        paquete_agnt_drv[instruccion_agente.origen].print("Agente: Especifica Transaccion creada");
+                        agnt_drv_mbx[instruccion_agente.origen].put(paquete_agnt_drv[instruccion_agente.origen]);
                     end
 
                     
