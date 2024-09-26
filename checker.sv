@@ -48,7 +48,8 @@ class checkr #(parameter width = 16, parameter devices = 4);
                             end
                             else begin
                                 $display("[%g] dato con direccion erronea: org = %h, dato =%h", $time,paquete_chkr.origen,paquete_chkr.dato);
-                                $finish;
+                                Procesos_erroneos[con_err] = paquete_chkr.dato;
+                                con_err++;
                             end
                             
                         end
