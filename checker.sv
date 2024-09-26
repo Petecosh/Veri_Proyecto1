@@ -52,7 +52,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
                                     $display("[%g] Nadie envio ese dato: dato =%h", $time,paquete_chkr.dato);
                                     $finish;
                                 end
-                                #20
+                                #20;
                             end
                         end
                         default: begin
