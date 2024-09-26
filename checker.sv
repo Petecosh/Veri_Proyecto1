@@ -67,8 +67,9 @@ class checkr #(parameter width = 16, parameter devices = 4);
                                     Procesos_erroneos[con_err] = paquete_chkr.dato;
                                     con_err++;
                                 end
-                                #20;
+                                
                             end
+                            $display("[%g] j =%h", $time,j);
                         end
                         default: begin
                             $display("[%g] WHAT: org = %h, dato%h", $time,paquete_chkr.origen,paquete_chkr.dato);
