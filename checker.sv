@@ -28,12 +28,12 @@ class checkr #(parameter width = 16, parameter devices = 4);
                     case (paquete_chkr.accion)
                         
                         1'b0: begin
-                            if (paquete_chkr.dato[width-1:width-8] < devices)begin
+                            if (paquete_chkr.dato[width-1:width-8] < devices || paquete_chkr.dato[width-1:width-8] != 8'hffff)begin
                                 index[contador0] = paquete_chkr.origen; 
                                 keys[contador0] = paquete_chkr;
                                 contador0++;
                             end
-                            else if (paquete_chkr.dato[width-1:width-8] != 8'hffff) begin
+                            else begin
                                 $display("[%g] dato con direccion erronea: org = %h, dato =%h", $time,paquete_chkr.origen,paquete_chkr.dato);
                                 $finish;
                             end
