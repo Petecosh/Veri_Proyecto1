@@ -47,7 +47,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
                                     keys.delete(j);
                                     contador0 = contador0-1;
                                 end
-                                else if (j == contador0) begin
+                                else if (j >= contador0) begin
                                     $display("[%g] Nadie envio ese dato: dato =%h", $time,paquete_chkr.dato);
                                     $finish;
                                 end
