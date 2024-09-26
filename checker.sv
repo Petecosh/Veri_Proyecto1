@@ -64,7 +64,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
 
                             1'b1: begin
 
-                                if ((paquete_chkr.dato[width-1:width-8] == h) && (paquete_chkr.dato[width-1:width-8] != 8'hffff)) begin
+                                if ((paquete_chkr.dato[width-1:width-8] == h) || (paquete_chkr.dato[width-1:width-8] == 8'hffff)) begin
 
                                     $display("[%g] Dato recibido en Driver correcto", $time);
 
