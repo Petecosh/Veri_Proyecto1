@@ -22,7 +22,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
         forever begin
             for (int h=0; h<devices;h++)begin
                 #20
-                $display("[%g] ccontador %d en el mail%d",$time,contador0);
+                $display("[%g] ccontador %d",$time,contador0);
                 if (drv_chkr_mbx[h].num()>0)begin
                     pck_drv_chkr #(.width(width)) paquete_chkr;
                     drv_chkr_mbx[h].get(paquete_chkr);
@@ -31,7 +31,15 @@ class checkr #(parameter width = 16, parameter devices = 4);
                         
                         1'b0: begin
                             $display("[%g] Checker recive: org = %h, dato%h", $time,paquete_chkr.origen,paquete_chkr.dato);
-                            if ((paquete_chkr.dato[width-1:width-8] < devices) || (paquete_chkr.dato[width-1:width-8] == 8'hffff))begin
+                            
+                            if (paquete_chkr.dato[width-1:width-8] == 8'hffff) begin
+                                for (int i = 0; i < devices-1; i++) begin
+                                    index[contador0] = paquete_chkr.origen; 
+                                    keys[contador0] = paquete_chkr;
+                                contador0++;
+                                end
+                            end
+                            if (paquete_chkr.dato[width-1:width-8] < devices) begin
                                 index[contador0] = paquete_chkr.origen; 
                                 keys[contador0] = paquete_chkr;
                                 contador0++;
@@ -43,8 +51,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
                             
                         end
                         1'b1: begin
-                            
-                            for (int j = 0; j <= contador0; j++) begin
+                           for (int j = 0; j < contador0; j++) begin
                                 
                                 if (keys[j].dato == paquete_chkr.dato)begin
                                     $display("[%g] Dato checkaeado: org = %h, dato%h", $time,index[j],keys[j].dato);
