@@ -55,6 +55,9 @@ class checkr #(parameter width = 16, parameter devices = 4);
                                 end
                             end
                         end
+                        default: begin
+                            $display("[%g] WHAT: org = %h, dato%h", $time,paquete_chkr.origen,paquete_chkr.dato);
+                        end
                     endcase
                 end
             end
