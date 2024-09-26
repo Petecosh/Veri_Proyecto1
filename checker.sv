@@ -25,7 +25,6 @@ class checkr #(parameter width = 16, parameter devices = 4);
                 if (drv_chkr_mbx[h].num()>0)begin
                     pck_drv_chkr #(.width(width)) paquete_chkr;
                     drv_chkr_mbx[h].get(paquete_chkr);
-                    $display("[%g] accion %d",$time,paquete_chkr.accion);
                     case (paquete_chkr.accion)
                         
                         1'b0: begin
