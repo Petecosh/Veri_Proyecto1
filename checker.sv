@@ -45,12 +45,12 @@ class checkr #(parameter width = 16, parameter devices = 4);
                         1'b1: begin
                             
                             for (int j = 0; j <= contador0; j++) begin
-                                contador0 = contador0-1;
+                                
                                 if (keys[j].dato == paquete_chkr.dato)begin
                                     $display("[%g] Dato checkaeado: org = %h, dato%h", $time,index[j],keys[j].dato);
                                     index.delete(j);
                                     keys.delete(j);
-                                    
+                                    contador0 = contador0-1;
                                 end
                                 else if (j > contador0) begin
                                     $display("[%g] Nadie envio ese dato: dato =%h", $time,paquete_chkr.dato);
