@@ -33,12 +33,13 @@ class checkr #(parameter width = 16, parameter devices = 4);
                                 index[contador0] = paquete_chkr.origen; 
                                 keys[contador0] = paquete_chkr;
                                 
-                                contador0++;
+                                
                             end
                             else begin
                                 $display("[%g] dato con direccion erronea: org = %h, dato =%h", $time,paquete_chkr.origen,paquete_chkr.dato);
                                 $finish;
                             end
+                            contador0++;
                         end
                         1'b1: begin
                             
