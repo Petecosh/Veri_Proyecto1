@@ -39,10 +39,9 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
             if (emul_fifo_o.size() != 0) begin
                 paquete_chkr = new();                        // Crear un paquete hacia el checker
                 paquete_chkr.accion=1'b1;                    // Avisar que se trata es una lectura
-                paquete_chkr.dato = emul_fifo_o.pop_front(); // Sacar el dato de FIFO out
+                paquete_chkr = emul_fifo_o.pop_front(); // Sacar el dato de FIFO out
                 paquete_chkr.print("Monitor leyo un dato");
                 drv_chkr_mbx.put(paquete_chkr);              // Se coloca lo que se leyo hacia checker
-                paquete_chkr.print("si lo envie puto");
             end
         end
     endtask
@@ -59,7 +58,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
                 paquete_chkr = new();                        // Crear un paquete hacia el checker
                 $display("[%g]  Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);         
                 paquete_chkr.accion=1'b0;                    // Avisar que se trata de una escritura
-                paquete_chkr.dato = emul_fifo_i.pop_front(); // El dato enviado hacia el DUT se envia al checker tambien
+                paquete_chkr = emul_fifo_i.pop_front(); // El dato enviado hacia el DUT se envia al checker tambien
                 paquete_chkr.origen = id;                    // Asignar el origen de acuerdo al identificador
                 drv_chkr_mbx.put(paquete_chkr);              // Se coloca lo que se escribio hacia el checker
                 

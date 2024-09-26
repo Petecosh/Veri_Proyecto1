@@ -32,8 +32,6 @@ class checkr #(parameter width = 16, parameter devices = 4);
                             if ((paquete_chkr.dato[width-1:width-8] < devices) || (paquete_chkr.dato[width-1:width-8] == 8'hffff))begin
                                 index[contador0] = paquete_chkr.origen; 
                                 keys[contador0] = paquete_chkr;
-                                
-                                
                             end
                             else begin
                                 $display("[%g] dato con direccion erronea: org = %h, dato =%h", $time,paquete_chkr.origen,paquete_chkr.dato);
@@ -54,6 +52,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
                                     $display("[%g] Nadie envio ese dato: dato =%h", $time,paquete_chkr.dato);
                                     $finish;
                                 end
+                                #20
                             end
                         end
                         default: begin
