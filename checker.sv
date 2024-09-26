@@ -39,7 +39,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
                                 contador0++;
                                 end
                             end
-                            if (paquete_chkr.dato[width-1:width-8] < devices) begin
+                            else if (paquete_chkr.dato[width-1:width-8] < devices) begin
                                 index[contador0] = paquete_chkr.origen; 
                                 keys[contador0] = paquete_chkr;
                                 contador0++;
