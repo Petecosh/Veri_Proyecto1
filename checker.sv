@@ -6,7 +6,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
     int Procesos_erroneos[$];
     int con_index;
     int con_err;
-
+    bit check_correcto;
     
     function new();
     for (int q = 0; q < devices; q++) begin
@@ -17,6 +17,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
         this.Procesos_erroneos = {};
         this.con_index = 0;
         this.con_err = 0;
+        this.check_correcto = 0;
 
     endfunction
     task run();
@@ -54,22 +55,21 @@ class checkr #(parameter width = 16, parameter devices = 4);
                             
                         end
                         1'b1: begin
-                           for (int j = 0; j < con_index; j++) begin
-                                
+                           for (int j = 0; j < con_index; j++) begin  
                                 if (keys[j].dato == paquete_chkr.dato)begin
                                     $display("[%g] Dato checkaeado: org = %h, dato%h", $time,index[j],keys[j].dato);
                                     index.delete(j);
                                     keys.delete(j);
                                     con_index = con_index-1;
-                                end
-                                else if (j >= con_index) begin
-                                    $display("[%g] Nadie envio ese dato: dato =%h", $time,paquete_chkr.dato);
-                                    Procesos_erroneos[con_err] = paquete_chkr.dato;
-                                    con_err++;
-                                end
-                                
+                                    check_correcto = 1'b1;
+                                end                                                               
                             end
-                            $display("[%g] j =%h", $time,j);
+                            if (check_correcto == 0)begin
+                                $display("[%g] Nadie envio ese dato: dato =%h", $time,paquete_chkr.dato);
+                                Procesos_erroneos[con_err] = paquete_chkr.dato;
+                                con_err++;
+                                check_correcto = 1'b0;
+                            end
                         end
                         default: begin
                             $display("[%g] WHAT: org = %h, dato%h", $time,paquete_chkr.origen,paquete_chkr.dato);
