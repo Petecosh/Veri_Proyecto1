@@ -57,17 +57,14 @@ class agente #(parameter devices = 4, parameter width = 16);
                     
 
                     Erronea: begin
-                        for (int i = 0; i < num_transacciones; i++) begin
-                            ori = new();
-                            ori.randomize();
-                            ori.dato = {devices+1, ori.payload};
-                            //ori.max_retardo = max_retardo;
-                            paquete_agnt_drv[ori.origen] = new();
-                            paquete_agnt_drv[ori.origen] = ori;
-                            paquete_agnt_drv[ori.origen].print("Agente: Random Transaccion creada");
-                            agnt_drv_mbx[ori.origen].put(paquete_agnt_drv[ori.origen]);
-
-                        end
+                        ori = new();
+                        ori.randomize();
+                        ori.dato = {devices+1, ori.payload};
+                        //ori.max_retardo = max_retardo;
+                        paquete_agnt_drv[ori.origen] = new();
+                        paquete_agnt_drv[ori.origen] = ori;
+                        paquete_agnt_drv[ori.origen].print("Agente: Random Transaccion creada");
+                        agnt_drv_mbx[ori.origen].put(paquete_agnt_drv[ori.origen]);
                     end
                     
                     default: begin
