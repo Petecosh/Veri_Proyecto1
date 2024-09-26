@@ -62,7 +62,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
                                     keys.delete(j);
                                     con_index = con_index-1;
                                 end
-                                else if (j > con_index) begin
+                                else if (j >= con_index) begin
                                     $display("[%g] Nadie envio ese dato: dato =%h", $time,paquete_chkr.dato);
                                     Procesos_erroneos[con_err] = paquete_chkr.dato;
                                     con_err++;
