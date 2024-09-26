@@ -34,11 +34,7 @@ class checkr #(parameter width = 16, parameter devices = 4);
                     pck_drv_chkr #(.width(width)) paquete_chkr;
                     drv_chkr_mbx[h].get(paquete_chkr);
 
-                    if (paquete_chkr.dato[width-1:width-8] == h) begin
-
-                        $display("[%g] Dato recibido en Driver correcto", $time);
-
-                        case (paquete_chkr.accion)
+                    case (paquete_chkr.accion)
                             
                             1'b0: begin
 
@@ -65,31 +61,39 @@ class checkr #(parameter width = 16, parameter devices = 4);
                                 end
                                 
                             end
+
                             1'b1: begin
-                            for (int j = 0; j < con_index; j++) begin  
-                                    if (keys[j].dato == paquete_chkr.dato)begin
-                                        $display("[%g] Dato checkaeado: org = %h, dato%h", $time,index[j],keys[j].dato);
-                                        index.delete(j);
-                                        keys.delete(j);
-                                        con_index = con_index-1;
-                                        check_correcto = 1'b1;
-                                    end                                                               
+
+                                if (paquete_chkr.dato[width-1:width-8] == h) begin
+
+                                    $display("[%g] Dato recibido en Driver correcto", $time);
+
+                                    for (int j = 0; j < con_index; j++) begin  
+                                        if (keys[j].dato == paquete_chkr.dato)begin
+                                            $display("[%g] Dato checkaeado: org = %h, dato%h", $time,index[j],keys[j].dato);
+                                            index.delete(j);
+                                            keys.delete(j);
+                                            con_index = con_index-1;
+                                            check_correcto = 1'b1;
+                                        end                                                               
+                                    end
+                                    if (check_correcto == 0)begin
+                                        $display("[%g] Nadie envio ese dato: dato =%h", $time,paquete_chkr.dato);
+                                        Procesos_erroneos[con_err] = paquete_chkr.dato;
+                                        con_err++;
+                                        check_correcto = 1'b0;
+                                    end
+
+                                end else begin
+                                    $display("[%g] Dato en Driver INCORRECTO", $time);
                                 end
-                                if (check_correcto == 0)begin
-                                    $display("[%g] Nadie envio ese dato: dato =%h", $time,paquete_chkr.dato);
-                                    Procesos_erroneos[con_err] = paquete_chkr.dato;
-                                    con_err++;
-                                    check_correcto = 1'b0;
-                                end
+                               
                             end
+
                             default: begin
                                 $display("[%g] WHAT: org = %h, dato%h", $time,paquete_chkr.origen,paquete_chkr.dato);
                             end
                         endcase
-
-                    end else begin
-                        $display("[%g] Dato en Driver INCORRECTO", $time);
-                    end
                 end
             end
         end
