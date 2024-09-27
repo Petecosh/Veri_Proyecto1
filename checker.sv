@@ -59,7 +59,7 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                     Procesos_erroneos[con_err] = paquete_chkr.dato;
                                     
                                     // MANDE
-                                    pck_chkr_sb paquete_sb;
+                                    //pck_chkr_sb paquete_sb;
 
                                     con_err++;
                                 end
