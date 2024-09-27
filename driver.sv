@@ -66,7 +66,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
                 paquete_chkr = new();                        // Crear un paquete driver -> checker
                 $display("[%g] Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);         
                 paquete_chkr.accion = 1'b0;                  // Avisar que se trata de una escritura
-                paquete_chkr.tiempo = $time;                 // Tiempo inicial
+                paquete_chkr.tiempo = ($time-(paquete_drv.retardo*10));                 // Tiempo inicial
                 paquete_chkr.dato = emul_fifo_i.pop_front(); // El dato enviado hacia el DUT se envia al checker tambien
                 paquete_chkr.origen = id;                    // Asignar el origen de acuerdo al identificador
                 drv_chkr_mbx.put(paquete_chkr);              // Se coloca lo que se escribio hacia el checker
