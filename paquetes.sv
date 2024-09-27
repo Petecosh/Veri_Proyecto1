@@ -95,7 +95,7 @@ class pck_chkr_sb #(parameter width = 16);
     int latencia;
 
     task calc_latencia;
-        this.latencia = this.tiempo_inicio - tiempo_final;
+        this.latencia = this.tiempo_final - tiempo_inicio;
     endtask
 
     function new(bit[width-1:0] dto = 0, int org = 0, string tpo = Erronea, int t_i = 0, int t_f = 0, int lat = 0);
