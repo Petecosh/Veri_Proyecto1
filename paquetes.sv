@@ -51,11 +51,12 @@ class pck_drv_chkr #(parameter width = 16);
     bit [width-1:0] dato;   // Dato enviado
     bit accion;             // Avisa si el dato es enviado hacia el DUT o recibido desde el DUT
     int origen;             // Dispositivo origen
-    
-    function new(bit[width-1:0] dto = 0, bit ac = 0, int orig = 0);
+    int tiempo;
+    function new(bit[width-1:0] dto = 0, bit ac = 0, int orig = 0, int tme = 0);
         this.dato = dto;
         this.accion = ac; 
         this.origen = orig;
+        this.tiempo = tme;
     endfunction
 
     function void print(string tag = "");
@@ -89,17 +90,24 @@ class pck_chkr_sb #(parameter width = 16);
     bit [width-1:0] dato;   // Dato enviado
     int origen;             // Dispositivo origen
     string tipo;            // Tipo de la transaccion (correcta, erronea, broadcast)
-
-    function new(bit[width-1:0] dto = 0, int org = 0, string tpo = Erronea);
+    int tiempo_inicio; 
+    int tiempo_final; 
+    task calc_latencia;
+        this.latencia = this.tiempo_inicio - tiempo_final;
+    endtask
+    function new(bit[width-1:0] dto = 0, int org = 0, string tpo = Erronea, int t_i = 0,int t_f = 0);
         this.dato = dto;
         this.origen = org;
         this.tipo = tpo;
+        this.tiempo_inicio = t_i;
+        this.tiempo_final = t_f;
     endfunction
 
     function void print();
         $display("---------------------------");
         $display("[%g]   0x%h     0x%h     %s" , $time, this.dato, this.origen, this.tipo);
     endfunction
+    
 endclass
 
 // Paquete Test -> Scoreboard
