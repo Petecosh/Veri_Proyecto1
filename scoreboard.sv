@@ -42,8 +42,6 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
                             file = $fopen("output.csv", "w");
     
                             if (file) begin
-                            // Write the header of the CSV file
-                                $fdisplay(file, "Dato,Origen,Tipo,Latencia");
                                 
                                 // Iterate over the queue and write each element to the CSV file
                                 foreach (almacen[i]) begin
