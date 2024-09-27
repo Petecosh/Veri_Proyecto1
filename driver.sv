@@ -7,14 +7,12 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     int id;                                                            // Identificador
     pck_drv_chkr #(.width(width)) paquete_chkr;                        // Paquete driver -> checker
     int espera;                                                        // Variable para los retardos
-    int tiempo_inicial;
 
     function new(input int ident);
         id = ident;            // Crear una variable ident, viene de un ciclo for que saca numero 0,1,2..
         this.emul_fifo_i = {}; // Inicializar FIFO in
         this.emul_fifo_o = {}; // Inicializar FIFO out
         this.espera = 0;       // Inicializar variable espera
-        this.tiempo_inicial = 0;
     endfunction
 
     // Se encarga de escribir
@@ -49,6 +47,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
                 paquete_chkr = new();                        // Crear un paquete driver -> checker
                 paquete_chkr.accion=1'b1;                    // Avisar que se trata es una lectura
                 paquete_chkr.tiempo = $time;                 // Tiempo final
+                paquete_chkr.retardo = paquete_drv.retardo;  // Me llevo el retardo para eventualmente sumarlo en el scoreboard
                 paquete_chkr.dato = emul_fifo_o.pop_front(); // Sacar el dato de FIFO out
                 paquete_chkr.print("Monitor leyo un dato");
                 drv_chkr_mbx.put(paquete_chkr);              // Se coloca lo que se leyo hacia checker
@@ -69,8 +68,6 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
                 $display("[%g] Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);         
                 paquete_chkr.accion = 1'b0;                  // Avisar que se trata de una escritura
                 paquete_chkr.tiempo = $time;                 // Tiempo inicial
-                tiempo_inicial = paquete_chkr.tiempo-(paquete_drv.retardo*10);
-                paquete_chkr.tiempo = tiempo_inicial;        // Tiempo inicial - retardo
                 paquete_chkr.dato = emul_fifo_i.pop_front(); // El dato enviado hacia el DUT se envia al checker tambien
                 paquete_chkr.origen = id;                    // Asignar el origen de acuerdo al identificador
                 drv_chkr_mbx.put(paquete_chkr);              // Se coloca lo que se escribio hacia el checker
