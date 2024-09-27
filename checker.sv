@@ -45,16 +45,14 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                 
                                 if (paquete_chkr.dato[width-1:width-8] == broadcast) begin
                                     for (int i = 0; i < devices-1; i++) begin
-                                        index[con_index].origen = paquete_chkr.origen; 
-                                        index[con_index].tiempo = paquete_chkr.tiempo; 
+                                        index[con_index] = paquete_chkr;  
                                         keys[con_index] = paquete_chkr;
                                         con_index++;
                                     end
                                 end
 
                                 else if (paquete_chkr.dato[width-1:width-8] < devices) begin
-                                    index[con_index].origen = paquete_chkr.origen; 
-                                    index[con_index].tiempo = paquete_chkr.tiempo; 
+                                    index[con_index] = paquete_chkr; 
                                     keys[con_index] = paquete_chkr;
                                     con_index++;
                                 end
