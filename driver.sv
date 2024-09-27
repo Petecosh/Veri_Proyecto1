@@ -2,7 +2,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     tipo_mbx_agnt_drv agnt_drv_mbx;                                    // Mailbox Agente -> Driver
     tipo_mbx_drv_chkr drv_chkr_mbx;                                    // Mailbox Driver -> Checker
     bit [width-1:0] emul_fifo_i[$];                                    // Emulación Fifo Driver -> DUT
-    int [width-1:0] aux[$];
+    int             aux[$];
     bit [width-1:0] emul_fifo_o[$];                                    // Emulación FIFO DUT -> Driver
     virtual bus_if #(.bits(bits), .drvrs(drvrs), .pckg_sz(width)) vif; // Interfaz
     int id;                                                            // Identificador
