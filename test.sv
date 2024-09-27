@@ -3,12 +3,16 @@ class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, pa
     pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente;                           // Instruccion hacia el agente
     tipo_mbx_test_agnt test_agnt_mbx;                                                               // Mailbox test -> agente
     virtual bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if;     // Interfaz
+    pck_test_sb instruccion_sb;
+    tipo_mbx_test_sb test_sb_mbx;
 
     function new();
 
         test_agnt_mbx = new();                                      // Inicialziar el mbx test -> agente
         ambiente_inst = new();                                      // Inicializar la instancia del ambiente
         ambiente_inst.agente_inst.test_agnt_mbx = test_agnt_mbx;    // Apuntar el mbx test -> agente
+        test_sb_mbx = new();                                        // Inicializar el mbx test -> scoreboard
+        ambiente_inst.scoreboard_inst.test_sb_mbx = test_sb_mbx;    // Apuntar el mbx test -> scoreboard
 
     endfunction
 
@@ -24,6 +28,7 @@ class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, pa
         instruccion_agente.tipo = Random;
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
+        
         #20
         instruccion_agente = new();
         instruccion_agente.tipo = Especifica;
@@ -31,13 +36,19 @@ class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, pa
         instruccion_agente.origen = 1'b1;
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
+        
         #2000
         instruccion_agente = new();
         instruccion_agente.tipo = Erronea;
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
+        
         #10000
         $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);
+        pck_test_sb = new();
+        pck_test_sb.tipo = Reporte;
+        test_sb_mbx.put(pck_test_sb);
+        #20
         $finish;
 
     endtask

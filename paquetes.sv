@@ -1,5 +1,5 @@
-// Tipo Transaccion Agente
-typedef enum {Random, Especifica, Erronea} tipo_agente;
+// Tipo Transaccion Agente (y Scoreboard)
+typedef enum {Random, Especifica, Erronea, Reporte} tipo_agente;
 
 // Interfaz
 interface bus_if #(parameter bits = 1, parameter drvrs = 4, parameter pckg_sz = 16, parameter broadcast = {8{1'b1}})
@@ -23,7 +23,7 @@ class pck_agnt_drv #(parameter devices = 4, parameter width = 16);
     rand bit [7:0] receptor;         // Dispositivo destino
     rand bit [width-9:0] payload;    // Mensaje
 
-    constraint direccion {receptor < devices+3; receptor >=0; receptor != origen;}
+    constraint direccion {receptor < devices+2; receptor >=0; receptor != origen;}
     constraint dispositivo {origen < devices; origen >= 0;}
     //constraint retardo {retardo < max_retardo; retardo>0;}
 
@@ -81,48 +81,37 @@ endclass
 
 // Paquete Checker -> Scoreboard
 class pck_chkr_sb #(parameter width = 16);
-    bit [width-1:0] dato_enviado;
-    int tiempo_push;
-    int tiempo_pop;
-    bit completado;
-    bit Broadcast;
-    bit reset;
-    int latencia;
+    bit [width-1:0] dato;   // Dato enviado
+    int origen;             // Dispositivo origen
+    string tipo;            // Tipo de la transaccion (correcta, erronea, broadcast)
 
-    function clean();
-        this.dato_enviado = 0;
-        this.tiempo_push = 0;
-        this.tiempo_pop = 0;
-        this.completado = 0;
-        this.Broadcast = 0;
-        this.reset = 0;
-        this.latencia = 0;
+    function new(bit[width-1:0] dto = 0, int org = 0, string tpo = erronea);
+        this.dato = dto;
+        this.origen = org;
+        this.tipo = tpo;
     endfunction
 
-    task calc_latencia;
-        this.latencia = this.tiempo_pop - tiempo_push;
-    endtask
-
-    function print (string tag);
-        $display("[%g] %s dato = %h, t_push = %g, t_pop = %g, cmplt = %g, Brdcst = %g, rst = %g, ltncy = %g",
-                 $time,
-                 tag,
-                 this.dato_enviado,
-                 this.tiempo_push,
-                 this.tiempo_pop,
-                 this.completado,
-                 this.Broadcast,
-                 this.reset,
-                 this.latencia);
+    function void print();
+        $display("---------------------------");
+        $display("[%g]   0x%h     0x%h     %s" , $time, this.dato, this.origen, this.tipo);
     endfunction
 endclass
 
 // Paquete Test -> Scoreboard
+class pck_test_sb();
+    tipo_agente tipo;       // Tipo de instruccion para el scoreboard
+
+    function new(tipo_agente tpo = Random);
+        this.tipo = tpo;
+    endfunction
+
+endclass
 
 // Mailboxes
 
 typedef mailbox #(pck_agnt_drv) tipo_mbx_agnt_drv;    // Mailbox agente -> driver
 typedef mailbox #(pck_drv_chkr) tipo_mbx_drv_chkr;    // Mailbox driver -> checker
-typedef mailbox #(pck_chkr_sb) tipo_mbx_chkr_sb;       // Mailbox checker -> scoreboard
+typedef mailbox #(pck_chkr_sb) tipo_mbx_chkr_sb;      // Mailbox checker -> scoreboard
 typedef mailbox #(pck_test_agnt) tipo_mbx_test_agnt;  // Mailbox test -> agente
+typedef mailbox #(pck_test_sb) tipo_mbx_test_sb;      // Mailbox test -> scoreboard
 

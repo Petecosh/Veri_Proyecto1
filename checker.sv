@@ -7,6 +7,9 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
     int con_index;
     int con_err;
     bit check_correcto;
+
+    pck_chkr_sb #(.width(width)) paquete_sb;   // Paquete checker -> scoreboard
+    tipo_mbx_chkr_sb chkr_sb_mbx;              // Mailbox checker -> scoreboard
     
     function new();
     for (int q = 0; q < devices; q++) begin
@@ -58,8 +61,11 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                     $display("[%g] Dato con direccion erronea: org = %h, dato =%h", $time,paquete_chkr.origen,paquete_chkr.dato);
                                     Procesos_erroneos[con_err] = paquete_chkr.dato;
                                     
-                                    // MANDE
-                                    //pck_chkr_sb paquete_sb;
+                                    paquete_sb = new();                       // Inicializo paquete checker -> scoreboard
+                                    paquete_sb.dato = paquete_chkr.dato;      // Colocar el dato
+                                    paquete_sb.origen = paquete_chkr.origen;  // Colocar origen
+                                    paquete_sb.tipo = "Erroneo";              // Colocar tipo
+                                    chkr_sb_mbx.put(paquete_sb);              // Colocar en el mbx checker -> scoreboard
 
                                     con_err++;
                                 end
@@ -75,7 +81,17 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                     for (int j = 0; j < con_index; j++) begin  
                                         if (keys[j].dato == paquete_chkr.dato)begin
                                             $display("[%g] Dato checkaeado: org = %h, dato%h", $time,index[j],keys[j].dato);
-                                            // MANDE
+
+                                            paquete_sb = new();                       // Inicializo paquete checker -> scoreboard
+                                            paquete_sb.dato = paquete_chkr.dato;      // Colocar el dato
+                                            paquete_sb.origen = index[j];             // Colocar origen
+                                            if (paquete_chkr.dato[width-1:width-8] == broadcast) begin 
+                                                paquete_sb.tipo = "Broadcast";        // Colocar tipo
+                                            end else begin
+                                                paquete_sb.tipo = "Correcto";         // Colocar tipo
+                                            end
+                                            chkr_sb_mbx.put(paquete_sb);              // Colocar en el mbx checker -> scoreboard
+
                                             index.delete(j);
                                             keys.delete(j);
                                             con_index = con_index-1;
