@@ -5,7 +5,9 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
     pck_test_sb instruccion_sb;     // Instruccion para el scoreboard
     tipo_mbx_test_sb test_sb_mbx;
 
-    int file; // Archivo para CSV
+    int tamano_sb; // Tamano del almacen
+    int file;      // Archivo para CSV
+    pck_chkr_sb auxiliar; // Para hacer prints
 
 
     task run();

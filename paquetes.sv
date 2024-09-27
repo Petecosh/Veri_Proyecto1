@@ -85,7 +85,7 @@ class pck_chkr_sb #(parameter width = 16);
     int origen;             // Dispositivo origen
     string tipo;            // Tipo de la transaccion (correcta, erronea, broadcast)
 
-    function new(bit[width-1:0] dto = 0, int org = 0, string tpo = erronea);
+    function new(bit[width-1:0] dto = 0, int org = 0, string tpo = Erronea);
         this.dato = dto;
         this.origen = org;
         this.tipo = tpo;
