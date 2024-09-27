@@ -51,14 +51,13 @@ class pck_drv_chkr #(parameter width = 16);
     bit [width-1:0] dato;   // Dato enviado
     bit accion;             // Avisa si el dato es enviado hacia el DUT o recibido desde el DUT
     int origen;             // Dispositivo origen
-    int tiempo;
-    rand int retardo;
-    function new(bit[width-1:0] dto = 0, bit ac = 0, int orig = 0, int tme = 0, int ret = 0);
+    int tiempo;             // Tiempo para medir retardo
+
+    function new(bit[width-1:0] dto = 0, bit ac = 0, int orig = 0, int tme = 0);
         this.dato = dto;
         this.accion = ac; 
         this.origen = orig;
         this.tiempo = tme;
-        this.retardo = ret;
     endfunction
 
     function void print(string tag = "");
@@ -73,7 +72,8 @@ class pck_test_agnt #(parameter devices = 4, parameter width = 16);
     bit [width-1:0] dato;   // Dato enviado
     tipo_agente tipo;       // Tipo de instruccion para el agente
     rand bit [4:0] origen;  // Dispositivo origen
-    int retardo;
+    int retardo;            // Retardo especificado
+
     function new(bit[width-1:0] dto = 0, tipo_agente tpo = Random, int org = 0, int ret = 0);
         this.dato = dto;
         this.tipo = tpo;
@@ -92,23 +92,21 @@ class pck_chkr_sb #(parameter width = 16);
     bit [width-1:0] dato;   // Dato enviado
     int origen;             // Dispositivo origen
     string tipo;            // Tipo de la transaccion (correcta, erronea, broadcast)
-    int tiempo_inicio; 
-    int tiempo_final; 
-    int latencia;
-    int retardo;
+    int tiempo_inicio;      // Tiempo inical para calcular retardo
+    int tiempo_final;       // Tiempo final para calcular retardo
+    int latencia;           // Valor final de retardo
 
     task calc_latencia;
-        this.latencia = this.tiempo_final - tiempo_inicio + (retardo*10);
+        this.latencia = this.tiempo_final - tiempo_inicio;
     endtask
 
-    function new(bit[width-1:0] dto = 0, int org = 0, string tpo = Erronea, int t_i = 0, int t_f = 0, int lat = 0, int reta = 0);
+    function new(bit[width-1:0] dto = 0, int org = 0, string tpo = Erronea, int t_i = 0, int t_f = 0, int lat = 0);
         this.dato = dto;
         this.origen = org;
         this.tipo = tpo;
         this.tiempo_inicio = t_i;
         this.tiempo_final = t_f;
         this.latencia = lat;
-        this.retardo = reta;
     endfunction
 
     function void print();

@@ -2,7 +2,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     tipo_mbx_agnt_drv agnt_drv_mbx;                                    // Mailbox Agente -> Driver
     tipo_mbx_drv_chkr drv_chkr_mbx;                                    // Mailbox Driver -> Checker
     bit [width-1:0] emul_fifo_i[$];                                    // Emulación Fifo Driver -> DUT
-    int             aux[$];
+    int             aux[$];                                            // Queue para guardar retardos
     bit [width-1:0] emul_fifo_o[$];                                    // Emulación FIFO DUT -> Driver
     virtual bus_if #(.bits(bits), .drvrs(drvrs), .pckg_sz(width)) vif; // Interfaz
     int id;                                                            // Identificador
@@ -14,7 +14,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
         this.emul_fifo_i = {}; // Inicializar FIFO in
         this.emul_fifo_o = {}; // Inicializar FIFO out
         this.espera = 0;       // Inicializar variable espera
-        this.aux = {};
+        this.aux = {};         // Inicializar la queue de los retardos
     endfunction
 
     // Se encarga de escribir
