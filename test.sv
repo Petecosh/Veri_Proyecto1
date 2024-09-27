@@ -45,9 +45,9 @@ class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, pa
         
         #10000
         $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);
-        pck_test_sb = new();
-        pck_test_sb.tipo = Reporte;
-        test_sb_mbx.put(pck_test_sb);
+        instruccion_sb = new();
+        instruccion_sb.tipo = Reporte;
+        test_sb_mbx.put(instruccion_sb);
         #20
         $finish;
 
