@@ -22,21 +22,25 @@ class pck_agnt_drv #(parameter devices = 4, parameter width = 16);
     rand bit [devices-1:0] origen;   // Dispositivo origen
     rand bit [7:0] receptor;         // Dispositivo destino
     rand bit [width-9:0] payload;    // Mensaje
+    rand int retardo;               
+    int max_retardo;
 
+    constraint const_retardo {retardo < max_retardo; retardo > 0;}
     constraint direccion {receptor < devices+2; receptor >=0; receptor != origen;}
     constraint dispositivo {origen < devices; origen >= 0;}
-    //constraint retardo {retardo < max_retardo; retardo>0;}
 
-    function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0);
+    function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0, int ret = 0, int max_ret = 0);
         this.dato = dto;
         this.origen = org;
         this.receptor = rec;
         this.payload = pay;
+        this.retardo = ret;
+        this.max_retardo = retardo;
         
     endfunction
 
     function void print(string tag = "");
-        $display("[%g] %s Dato = 0x%h, origen = 0x%h" , $time, tag, this.dato,this.origen);
+        $display("[%g] %s Dato = 0x%h, origen = 0x%h, retardo = %0d" , $time, tag, this.dato, this.origen, this.retardo);
     endfunction
 
 endclass
@@ -47,11 +51,13 @@ class pck_drv_chkr #(parameter width = 16);
     bit [width-1:0] dato;   // Dato enviado
     bit accion;             // Avisa si el dato es enviado hacia el DUT o recibido desde el DUT
     int origen;             // Dispositivo origen
-    
-    function new(bit[width-1:0] dto = 0, bit ac = 0, int orig = 0);
+    int tiempo;             // Tiempo para medir retardo
+
+    function new(bit[width-1:0] dto = 0, bit ac = 0, int orig = 0, int tme = 0);
         this.dato = dto;
         this.accion = ac; 
         this.origen = orig;
+        this.tiempo = tme;
     endfunction
 
     function void print(string tag = "");
@@ -66,11 +72,13 @@ class pck_test_agnt #(parameter devices = 4, parameter width = 16);
     bit [width-1:0] dato;   // Dato enviado
     tipo_agente tipo;       // Tipo de instruccion para el agente
     rand bit [4:0] origen;  // Dispositivo origen
+    int retardo;            // Retardo especificado
 
-    function new(bit[width-1:0] dto = 0, tipo_agente tpo = Random, int org = 0);
+    function new(bit[width-1:0] dto = 0, tipo_agente tpo = Random, int org = 0, int ret = 0);
         this.dato = dto;
         this.tipo = tpo;
         this.origen = org;
+        this.retardo = ret;
     endfunction
 
     function void print(string tag = "");
@@ -84,17 +92,28 @@ class pck_chkr_sb #(parameter width = 16);
     bit [width-1:0] dato;   // Dato enviado
     int origen;             // Dispositivo origen
     string tipo;            // Tipo de la transaccion (correcta, erronea, broadcast)
+    int tiempo_inicio;      // Tiempo inical para calcular retardo
+    int tiempo_final;       // Tiempo final para calcular retardo
+    int latencia;           // Valor final de retardo
 
-    function new(bit[width-1:0] dto = 0, int org = 0, string tpo = Erronea);
+    task calc_latencia;
+        this.latencia = this.tiempo_final - tiempo_inicio;
+    endtask
+
+    function new(bit[width-1:0] dto = 0, int org = 0, string tpo = Erronea, int t_i = 0, int t_f = 0, int lat = 0);
         this.dato = dto;
         this.origen = org;
         this.tipo = tpo;
+        this.tiempo_inicio = t_i;
+        this.tiempo_final = t_f;
+        this.latencia = lat;
     endfunction
 
     function void print();
         $display("---------------------------");
-        $display("[%g]   0x%h     0x%h     %s" , $time, this.dato, this.origen, this.tipo);
+        $display("[%g]   0x%h     0x%h     %s      %g" , $time, this.dato, this.origen, this.tipo, this.latencia);
     endfunction
+    
 endclass
 
 // Paquete Test -> Scoreboard

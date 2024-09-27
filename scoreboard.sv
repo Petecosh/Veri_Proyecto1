@@ -15,7 +15,7 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
 
         forever begin
             #5
-            if (chkr_sb_mbx.num() > 0) begin
+            if (chkr_sb_mbx.num() > 0) begin            // Si el mbx checker -> scoreboard tiene algo...
                 chkr_sb_mbx.get(paquete_sb);
                 $display("[%g] Scoreboard: Recibido paquete desde checker", $time);
                 almacen.push_back(paquete_sb);
@@ -31,8 +31,9 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
 
                             $display("[%g] Scoreboard: Recibida instruccion reporte", $time);
                             tamano_sb = this.almacen.size();
-                            $display("[%g]   Dato       Origen         Tipo", $time);
+                            $display("[%g]   Dato       Origen         Tipo     Latencia", $time);
                             for (int i = 0; i < tamano_sb; i++) begin
+                                almacen[i].calc_latencia();
                                 auxiliar = almacen[i];
                                 auxiliar.print();
                             end
@@ -41,12 +42,10 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
                             file = $fopen("output.csv", "w");
     
                             if (file) begin
-                            // Write the header of the CSV file
-                                $fdisplay(file, "Dato,Origen,Tipo");
                                 
                                 // Iterate over the queue and write each element to the CSV file
                                 foreach (almacen[i]) begin
-                                    $fdisplay(file, "%0d,%0d,%0d", almacen[i].dato, almacen[i].origen, almacen[i].tipo);
+                                    $fdisplay(file, "%h,%0d,%s,%0d", almacen[i].dato, almacen[i].origen, almacen[i].tipo, almacen[i].latencia);
                                 end
                                 
                                 // Close the file

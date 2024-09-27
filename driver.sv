@@ -2,27 +2,40 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     tipo_mbx_agnt_drv agnt_drv_mbx;                                    // Mailbox Agente -> Driver
     tipo_mbx_drv_chkr drv_chkr_mbx;                                    // Mailbox Driver -> Checker
     bit [width-1:0] emul_fifo_i[$];                                    // Emulación Fifo Driver -> DUT
+    int             aux[$];                                            // Queue para guardar retardos
     bit [width-1:0] emul_fifo_o[$];                                    // Emulación FIFO DUT -> Driver
     virtual bus_if #(.bits(bits), .drvrs(drvrs), .pckg_sz(width)) vif; // Interfaz
     int id;                                                            // Identificador
     pck_drv_chkr #(.width(width)) paquete_chkr;                        // Paquete driver -> checker
+    int espera;                                                        // Variable para los retardos
 
     function new(input int ident);
         id = ident;            // Crear una variable ident, viene de un ciclo for que saca numero 0,1,2..
         this.emul_fifo_i = {}; // Inicializar FIFO in
         this.emul_fifo_o = {}; // Inicializar FIFO out
+        this.espera = 0;       // Inicializar variable espera
+        this.aux = {};         // Inicializar la queue de los retardos
     endfunction
 
     // Se encarga de escribir
     task escribir();
         forever begin
+
             pck_agnt_drv #(.width(width)) paquete_drv;                     // Paquete que utiliza el driver
+
+            espera = 0;       // Siempre que pida escribir, ponga espera en 0
 
             $display("[%g] El driver espera por una transaccion", $time);
             agnt_drv_mbx.get(paquete_drv);                                 // Sacar mensaje del mailbox
             paquete_drv.print("Driver: Transaccion recibida");
 
+            while (espera < paquete_drv.retardo) begin                     // Si hay retardo, se espera hasta vencerlo
+                @(posedge vif.clk);
+                espera = espera + 1;
+            end
+
             emul_fifo_i.push_back(paquete_drv.dato);                       // Escribir en la FIFO in
+            aux.push_back(paquete_drv.retardo); 
             paquete_drv.print("Driver Ejecucion: Escritura");
         end 
     endtask
@@ -35,7 +48,8 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
             @(posedge vif.clk);
             if (emul_fifo_o.size() != 0) begin
                 paquete_chkr = new();                        // Crear un paquete driver -> checker
-                paquete_chkr.accion=1'b1;                    // Avisar que se trata es una lectura
+                paquete_chkr.accion = 1'b1;                  // Avisar que se trata es una lectura
+                paquete_chkr.tiempo = $time;                 // Tiempo final
                 paquete_chkr.dato = emul_fifo_o.pop_front(); // Sacar el dato de FIFO out
                 paquete_chkr.print("Monitor leyo un dato");
                 drv_chkr_mbx.put(paquete_chkr);              // Se coloca lo que se leyo hacia checker
@@ -54,7 +68,8 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
                 // Sale de FIFO in
                 paquete_chkr = new();                        // Crear un paquete driver -> checker
                 $display("[%g] Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);         
-                paquete_chkr.accion=1'b0;                    // Avisar que se trata de una escritura
+                paquete_chkr.accion = 1'b0;                  // Avisar que se trata de una escritura
+                paquete_chkr.tiempo = ($time-(10*aux.pop_front()));                 // Tiempo inicial
                 paquete_chkr.dato = emul_fifo_i.pop_front(); // El dato enviado hacia el DUT se envia al checker tambien
                 paquete_chkr.origen = id;                    // Asignar el origen de acuerdo al identificador
                 drv_chkr_mbx.put(paquete_chkr);              // Se coloca lo que se escribio hacia el checker

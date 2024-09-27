@@ -2,7 +2,7 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
     
     tipo_mbx_drv_chkr drv_chkr_mbx[devices];
     pck_drv_chkr keys[$];
-    int index[$];
+    pck_drv_chkr index[$];
     int Procesos_erroneos[$];
     int con_index;
     int con_err;
@@ -45,14 +45,14 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                 
                                 if (paquete_chkr.dato[width-1:width-8] == broadcast) begin
                                     for (int i = 0; i < devices-1; i++) begin
-                                        index[con_index] = paquete_chkr.origen; 
+                                        index[con_index] = paquete_chkr;  
                                         keys[con_index] = paquete_chkr;
-                                    con_index++;
+                                        con_index++;
                                     end
                                 end
 
                                 else if (paquete_chkr.dato[width-1:width-8] < devices) begin
-                                    index[con_index] = paquete_chkr.origen; 
+                                    index[con_index] = paquete_chkr; 
                                     keys[con_index] = paquete_chkr;
                                     con_index++;
                                 end
@@ -62,9 +62,11 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                     Procesos_erroneos[con_err] = paquete_chkr.dato;
                                     
                                     paquete_sb = new();                       // Inicializo paquete checker -> scoreboard
+                                    paquete_sb.tiempo_inicio = paquete_chkr.tiempo;
+                                    paquete_sb.tiempo_final = paquete_chkr.tiempo;
                                     paquete_sb.dato = paquete_chkr.dato;      // Colocar el dato
                                     paquete_sb.origen = paquete_chkr.origen;  // Colocar origen
-                                    paquete_sb.tipo = "Erroneo";              // Colocar tipo
+                                    paquete_sb.tipo = "Erroneo  ";              // Colocar tipo
                                     chkr_sb_mbx.put(paquete_sb);              // Colocar en el mbx checker -> scoreboard
 
                                     con_err++;
@@ -80,15 +82,17 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
 
                                     for (int j = 0; j < con_index; j++) begin  
                                         if (keys[j].dato == paquete_chkr.dato)begin
-                                            $display("[%g] Dato checkaeado: org = %h, dato%h", $time,index[j],keys[j].dato);
+                                            $display("[%g] Dato checkaeado: org = %h, dato%h", $time,index[j].origen,keys[j].dato);
 
                                             paquete_sb = new();                       // Inicializo paquete checker -> scoreboard
+                                            paquete_sb.tiempo_inicio = index[j].tiempo;
+                                            paquete_sb.tiempo_final = paquete_chkr.tiempo;
                                             paquete_sb.dato = paquete_chkr.dato;      // Colocar el dato
-                                            paquete_sb.origen = index[j];             // Colocar origen
+                                            paquete_sb.origen = index[j].origen;             // Colocar origen
                                             if (paquete_chkr.dato[width-1:width-8] == broadcast) begin 
                                                 paquete_sb.tipo = "Broadcast";        // Colocar tipo
                                             end else begin
-                                                paquete_sb.tipo = "Correcto";         // Colocar tipo
+                                                paquete_sb.tipo = "Correcto ";         // Colocar tipo
                                             end
                                             chkr_sb_mbx.put(paquete_sb);              // Colocar en el mbx checker -> scoreboard
 
