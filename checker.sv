@@ -63,6 +63,7 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                     
                                     paquete_sb = new();                       // Inicializo paquete checker -> scoreboard
                                     paquete_sb.tiempo_inicio = paquete_chkr.tiempo;
+                                    paquete_sb.retardo = paquete_chkr.retardo;
                                     paquete_sb.tiempo_final = paquete_chkr.tiempo;
                                     paquete_sb.dato = paquete_chkr.dato;      // Colocar el dato
                                     paquete_sb.origen = paquete_chkr.origen;  // Colocar origen
@@ -86,6 +87,7 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
 
                                             paquete_sb = new();                       // Inicializo paquete checker -> scoreboard
                                             paquete_sb.tiempo_inicio = index[j].tiempo;
+                                            paquete_sb.retardo = index[j].retardo;
                                             paquete_sb.tiempo_final = paquete_chkr.tiempo;
                                             paquete_sb.dato = paquete_chkr.dato;      // Colocar el dato
                                             paquete_sb.origen = index[j].origen;             // Colocar origen
