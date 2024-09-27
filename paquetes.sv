@@ -22,16 +22,20 @@ class pck_agnt_drv #(parameter devices = 4, parameter width = 16);
     rand bit [devices-1:0] origen;   // Dispositivo origen
     rand bit [7:0] receptor;         // Dispositivo destino
     rand bit [width-9:0] payload;    // Mensaje
+    rand int retardo;               
+    int max_retardo;
 
+    constraint const_retardo {retardo < max_retardo; retardo > 0;}
     constraint direccion {receptor < devices+2; receptor >=0; receptor != origen;}
     constraint dispositivo {origen < devices; origen >= 0;}
-    //constraint retardo {retardo < max_retardo; retardo>0;}
 
-    function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0);
+    function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0, int ret = 0, int max_ret = 0);
         this.dato = dto;
         this.origen = org;
         this.receptor = rec;
         this.payload = pay;
+        this.retardo = ret;
+        this.max_retardo = retardo;
         
     endfunction
 
@@ -66,11 +70,12 @@ class pck_test_agnt #(parameter devices = 4, parameter width = 16);
     bit [width-1:0] dato;   // Dato enviado
     tipo_agente tipo;       // Tipo de instruccion para el agente
     rand bit [4:0] origen;  // Dispositivo origen
-
-    function new(bit[width-1:0] dto = 0, tipo_agente tpo = Random, int org = 0);
+    int retardo;
+    function new(bit[width-1:0] dto = 0, tipo_agente tpo = Random, int org = 0, int ret = 0);
         this.dato = dto;
         this.tipo = tpo;
         this.origen = org;
+        this.retardo = ret;
     endfunction
 
     function void print(string tag = "");
