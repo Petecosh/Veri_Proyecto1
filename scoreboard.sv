@@ -9,7 +9,6 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
     int file;      // Archivo para CSV
     pck_chkr_sb auxiliar; // Para hacer prints
 
-
     task run();
 
          $display("[%g] El scoreboard fue inicializado", $time);

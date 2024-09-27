@@ -23,6 +23,7 @@ class ambiente #(parameter bits = 1, parameter devices = 4, parameter width = 16
 
         checkr_inst = new();             // Inicializar instancia del checker
         chkr_sb_mbx = new();             // Inicializar mbx checker -> scoreboard
+        scoreboard_inst = new();         // Inicializar el scoreboard
 
         // Apuntar mailboxes
         
