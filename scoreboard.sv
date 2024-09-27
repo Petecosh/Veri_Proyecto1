@@ -44,7 +44,7 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
                                 $fdisplay(file, "Dato,Origen,Tipo");
                                 
                                 // Iterate over the queue and write each element to the CSV file
-                                |foreach (almacen[i]) begin
+                                foreach (almacen[i]) begin
                                     $fdisplay(file, "%0d,%0d,%0d", almacen[i].dato, almacen[i].origen, almacen[i].tipo);
                                 end
                                 
