@@ -19,9 +19,9 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     task escribir();
         forever begin
 
-            espera = 0;       // Siempre que pida escribir, ponga espera en 0
-
             pck_agnt_drv #(.width(width)) paquete_drv;                     // Paquete que utiliza el driver
+
+            espera = 0;       // Siempre que pida escribir, ponga espera en 0
 
             $display("[%g] El driver espera por una transaccion", $time);
             agnt_drv_mbx.get(paquete_drv);                                 // Sacar mensaje del mailbox
