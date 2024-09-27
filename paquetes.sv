@@ -101,7 +101,7 @@ class pck_chkr_sb #(parameter width = 16);
         this.latencia = this.tiempo_final - tiempo_inicio + (retardo*10);
     endtask
 
-    function new(bit[width-1:0] dto = 0, int org = 0, string tpo = Erronea, int t_i = 0, int t_f = 0, int lat = 0, int reta = 0;);
+    function new(bit[width-1:0] dto = 0, int org = 0, string tpo = Erronea, int t_i = 0, int t_f = 0, int lat = 0, int reta = 0);
         this.dato = dto;
         this.origen = org;
         this.tipo = tpo;
