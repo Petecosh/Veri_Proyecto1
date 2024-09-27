@@ -15,7 +15,7 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
 
         forever begin
             #5
-            if (chkr_sb_mbx.num() > 0) begin
+            if (chkr_sb_mbx.num() > 0) begin            // Si el mbx checker -> scoreboard tiene algo...
                 chkr_sb_mbx.get(paquete_sb);
                 $display("[%g] Scoreboard: Recibido paquete desde checker", $time);
                 almacen.push_back(paquete_sb);

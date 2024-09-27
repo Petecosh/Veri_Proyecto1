@@ -6,21 +6,31 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     virtual bus_if #(.bits(bits), .drvrs(drvrs), .pckg_sz(width)) vif; // Interfaz
     int id;                                                            // Identificador
     pck_drv_chkr #(.width(width)) paquete_chkr;                        // Paquete driver -> checker
+    int espera;                                                        // Variable para los retardos
 
     function new(input int ident);
         id = ident;            // Crear una variable ident, viene de un ciclo for que saca numero 0,1,2..
         this.emul_fifo_i = {}; // Inicializar FIFO in
         this.emul_fifo_o = {}; // Inicializar FIFO out
+        this.espera = 0;       // Inicializar variable espera
     endfunction
 
     // Se encarga de escribir
     task escribir();
         forever begin
+
+            espera = 0;       // Siempre que pida escribir, ponga espera en 0
+
             pck_agnt_drv #(.width(width)) paquete_drv;                     // Paquete que utiliza el driver
 
             $display("[%g] El driver espera por una transaccion", $time);
             agnt_drv_mbx.get(paquete_drv);                                 // Sacar mensaje del mailbox
             paquete_drv.print("Driver: Transaccion recibida");
+
+            while (espera < paquete_drv.retardo) begin                     // Si hay retardo, se espera hasta vencerlo
+                @(posedge vif.clk);
+                espera = espera + 1;
+            end
 
             emul_fifo_i.push_back(paquete_drv.dato);                       // Escribir en la FIFO in
             paquete_drv.print("Driver Ejecucion: Escritura");
