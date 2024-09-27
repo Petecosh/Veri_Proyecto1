@@ -9,7 +9,7 @@ class agente #(parameter devices = 4, parameter width = 16);
     int max_retardo;                                                      // Retardo maximo
 
     function new();
-        num_transacciones = 3;                   // Se define 3 transacciones como maximo
+        num_transacciones = 10;                   // Se define 3 transacciones como maximo
         max_retardo = 10;                        // Se define 10 como el retardo maximo
     endfunction
 
@@ -58,7 +58,7 @@ class agente #(parameter devices = 4, parameter width = 16);
                         //paquete.max_retardo = max_retardo;
                         paquete_agnt_drv[paquete_rand.origen] = new();                                // Inicializar el paquete agente -> driver
                         paquete_agnt_drv[paquete_rand.origen] = paquete_rand;                         // Asociar el contenido random al paquete agente -> driver
-                        paquete_agnt_drv[paquete_rand.origen].print("Agente: Random Transaccion creada");
+                        paquete_agnt_drv[paquete_rand.origen].print("Agente: Erronea Transaccion creada");
                         agnt_drv_mbx[paquete_rand.origen].put(paquete_agnt_drv[paquete_rand.origen]); // Se coloca en el mbx agente -> driver
                     end
                     
