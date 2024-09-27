@@ -48,7 +48,7 @@ class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, pa
         instruccion_sb = new();
         instruccion_sb.tipo = Reporte;
         test_sb_mbx.put(instruccion_sb);
-        #20
+        #40
         $finish;
 
     endtask

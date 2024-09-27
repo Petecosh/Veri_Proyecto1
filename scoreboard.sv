@@ -15,15 +15,15 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
 
         forever begin
             #5
-            if (chkr_sb_mbx.num() != 0) begin
+            if (chkr_sb_mbx.num() > 0) begin
                 chkr_sb_mbx.get(paquete_sb);
                 $display("[%g] Scoreboard: Recibido paquete desde checker", $time);
                 almacen.push_back(paquete_sb);
 
             end else begin
-                if (test_sb_mbx.num() != 0) begin
+                if (test_sb_mbx.num() > 0) begin
                     test_sb_mbx.get(instruccion_sb);
-
+                    $display("Scoreboard Recibi algo del test")
                     case(instruccion_sb.tipo)
 
                         Reporte: begin
@@ -38,7 +38,7 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
                                 auxiliar.print();
                             end
 
-                            file = $fopen("output.csv", "w");
+                            /*file = $fopen("output.csv", "w");
     
                             if (file) begin
                             // Write the header of the CSV file
@@ -56,7 +56,7 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
 
                             $display("Error: Could not open file for writing.");
 
-                            end                            
+                            end */                          
 
                         end
 
