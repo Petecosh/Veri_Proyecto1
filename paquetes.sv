@@ -17,13 +17,13 @@ interface bus_if #(parameter bits = 1, parameter drvrs = 4, parameter pckg_sz = 
 endinterface
 
 // Paquete Agente -> Driver
-class pck_agnt_drv #(parameter devices = 4,parameter width = 16);
+class pck_agnt_drv #(parameter devices = 4, parameter width = 16);
     bit [width-1:0] dato;
     rand bit [devices-1:0] origen;   // Dispositivo origen
     rand bit [7:0] receptor;         // Dispositivo destino
     rand bit [width-9:0] payload;    // Mensaje
 
-    constraint direccion {receptor < devices; receptor >=0; receptor != origen;}
+    constraint direccion {receptor < devices+3; receptor >=0; receptor != origen;}
     constraint dispositivo {origen < devices; origen >= 0;}
     //constraint retardo {retardo < max_retardo; retardo>0;}
 
