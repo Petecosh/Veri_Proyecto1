@@ -37,8 +37,9 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
                                 auxiliar = almacen[i];
                                 auxiliar.print();
                             end
+                            $display("---------------------------");
 
-                            /*file = $fopen("output.csv", "w");
+                            file = $fopen("output.csv", "w");
     
                             if (file) begin
                             // Write the header of the CSV file
@@ -56,7 +57,7 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
 
                             $display("Error: Could not open file for writing.");
 
-                            end */                          
+                            end                         
 
                         end
 
