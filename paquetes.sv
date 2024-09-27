@@ -98,7 +98,7 @@ class pck_chkr_sb #(parameter width = 16);
 endclass
 
 // Paquete Test -> Scoreboard
-class pck_test_sb();
+class pck_test_sb;
     tipo_agente tipo;       // Tipo de instruccion para el scoreboard
 
     function new(tipo_agente tpo = Random);
