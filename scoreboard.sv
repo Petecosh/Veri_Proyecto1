@@ -31,8 +31,9 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
 
                             $display("[%g] Scoreboard: Recibida instruccion reporte", $time);
                             tamano_sb = this.almacen.size();
-                            $display("[%g]   Dato       Origen         Tipo", $time);
+                            $display("[%g]   Dato       Origen         Tipo     Latencia", $time);
                             for (int i = 0; i < tamano_sb; i++) begin
+                                almacen[i].calc_latencia();
                                 auxiliar = almacen[i];
                                 auxiliar.print();
                             end
@@ -42,11 +43,11 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
     
                             if (file) begin
                             // Write the header of the CSV file
-                                $fdisplay(file, "Dato,Origen,Tipo");
+                                $fdisplay(file, "Dato,Origen,Tipo,Latencia");
                                 
                                 // Iterate over the queue and write each element to the CSV file
                                 foreach (almacen[i]) begin
-                                    $fdisplay(file, "%0d,%0d,%0d", almacen[i].dato, almacen[i].origen, almacen[i].tipo);
+                                    $fdisplay(file, "%0d,%0d,%0d", almacen[i].dato, almacen[i].origen, almacen[i].tipo, almacen[i].latencia);
                                 end
                                 
                                 // Close the file

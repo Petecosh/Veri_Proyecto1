@@ -93,9 +93,11 @@ class pck_chkr_sb #(parameter width = 16);
     int tiempo_inicio; 
     int tiempo_final; 
     int latencia;
+
     task calc_latencia;
         this.latencia = this.tiempo_inicio - tiempo_final;
     endtask
+
     function new(bit[width-1:0] dto = 0, int org = 0, string tpo = Erronea, int t_i = 0, int t_f = 0, int lat = 0);
         this.dato = dto;
         this.origen = org;
@@ -107,7 +109,7 @@ class pck_chkr_sb #(parameter width = 16);
 
     function void print();
         $display("---------------------------");
-        $display("[%g]   0x%h     0x%h     %s" , $time, this.dato, this.origen, this.tipo);
+        $display("[%g]   0x%h     0x%h     %s      %g" , $time, this.dato, this.origen, this.tipo, this.latencia);
     endfunction
     
 endclass
