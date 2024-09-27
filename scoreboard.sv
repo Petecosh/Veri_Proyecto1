@@ -23,7 +23,6 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
             end else begin
                 if (test_sb_mbx.num() > 0) begin
                     test_sb_mbx.get(instruccion_sb);
-                    $display("Scoreboard Recibi algo del test");
                     case(instruccion_sb.tipo)
 
                         Reporte: begin
