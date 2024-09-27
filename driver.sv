@@ -7,12 +7,14 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     int id;                                                            // Identificador
     pck_drv_chkr #(.width(width)) paquete_chkr;                        // Paquete driver -> checker
     int espera;                                                        // Variable para los retardos
+    int tiempo_inicial;
 
     function new(input int ident);
         id = ident;            // Crear una variable ident, viene de un ciclo for que saca numero 0,1,2..
         this.emul_fifo_i = {}; // Inicializar FIFO in
         this.emul_fifo_o = {}; // Inicializar FIFO out
         this.espera = 0;       // Inicializar variable espera
+        this.tiempo_inicial = 0;
     endfunction
 
     // Se encarga de escribir
@@ -47,7 +49,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
                 paquete_chkr = new();                        // Crear un paquete driver -> checker
                 paquete_chkr.accion=1'b1;                    // Avisar que se trata es una lectura
                 paquete_chkr.tiempo = $time;                 // Tiempo final
-                int tiempo_inicial = paquete_drv.retardo;
+                tiempo_inicial = paquete_drv.retardo;
                 paquete_chkr.retardo = tiempo_inicial;  // Me llevo el retardo para eventualmente sumarlo en el scoreboard
                 paquete_chkr.dato = emul_fifo_o.pop_front(); // Sacar el dato de FIFO out
                 paquete_chkr.print("Monitor leyo un dato");
