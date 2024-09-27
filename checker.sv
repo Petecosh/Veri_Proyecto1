@@ -66,7 +66,7 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                     paquete_sb.tiempo_final = paquete_chkr.tiempo;
                                     paquete_sb.dato = paquete_chkr.dato;      // Colocar el dato
                                     paquete_sb.origen = paquete_chkr.origen;  // Colocar origen
-                                    paquete_sb.tipo = "Erroneo";              // Colocar tipo
+                                    paquete_sb.tipo = "Erroneo  ";              // Colocar tipo
                                     chkr_sb_mbx.put(paquete_sb);              // Colocar en el mbx checker -> scoreboard
 
                                     con_err++;
@@ -92,7 +92,7 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                             if (paquete_chkr.dato[width-1:width-8] == broadcast) begin 
                                                 paquete_sb.tipo = "Broadcast";        // Colocar tipo
                                             end else begin
-                                                paquete_sb.tipo = "Correcto";         // Colocar tipo
+                                                paquete_sb.tipo = "Correcto ";         // Colocar tipo
                                             end
                                             chkr_sb_mbx.put(paquete_sb);              // Colocar en el mbx checker -> scoreboard
 
