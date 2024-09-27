@@ -17,12 +17,12 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
         forever begin
             #5
             if (chkr_sb_mbx.num() != 0) begin
-                chkr_sb_mbx.get(chkr_sb_mbx);
+                chkr_sb_mbx.get(paquete_sb);
                 $display("[%g] Scoreboard: Recibido paquete desde checker", $time);
-                almacen.push_back(chkr_sb_mbx);
+                almacen.push_back(paquete_sb);
 
             end else begin
-                if (test_sb_mbx != 0) begin
+                if (test_sb_mbx.num() != 0) begin
                     test_sb_mbx.get(instruccion_sb);
 
                     case(instruccion_sb.tipo)
@@ -31,7 +31,7 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
 
 
 
-                            $display("[%g] Scoreboard: Recibida instruccion reporte", );
+                            $display("[%g] Scoreboard: Recibida instruccion reporte", $time);
                             tamano_sb = this.almacen.size();
                             $display("[%g] Dato       Origen       Tipo", $time);
                             for (int i = 0; i < tamano_sb; i++) begin
