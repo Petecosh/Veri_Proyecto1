@@ -52,7 +52,7 @@ class pck_drv_chkr #(parameter width = 16);
     bit accion;             // Avisa si el dato es enviado hacia el DUT o recibido desde el DUT
     int origen;             // Dispositivo origen
     int tiempo;
-    int retardo;
+    rand int retardo;
     function new(bit[width-1:0] dto = 0, bit ac = 0, int orig = 0, int tme = 0, int ret = 0);
         this.dato = dto;
         this.accion = ac; 
