@@ -37,7 +37,7 @@ class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, pa
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
         
-        #2000
+        #20
         instruccion_agente = new();
         instruccion_agente.tipo = Erronea;
         instruccion_agente.print("Test: Paquete al agente creado");

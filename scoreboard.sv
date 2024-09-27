@@ -32,7 +32,7 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
 
                             $display("[%g] Scoreboard: Recibida instruccion reporte", $time);
                             tamano_sb = this.almacen.size();
-                            $display("[%g] Dato       Origen       Tipo", $time);
+                            $display("[%g]   Dato       Origen         Tipo", $time);
                             for (int i = 0; i < tamano_sb; i++) begin
                                 auxiliar = almacen[i];
                                 auxiliar.print();
