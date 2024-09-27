@@ -47,7 +47,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
                 paquete_chkr = new();                        // Crear un paquete driver -> checker
                 paquete_chkr.accion=1'b1;                    // Avisar que se trata es una lectura
                 paquete_chkr.tiempo = $time;                 // Tiempo final
-                paquete_chkr.retardo = paquete_drv.retardo;  // Me llevo el retardo para eventualmente sumarlo en el scoreboard
+                paquete_chkr.retardo.copy(paquete_drv.retardo);  // Me llevo el retardo para eventualmente sumarlo en el scoreboard
                 paquete_chkr.dato = emul_fifo_o.pop_front(); // Sacar el dato de FIFO out
                 paquete_chkr.print("Monitor leyo un dato");
                 drv_chkr_mbx.put(paquete_chkr);              // Se coloca lo que se leyo hacia checker
