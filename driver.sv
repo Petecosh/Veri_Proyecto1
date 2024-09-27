@@ -7,12 +7,14 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     int id;                                                            // Identificador
     pck_drv_chkr #(.width(width)) paquete_chkr;                        // Paquete driver -> checker
     int espera;                                                        // Variable para los retardos
+    int tiempo_inicial;
 
     function new(input int ident);
         id = ident;            // Crear una variable ident, viene de un ciclo for que saca numero 0,1,2..
         this.emul_fifo_i = {}; // Inicializar FIFO in
         this.emul_fifo_o = {}; // Inicializar FIFO out
         this.espera = 0;       // Inicializar variable espera
+        this.tiempo_inicial = 0;
     endfunction
 
     // Se encarga de escribir
@@ -67,7 +69,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
                 $display("[%g] Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);         
                 paquete_chkr.accion = 1'b0;                  // Avisar que se trata de una escritura
                 paquete_chkr.tiempo = $time;                 // Tiempo inicial
-                int tiempo_inicial = paquete_chkr.tiempo-(paquete_drv.retardo*10);
+                tiempo_inicial = paquete_chkr.tiempo-(paquete_drv.retardo*10);
                 paquete_chkr.tiempo = tiempo_inicial         // Tiempo inicial - retardo
                 paquete_chkr.dato = emul_fifo_i.pop_front(); // El dato enviado hacia el DUT se envia al checker tambien
                 paquete_chkr.origen = id;                    // Asignar el origen de acuerdo al identificador
