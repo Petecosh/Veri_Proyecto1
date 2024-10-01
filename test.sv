@@ -1,8 +1,8 @@
 class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
     ambiente #(bits, devices, width, broadcast) ambiente_inst; // Instancia del ambiente
-    pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente;                           // Instruccion hacia el agente
+    pck_test_agnt #(devices, width) instruccion_agente;                           // Instruccion hacia el agente
     tipo_mbx_test_agnt test_agnt_mbx;                                                               // Mailbox test -> agente
-    virtual bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if;     // Interfaz
+    virtual bus_if #(bits, devices, width, broadcast) _if;     // Interfaz
     pck_test_sb instruccion_sb;
     tipo_mbx_test_sb test_sb_mbx;
 

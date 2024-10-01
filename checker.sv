@@ -8,7 +8,7 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
     int con_err;
     bit check_correcto;
 
-    pck_chkr_sb #(.width(width)) paquete_sb;   // Paquete checker -> scoreboard
+    pck_chkr_sb #(width) paquete_sb;   // Paquete checker -> scoreboard
     tipo_mbx_chkr_sb chkr_sb_mbx;              // Mailbox checker -> scoreboard
     
     function new();

@@ -1,7 +1,7 @@
 class agente #(parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
-    pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente; // Instruccion que recibe el agente
-    pck_agnt_drv #(.width(width)) paquete_agnt_drv[devices];              // Paquete que se envia hacia los mbx de los drivers
-    pck_agnt_drv #(.width(width)) paquete_rand;                           // Paquete para randomizar
+    pck_test_agnt #(devices, width) instruccion_agente; // Instruccion que recibe el agente
+    pck_agnt_drv #(width) paquete_agnt_drv[devices];              // Paquete que se envia hacia los mbx de los drivers
+    pck_agnt_drv #(width) paquete_rand;                           // Paquete para randomizar
     tipo_mbx_agnt_drv agnt_drv_mbx[devices];                              // Mailboxes del agente a los drivers
 
     int num_transacciones;                                                // Numero de transacciones
