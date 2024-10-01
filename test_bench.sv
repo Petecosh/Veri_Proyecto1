@@ -16,7 +16,7 @@ module test_bench;
     parameter bits = 1;
     parameter broadcast = {8{1'b1}};
 
-    test #(bits, devices, width, broadcast) test_inst;          // Instancia del test
+    test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
 
     bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if(.clk(clk));   // Interfaz
 
