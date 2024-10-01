@@ -23,15 +23,19 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
         this.check_correcto = 0;
 
     endfunction
+    
     task run();
 
-        $display("[%g] Chekcer inicializado", $time);
+        $display("[%g] Checker inicializado", $time);
+
+        #5
 
         forever begin
 
+            #10
+
             for (int h = 0; h < devices; h++)begin
 
-                #20
                 if (drv_chkr_mbx[h].num() > 0)begin
 
                     pck_drv_chkr #(.width(width)) paquete_chkr;
@@ -66,7 +70,7 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                     paquete_sb.tiempo_final = paquete_chkr.tiempo;
                                     paquete_sb.dato = paquete_chkr.dato;      // Colocar el dato
                                     paquete_sb.origen = paquete_chkr.origen;  // Colocar origen
-                                    paquete_sb.tipo = "Erroneo  ";              // Colocar tipo
+                                    paquete_sb.tipo = "Erroneo  ";            // Colocar tipo
                                     chkr_sb_mbx.put(paquete_sb);              // Colocar en el mbx checker -> scoreboard
 
                                     con_err++;
@@ -92,8 +96,10 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                             if (paquete_chkr.dato[width-1:width-8] == broadcast) begin 
                                                 paquete_sb.tipo = "Broadcast";        // Colocar tipo
                                             end else begin
-                                                paquete_sb.tipo = "Correcto ";         // Colocar tipo
+                                                paquete_sb.tipo = "Correcto ";        // Colocar tipo
                                             end
+                                            paquete_sb.keys = keys;                   // Para revisar que no queda nadie sobrando 
+                                            paquete_sb.index = index;                 // 
                                             chkr_sb_mbx.put(paquete_sb);              // Colocar en el mbx checker -> scoreboard
 
                                             index.delete(j);

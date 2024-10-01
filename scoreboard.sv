@@ -3,7 +3,9 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
     tipo_mbx_chkr_sb chkr_sb_mbx;   // Mailbox checker -> scoreboard
     pck_chkr_sb almacen[$];         // Guardar lo que sale del mbx checker -> scoreboard
     pck_test_sb instruccion_sb;     // Instruccion para el scoreboard
-    tipo_mbx_test_sb test_sb_mbx;
+    tipo_mbx_test_sb test_sb_mbx;   // Mailbox test -> scoreboard
+    pck_drv_chkr keys[$];           // Para revisar que no queda nadie sobrando
+    pck_drv_chkr index[$];          // 
 
     int tamano_sb; // Tamano del almacen
     int file;      // Archivo para CSV
@@ -19,6 +21,8 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
                 chkr_sb_mbx.get(paquete_sb);
                 $display("[%g] Scoreboard: Recibido paquete desde checker", $time);
                 almacen.push_back(paquete_sb);
+                keys = paquete_sb.keys;
+                index = paquete_sb.index;
 
             end else begin
                 if (test_sb_mbx.num() > 0) begin
@@ -38,6 +42,16 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
                                 auxiliar.print();
                             end
                             $display("---------------------------");
+                            $display("[%g] Se ejecutaron %0d mensajes", $time, almacen.size());
+
+                            if (keys.size() <= 1) begin
+                                $display("[%g] No quedo ningun mensaje sobrando en el DUT", $time);
+                            end else begin
+                                $display("[%g] Sobraron los siguientes mensajes", $time);
+                                for (int i = 0; i < keys.size(); i++) begin
+                                    $display("[%g] Dato = 0x%h Origen = %0d", $time, keys[i], index[i]);
+                                end
+                            end
 
                             file = $fopen("output.csv", "w");
     

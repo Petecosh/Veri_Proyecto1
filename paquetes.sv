@@ -1,5 +1,5 @@
 // Tipo Transaccion Agente (y Scoreboard)
-typedef enum {Random, Especifica, Erronea, Reporte} tipo_agente;
+typedef enum {Random, Especifica, Erronea, Broadcast, Reporte} tipo_agente;
 
 // Interfaz
 interface bus_if #(parameter bits = 1, parameter drvrs = 4, parameter pckg_sz = 16, parameter broadcast = {8{1'b1}})
@@ -26,7 +26,7 @@ class pck_agnt_drv #(parameter devices = 4, parameter width = 16);
     int max_retardo;
 
     constraint const_retardo {retardo < max_retardo; retardo > 0;}
-    constraint direccion {receptor < devices+2; receptor >=0; receptor != origen;}
+    constraint direccion {receptor < devices; receptor >=0; receptor != origen;}
     constraint dispositivo {origen < devices; origen >= 0;}
 
     function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0, int ret = 0, int max_ret = 0);
@@ -95,6 +95,8 @@ class pck_chkr_sb #(parameter width = 16);
     int tiempo_inicio;      // Tiempo inical para calcular retardo
     int tiempo_final;       // Tiempo final para calcular retardo
     int latencia;           // Valor final de retardo
+    pck_drv_chkr keys[$];   // Estos 2 son para revisar que no sobro ningun paquete
+    pck_drv_chkr index[$];  //
 
     task calc_latencia;
         this.latencia = this.tiempo_final - tiempo_inicio;
@@ -120,7 +122,7 @@ endclass
 class pck_test_sb;
     tipo_agente tipo;       // Tipo de instruccion para el scoreboard
 
-    function new(tipo_agente tpo = Random);
+    function new(tipo_agente tpo = Reporte);
         this.tipo = tpo;
     endfunction
 

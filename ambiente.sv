@@ -1,5 +1,5 @@
 class ambiente #(parameter bits = 1, parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
-    agente #(.devices(devices), .width(width)) agente_inst;                         // Instancia del agente
+    agente #(.devices(devices), .width(width), .broadcast(broadcast)) agente_inst;  // Instancia del agente
     driver #(.bits(bits), .drvrs(devices), .width(width)) driver_inst[devices];     // Instancias de los drivers
     checkr #(.width(width), .devices(devices), .broadcast(broadcast)) checkr_inst;  // Instancia del checker
     scoreboard #(.width(width), .devices(devices), .broadcast(broadcast)) scoreboard_inst;  // Instancia del scoreboard
