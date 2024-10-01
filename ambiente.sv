@@ -1,8 +1,8 @@
 class ambiente #(parameter bits = 1, parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
-    agente #(.devices(devices), .width(width), .broadcast(broadcast)) agente_inst;  // Instancia del agente
-    driver #(.bits(bits), .drvrs(devices), .width(width)) driver_inst[devices];     // Instancias de los drivers
-    checkr #(.width(width), .devices(devices), .broadcast(broadcast)) checkr_inst;  // Instancia del checker
-    scoreboard #(.width(width), .devices(devices), .broadcast(broadcast)) scoreboard_inst;  // Instancia del scoreboard
+    agente #(devices, width, broadcast) agente_inst;  // Instancia del agente
+    driver #(bits, devices, width) driver_inst[devices];     // Instancias de los drivers
+    checkr #(width,devices, broadcast) checkr_inst;  // Instancia del checker
+    scoreboard #(width, devices, broadcast) scoreboard_inst;  // Instancia del scoreboard
 
     tipo_mbx_test_agnt test_agnt_mbx;               // Mailbox test -> agente
     tipo_mbx_agnt_drv agnt_drv_mbx[devices];        // Mailboxes agente -> drivers
