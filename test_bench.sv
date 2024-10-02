@@ -1,11 +1,12 @@
 `timescale 1ns/1ps
 `include "Library.sv"
-`include "paquetes.sv"
+
 `include "driver.sv"
 `include "checker.sv"
 `include "agente.sv"
 `include "scoreboard.sv"
 `include "ambiente.sv"
+`include "paquetes.sv"
 `include "test.sv"
 
 module test_bench;
