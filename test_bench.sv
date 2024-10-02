@@ -11,10 +11,10 @@
 module test_bench;
 
     reg clk;
-    parameter width = 32;
+    parameter width = 16;
     parameter devices = 5;
     parameter bits = 1;
-    parameter broadcast = {8{1'b1}};
+    parameter broadcast = {8'b0000_1111};
 
     test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
 
