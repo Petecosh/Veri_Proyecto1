@@ -3,7 +3,7 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
     tipo_mbx_chkr_sb #(.width(width)) chkr_sb_mbx;   // Mailbox checker -> scoreboard
     pck_chkr_sb #(.width(width))almacen[$];         // Guardar lo que sale del mbx checker -> scoreboard
     pck_test_sb instruccion_sb;     // Instruccion para el scoreboard
-    tipo_mbx_test_sb #(.devices(devices), .width(width)) test_sb_mbx;   // Mailbox test -> scoreboard
+    tipo_mbx_test_sb  test_sb_mbx;   // Mailbox test -> scoreboard
     pck_drv_chkr #(.width(width)) keys[$];           // Para revisar que no queda nadie sobrando
     pck_drv_chkr #(.width(width)) index[$];          // 
 
