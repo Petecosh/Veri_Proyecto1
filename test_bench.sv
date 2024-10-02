@@ -15,7 +15,7 @@ module test_bench;
 
     reg clk;
     parameter width = 16;
-    parameter devices = 4;
+    parameter devices = 6;
     parameter bits = 1;
     parameter broadcast = {8{1'b1}};
 
