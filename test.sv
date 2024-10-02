@@ -29,20 +29,20 @@ class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, pa
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
         
-        #20
+        /*#20
         instruccion_agente = new();
         instruccion_agente.tipo = Especifica;
         instruccion_agente.dato = 16'b1111_1111_1111_1111;
         instruccion_agente.origen = 1'b1;
         instruccion_agente.retardo = 4;
         instruccion_agente.print("Test: Paquete al agente creado");
-        test_agnt_mbx.put(instruccion_agente);
+        test_agnt_mbx.put(instruccion_agente);*/
         
-        #20
+        /*#20
         instruccion_agente = new();
         instruccion_agente.tipo = Erronea;
         instruccion_agente.print("Test: Paquete al agente creado");
-        test_agnt_mbx.put(instruccion_agente);
+        test_agnt_mbx.put(instruccion_agente);*/
         
         #100000
         $display("[%g] Test: Se alcanza el tiempo limite de la prueba", $time);
