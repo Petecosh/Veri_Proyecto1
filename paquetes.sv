@@ -122,7 +122,7 @@ endclass
 class pck_test_sb;
     tipo_agente tipo;       // Tipo de instruccion para el scoreboard
 
-    function new(tipo_agente tpo = Random);
+    function new(tipo_agente tpo = Reporte);
         this.tipo = tpo;
     endfunction
 
