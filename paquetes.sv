@@ -68,7 +68,7 @@ endclass
 
 
 // Paquete Test -> Agente
-class pck_test_agnt #(parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
+class pck_test_agnt #(parameter devices = 4, parameter width = 16);
     bit [width-1:0] dato;   // Dato enviado
     tipo_agente tipo;       // Tipo de instruccion para el agente
     rand bit [4:0] origen;  // Dispositivo origen
@@ -130,9 +130,9 @@ endclass
 
 // Mailboxes
 
-typedef mailbox #(pck_agnt_drv) tipo_mbx_agnt_drv;    // Mailbox agente -> driver
-typedef mailbox #(pck_drv_chkr) tipo_mbx_drv_chkr;    // Mailbox driver -> checker
-typedef mailbox #(pck_chkr_sb) tipo_mbx_chkr_sb;      // Mailbox checker -> scoreboard
-typedef mailbox #(pck_test_agnt) tipo_mbx_test_agnt;  // Mailbox test -> agente
-typedef mailbox #(pck_test_sb) tipo_mbx_test_sb;      // Mailbox test -> scoreboard
+typedef mailbox #(pck_agnt_drv #(.width(width))) tipo_mbx_agnt_drv;    // Mailbox agente -> driver
+typedef mailbox #(pck_drv_chkr #(.width(width))) tipo_mbx_drv_chkr;    // Mailbox driver -> checker
+typedef mailbox #(pck_chkr_sb #(.width(width))) tipo_mbx_chkr_sb;      // Mailbox checker -> scoreboard
+typedef mailbox #(pck_test_agnt #(.devices(devices), .width(width))) tipo_mbx_test_agnt;  // Mailbox test -> agente
+typedef mailbox #(pck_test_sb  #(.devices(devices), .width(width))) tipo_mbx_test_sb;      // Mailbox test -> scoreboard
 

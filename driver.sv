@@ -1,6 +1,6 @@
 class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
-    tipo_mbx_agnt_drv agnt_drv_mbx;                                    // Mailbox Agente -> Driver
-    tipo_mbx_drv_chkr drv_chkr_mbx;                                    // Mailbox Driver -> Checker
+    tipo_mbx_agnt_drv #(.width(width)) agnt_drv_mbx;                                    // Mailbox Agente -> Driver
+    tipo_mbx_drv_chkr #(.width(width)) drv_chkr_mbx;                                    // Mailbox Driver -> Checker
     bit [width-1:0] emul_fifo_i[$];                                    // Emulación Fifo Driver -> DUT
     int             aux[$];                                            // Queue para guardar retardos
     bit [width-1:0] emul_fifo_o[$];                                    // Emulación FIFO DUT -> Driver
