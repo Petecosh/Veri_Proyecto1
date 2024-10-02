@@ -68,7 +68,7 @@ endclass
 
 
 // Paquete Test -> Agente
-class pck_test_agnt #(parameter devices = 4, parameter width = 16);
+class pck_test_agnt #(parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
     bit [width-1:0] dato;   // Dato enviado
     tipo_agente tipo;       // Tipo de instruccion para el agente
     rand bit [4:0] origen;  // Dispositivo origen
