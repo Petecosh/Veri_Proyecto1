@@ -1,11 +1,18 @@
 `timescale 1ns/1ps
-
+`include "paquetes.sv"
+`include "driver.sv"
+`include "agente.sv"
+`include "Library.sv"
+`include "checker.sv"
+`include "scoreboard.sv"
+`include "ambiente.sv"
+`include "test.sv"
 
 module test_bench;
 
     reg clk;
     parameter width = 16;
-    parameter devices = 6;
+    parameter devices = 4;
     parameter bits = 1;
     parameter broadcast = {8{1'b1}};
 
