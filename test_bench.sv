@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-//parameter broadcast = {8'b0000_0110};
+`define devices 6
 
 `include "paquetes.sv"
 `include "driver.sv"
