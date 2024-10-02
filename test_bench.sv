@@ -13,9 +13,9 @@
 module test_bench;
 
     reg clk;
-    parameter width = 16;
-    devices = 6;
-    parameter bits = 1;
+    int width = 16;
+    int devices = 6;
+    int bits = 1;
     parameter broadcast = {8{1'b1}};
     test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
 
