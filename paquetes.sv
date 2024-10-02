@@ -26,7 +26,7 @@ class pck_agnt_drv #(parameter devices = 4, parameter width = 16, parameter broa
     rand int retardo;               
     int max_retardo;
 
-    constraint dir_erronea {erronea > devices; erronea != broadcast}
+    constraint dir_erronea {erronea > devices; erronea != broadcast;}
     constraint const_retardo {retardo < max_retardo; retardo > 0;}
     constraint direccion {receptor < devices; receptor >=0; receptor != origen;}
     constraint dispositivo {origen < devices; origen >= 0;}
