@@ -95,8 +95,8 @@ class pck_chkr_sb #(parameter width = 16);
     int tiempo_inicio;      // Tiempo inical para calcular retardo
     int tiempo_final;       // Tiempo final para calcular retardo
     int latencia;           // Valor final de retardo
-    pck_drv_chkr keys[$];   // Estos 2 son para revisar que no sobro ningun paquete
-    pck_drv_chkr index[$];  //
+    pck_drv_chkr #(.width(width)) keys[$];   // Estos 2 son para revisar que no sobro ningun paquete
+    pck_drv_chkr #(.width(width)) index[$];  //
 
     task calc_latencia;
         this.latencia = this.tiempo_final - tiempo_inicio;
@@ -130,9 +130,9 @@ endclass
 
 // Mailboxes
 
-typedef mailbox #(pck_agnt_drv #(.width(width))) tipo_mbx_agnt_drv;    // Mailbox agente -> driver
+typedef mailbox #(pck_agnt_drv #(.devices(devices),.width(width))) tipo_mbx_agnt_drv;    // Mailbox agente -> driver
 typedef mailbox #(pck_drv_chkr #(.width(width))) tipo_mbx_drv_chkr;    // Mailbox driver -> checker
 typedef mailbox #(pck_chkr_sb #(.width(width))) tipo_mbx_chkr_sb;      // Mailbox checker -> scoreboard
 typedef mailbox #(pck_test_agnt #(.devices(devices), .width(width))) tipo_mbx_test_agnt;  // Mailbox test -> agente
-typedef mailbox #(pck_test_sb  #(.devices(devices), .width(width))) tipo_mbx_test_sb;      // Mailbox test -> scoreboard
+typedef mailbox #(pck_test_sb) tipo_mbx_test_sb;      // Mailbox test -> scoreboard
 
