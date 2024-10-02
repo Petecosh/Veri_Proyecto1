@@ -1,7 +1,7 @@
 class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadcast = {8{1'b1}});
     pck_chkr_sb #(.width(width)) paquete_sb;         // Paquete checker -> scoreboard
     tipo_mbx_chkr_sb #(.width(width)) chkr_sb_mbx;   // Mailbox checker -> scoreboard
-    pck_chkr_sb #(.width(width))almacen[$];         // Guardar lo que sale del mbx checker -> scoreboard
+    pck_chkr_sb almacen[$];         // Guardar lo que sale del mbx checker -> scoreboard
     pck_test_sb instruccion_sb;     // Instruccion para el scoreboard
     tipo_mbx_test_sb  test_sb_mbx;   // Mailbox test -> scoreboard
     pck_drv_chkr #(.width(width)) keys[$];           // Para revisar que no queda nadie sobrando
@@ -9,7 +9,7 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
 
     int tamano_sb; // Tamano del almacen
     int file;      // Archivo para CSV
-    pck_chkr_sb auxiliar; // Para hacer prints
+    pck_chkr_sb #(.width(width)) auxiliar; // Para hacer prints
 
     task run();
 
