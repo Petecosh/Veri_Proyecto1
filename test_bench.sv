@@ -14,7 +14,7 @@ module test_bench;
     parameter width = 16;
     parameter devices = 5;
     parameter bits = 1;
-    parameter broadcast = {8'h0000_0111};
+    parameter broadcast = {8'b0000_0111};
 
     test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
 
