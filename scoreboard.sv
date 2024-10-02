@@ -2,10 +2,10 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
     pck_chkr_sb #(.width(width)) paquete_sb;         // Paquete checker -> scoreboard
     tipo_mbx_chkr_sb #(.width(width)) chkr_sb_mbx;   // Mailbox checker -> scoreboard
     pck_chkr_sb #(.width(width))almacen[$];         // Guardar lo que sale del mbx checker -> scoreboard
-    pck_test_sb #(.width(width))instruccion_sb;     // Instruccion para el scoreboard
+    pck_test_sb instruccion_sb;     // Instruccion para el scoreboard
     tipo_mbx_test_sb #(.devices(devices), .width(width)) test_sb_mbx;   // Mailbox test -> scoreboard
     pck_drv_chkr #(.width(width)) keys[$];           // Para revisar que no queda nadie sobrando
-    pck_drv_chkr #(.width(width))index[$];          // 
+    pck_drv_chkr #(.width(width)) index[$];          // 
 
     int tamano_sb; // Tamano del almacen
     int file;      // Archivo para CSV
