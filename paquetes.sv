@@ -31,7 +31,7 @@ class pck_agnt_drv #(parameter devices = 4, parameter width = 16, parameter broa
     constraint direccion {receptor < devices; receptor >=0; receptor != origen;}
     constraint dispositivo {origen < devices; origen >= 0;}
 
-    function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0, int ret = 0, int max_ret = 0, bit dir_er = 0);
+    function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0, int ret = 10, int max_ret = 0, bit dir_er = 0);
         this.dato = dto;
         this.origen = org;
         this.receptor = rec;
