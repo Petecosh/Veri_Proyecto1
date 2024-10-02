@@ -1,15 +1,15 @@
 class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast = {8{1'b1}});
     
-    tipo_mbx_drv_chkr drv_chkr_mbx[devices];
-    pck_drv_chkr keys[$];
-    pck_drv_chkr index[$];
+    tipo_mbx_drv_chkr #(.width(width)) drv_chkr_mbx[devices];
+    pck_drv_chkr #(.width(width))keys[$];
+    pck_drv_chkr #(.width(width))index[$];
     int Procesos_erroneos[$];
     int con_index;
     int con_err;
     bit check_correcto;
 
     pck_chkr_sb #(.width(width)) paquete_sb;   // Paquete checker -> scoreboard
-    tipo_mbx_chkr_sb chkr_sb_mbx;              // Mailbox checker -> scoreboard
+    tipo_mbx_chkr_sb #(.width(width)) chkr_sb_mbx;              // Mailbox checker -> scoreboard
     
     function new();
     for (int q = 0; q < devices; q++) begin
