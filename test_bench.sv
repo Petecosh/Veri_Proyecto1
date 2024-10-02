@@ -14,7 +14,7 @@ module test_bench;
 
     reg clk;
     parameter width = 16;
-    parameter devices = 4;
+    parameter devices = 2;
     parameter bits = 1;
     parameter broadcast = {8{1'b1}};
     test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
@@ -37,7 +37,6 @@ module test_bench;
 
     initial begin
         clk = 0;                                                     // Clock en 0
-        devices = 6;
         test_inst = new();                                           // Inicializar la instancia del test
         $display("[%g] Test inicializado", $time);                   
         test_inst._if = _if;                                         // Asociar la interfaz de afuera con la interfaz dentro del test
