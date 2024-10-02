@@ -95,6 +95,8 @@ class pck_chkr_sb #(parameter width = 16);
     int tiempo_inicio;      // Tiempo inical para calcular retardo
     int tiempo_final;       // Tiempo final para calcular retardo
     int latencia;           // Valor final de retardo
+    pck_drv_chkr keys[$];   // Estos 2 son para revisar que no sobro ningun paquete
+    pck_drv_chkr index[$];  //
 
     task calc_latencia;
         this.latencia = this.tiempo_final - tiempo_inicio;
