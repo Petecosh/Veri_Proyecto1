@@ -7,11 +7,10 @@ class agente #(parameter devices = 4, parameter width = 16, parameter broadcast 
     int num_transacciones;                                                // Numero de transacciones
     tipo_mbx_test_agnt #(.devices(devices), .width(width)) test_agnt_mbx;                                     // Mailbox del test al agente
     int max_retardo;                                                      // Retardo maximo
-    rand bit [width-1:width-8] dir_error;
+
     function new();
         num_transacciones = 275;                 // Se define la cantidad de transacciones
         max_retardo = 10;                        // Se define 10 como el retardo maximo
-        dir_error = 8'h0;
     endfunction
 
     task run();
@@ -55,7 +54,7 @@ class agente #(parameter devices = 4, parameter width = 16, parameter broadcast 
                         paquete_rand = new();
                         paquete_rand.max_retardo = max_retardo;                                                         // Inicializar un paquete random
                         paquete_rand.randomize();                                                     // El paquete se randomiza
-                        paquete_rand.dato = {dir_error.randomize(), paquete_rand.payload};                        // El identificador erroneo se concatena con el payload
+                        paquete_rand.dato = {devices+1, paquete_rand.payload};                        // El identificador erroneo se concatena con el payload
                         paquete_agnt_drv[paquete_rand.origen] = new();                                // Inicializar el paquete agente -> driver
                         paquete_agnt_drv[paquete_rand.origen] = paquete_rand;                         // Asociar el contenido random al paquete agente -> driver
                         paquete_agnt_drv[paquete_rand.origen].print("Agente: Erronea Transaccion creada");
