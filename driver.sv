@@ -21,7 +21,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
     task escribir();
         forever begin
 
-            pck_agnt_drv #(.width(width)) paquete_drv;                     // Paquete que utiliza el driver
+            pck_agnt_drv #(.devices(drvrs), .width(width)) paquete_drv;                     // Paquete que utiliza el driver
 
             espera = 0;       // Siempre que pida escribir, ponga espera en 0
 
