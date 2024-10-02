@@ -32,7 +32,7 @@ class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, pa
         #20
         instruccion_agente = new();
         instruccion_agente.tipo = Especifica;
-        instruccion_agente.dato = 16'b1111_1111_1111_1111;
+        instruccion_agente.dato = 16'b0000_0010_0101_0111;
         instruccion_agente.origen = 1'b1;
         instruccion_agente.retardo = 4;
         instruccion_agente.print("Test: Paquete al agente creado");
