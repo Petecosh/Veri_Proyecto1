@@ -1,7 +1,4 @@
 `timescale 1ns/1ps
-
-`define devices 6
-
 `include "paquetes.sv"
 `include "driver.sv"
 `include "agente.sv"
@@ -9,7 +6,7 @@
 `include "checker.sv"
 `include "scoreboard.sv"
 `include "ambiente.sv"
-`include "test.sv"
+//`include "test.sv"
 
 module test_bench;
 
