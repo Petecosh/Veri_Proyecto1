@@ -44,7 +44,7 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
                             $display("---------------------------");
                             $display("[%g] Se ejecutaron %0d mensajes", $time, almacen.size());
 
-                            if (keys.size() == 1) begin
+                            if (keys.size() <= 1) begin
                                 $display("[%g] No quedo ningun mensaje sobrando en el DUT", $time);
                             end else begin
                                 $display("[%g] Sobraron los siguientes mensajes", $time);

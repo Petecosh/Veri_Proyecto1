@@ -1,4 +1,4 @@
-class agente #(parameter devices = 4, parameter width = 16);
+class agente #(parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
     pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente; // Instruccion que recibe el agente
     pck_agnt_drv #(.width(width)) paquete_agnt_drv[devices];              // Paquete que se envia hacia los mbx de los drivers
     pck_agnt_drv #(.width(width)) paquete_rand;                           // Paquete para randomizar
@@ -59,6 +59,19 @@ class agente #(parameter devices = 4, parameter width = 16);
                         paquete_agnt_drv[paquete_rand.origen] = paquete_rand;                         // Asociar el contenido random al paquete agente -> driver
                         paquete_agnt_drv[paquete_rand.origen].print("Agente: Erronea Transaccion creada");
                         agnt_drv_mbx[paquete_rand.origen].put(paquete_agnt_drv[paquete_rand.origen]); // Se coloca en el mbx agente -> driver
+                    end
+
+                    Broadcast: begin                                                           // Si la instruccion es de tipo broadcast...
+                        for (int i = 0; i < devices; i++) begin                                // Se generan un broadcast por cada device 
+                            paquete_rand = new();                                              // Se inicializa el paquete random
+                            paquete_rand.randomize();                                          // se randomiza el contenido del paquete
+                            paquete_rand.dato = {broadcast, paquete_rand.payload};             // Se concatena el broadcast y el payload
+                            paquete_agnt_drv[i] = new();                                       // Se inicializa un paquete agente -> driver
+                            paquete_agnt_drv[i].dato = paquete_rand.dato;                      // El dato del paquete agente -> driver
+                            paquete_agnt_drv[i].origen = i;                                    // Agregar el origen
+                            paquete_agnt_drv[i].print("Agente: Broadcast Transaccion creada");
+                            agnt_drv_mbx[i].put(paquete_agnt_drv[i]);                          // Se coloca en el mbx agente -> driver
+                        end
                     end
                     
                     default: begin
