@@ -13,10 +13,10 @@
 module test_bench;
 
     reg clk;
-    parameter width = 32;
+    parameter width = 16;
     parameter devices = 4;
     parameter bits = 1;
-    parameter broadcast = {8{1'b1}};
+    parameter broadcast = {8'b0000_0110};
     test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
 
     bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if(.clk(clk));   // Interfaz
