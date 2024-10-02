@@ -9,7 +9,7 @@ class agente #(parameter devices = 4, parameter width = 16, parameter broadcast 
     int max_retardo;                                                      // Retardo maximo
 
     function new();
-        num_transacciones = 275;                 // Se define la cantidad de transacciones
+        num_transacciones = 500;                 // Se define la cantidad de transacciones
         max_retardo = 10;                        // Se define 10 como el retardo maximo
     endfunction
 
