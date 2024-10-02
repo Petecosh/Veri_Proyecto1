@@ -17,7 +17,7 @@ interface bus_if #(parameter bits = 1, parameter drvrs = 4, parameter pckg_sz = 
 endinterface
 
 // Paquete Agente -> Driver
-class pck_agnt_drv #(parameter devices = 4, parameter width = 16);
+class pck_agnt_drv #(parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
     bit [width-1:0] dato;
     rand bit [devices-1:0] origen;   // Dispositivo origen
     rand bit [width-1:width-8] receptor;         // Dispositivo destino
@@ -26,7 +26,7 @@ class pck_agnt_drv #(parameter devices = 4, parameter width = 16);
     rand int retardo;               
     int max_retardo;
 
-    constraint dir_erronea {erronea > devices;}
+    constraint dir_erronea {erronea > devices; erronea != broadcast}
     constraint const_retardo {retardo < max_retardo; retardo > 0;}
     constraint direccion {receptor < devices; receptor >=0; receptor != origen;}
     constraint dispositivo {origen < devices; origen >= 0;}
@@ -133,7 +133,7 @@ endclass
 
 // Mailboxes
 
-typedef mailbox #(pck_agnt_drv #(.devices(6), .width(16))) tipo_mbx_agnt_drv;    // Mailbox agente -> driver
+typedef mailbox #(pck_agnt_drv #(.devices(6), .width(16), .broadcast ({8{1'b1}}))) tipo_mbx_agnt_drv;    // Mailbox agente -> driver
 typedef mailbox #(pck_drv_chkr #(.width(6))) tipo_mbx_drv_chkr;    // Mailbox driver -> checker
 typedef mailbox #(pck_chkr_sb #(.width(16))) tipo_mbx_chkr_sb;      // Mailbox checker -> scoreboard
 typedef mailbox #(pck_test_agnt #(.devices(6), .width(16))) tipo_mbx_test_agnt;  // Mailbox test -> agente
