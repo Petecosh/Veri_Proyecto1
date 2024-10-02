@@ -4,7 +4,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16, pa
     bit [width-1:0] emul_fifo_i[$];                                    // Emulación Fifo Driver -> DUT
     int             aux[$];                                            // Queue para guardar retardos
     bit [width-1:0] emul_fifo_o[$];                                    // Emulación FIFO DUT -> Driver
-    virtual bus_if #(.bits(bits), .drvrs(drvrs), .pckg_sz(width)) vif; // Interfaz
+    virtual bus_if #(.bits(bits), .drvrs(drvrs), .pckg_sz(width), .broadcast(broadcast)) vif; // Interfaz
     int id;                                                            // Identificador
     pck_drv_chkr #(.width(width)) paquete_chkr;                        // Paquete driver -> checker
     int espera;                                                        // Variable para los retardos
