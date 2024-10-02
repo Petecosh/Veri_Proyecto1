@@ -15,6 +15,7 @@ module test_bench;
     reg clk;
     parameter width = 16;
     parameter devices = 4;
+    constraint const_devices {0 < devices < 8;}
     parameter bits = 1;
     parameter broadcast = {8{1'b1}};
     test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
@@ -40,6 +41,7 @@ module test_bench;
         test_inst = new();                                           // Inicializar la instancia del test
         $display("[%g] Test inicializado", $time);                   
         test_inst._if = _if;                                         // Asociar la interfaz de afuera con la interfaz dentro del test
+        devices.randomize();
         for (int i = 0; i < devices; i++) begin                      // Ciclo para conectar las instancias de los drivers a la interfaz
             test_inst.ambiente_inst.driver_inst[i].vif = _if;
         end
