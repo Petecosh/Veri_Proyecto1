@@ -130,7 +130,7 @@ endclass
 
 // Mailboxes
 
-typedef mailbox #(pck_agnt_drv #(.devices(devices),.width(width))) tipo_mbx_agnt_drv;    // Mailbox agente -> driver
+typedef mailbox #(pck_agnt_drv #(.devices(devices), .width(width))) tipo_mbx_agnt_drv;    // Mailbox agente -> driver
 typedef mailbox #(pck_drv_chkr #(.width(width))) tipo_mbx_drv_chkr;    // Mailbox driver -> checker
 typedef mailbox #(pck_chkr_sb #(.width(width))) tipo_mbx_chkr_sb;      // Mailbox checker -> scoreboard
 typedef mailbox #(pck_test_agnt #(.devices(devices), .width(width))) tipo_mbx_test_agnt;  // Mailbox test -> agente
