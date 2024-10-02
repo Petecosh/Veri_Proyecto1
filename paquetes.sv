@@ -26,7 +26,7 @@ class pck_agnt_drv #(parameter devices = 4, parameter width = 16);
     int max_retardo;
 
     constraint const_retardo {retardo < max_retardo; retardo > 0;}
-    constraint direccion {receptor < devices+2; receptor >=0; receptor != origen;}
+    constraint direccion {receptor < devices; receptor >=0; receptor != origen;}
     constraint dispositivo {origen < devices; origen >= 0;}
 
     function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0, int ret = 0, int max_ret = 0);
