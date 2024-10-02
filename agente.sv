@@ -51,14 +51,16 @@ class agente #(parameter devices = 4, parameter width = 16, parameter broadcast 
                     
 
                     Erronea: begin                                                                    // Si la instruccion es erronea a proposito
-                        paquete_rand = new();
-                        paquete_rand.max_retardo = max_retardo;                                                         // Inicializar un paquete random
-                        paquete_rand.randomize();                                                     // El paquete se randomiza
-                        paquete_rand.dato = {devices+1, paquete_rand.payload};                        // El identificador erroneo se concatena con el payload
-                        paquete_agnt_drv[paquete_rand.origen] = new();                                // Inicializar el paquete agente -> driver
-                        paquete_agnt_drv[paquete_rand.origen] = paquete_rand;                         // Asociar el contenido random al paquete agente -> driver
-                        paquete_agnt_drv[paquete_rand.origen].print("Agente: Erronea Transaccion creada");
-                        agnt_drv_mbx[paquete_rand.origen].put(paquete_agnt_drv[paquete_rand.origen]); // Se coloca en el mbx agente -> driver
+                        for (int j = 0; j < max_retardo; j++) begin
+                            paquete_rand = new();
+                            paquete_rand.max_retardo = max_retardo;                                                         // Inicializar un paquete random
+                            paquete_rand.randomize();                                                     // El paquete se randomiza
+                            paquete_rand.dato = { paquete_rand.erronea, paquete_rand.payload};                        // El identificador erroneo se concatena con el payload
+                            paquete_agnt_drv[paquete_rand.origen] = new();                                // Inicializar el paquete agente -> driver
+                            paquete_agnt_drv[paquete_rand.origen] = paquete_rand;                         // Asociar el contenido random al paquete agente -> driver
+                            paquete_agnt_drv[paquete_rand.origen].print("Agente: Erronea Transaccion creada");
+                            agnt_drv_mbx[paquete_rand.origen].put(paquete_agnt_drv[paquete_rand.origen]); // Se coloca en el mbx agente -> driver
+                        end
                     end
 
                     Broadcast: begin                                                           // Si la instruccion es de tipo broadcast...

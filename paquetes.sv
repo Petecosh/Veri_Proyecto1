@@ -20,22 +20,25 @@ endinterface
 class pck_agnt_drv #(parameter devices = 4, parameter width = 16);
     bit [width-1:0] dato;
     rand bit [devices-1:0] origen;   // Dispositivo origen
-    rand bit [7:0] receptor;         // Dispositivo destino
+    rand bit [width-1:width-8] receptor;         // Dispositivo destino
     rand bit [width-9:0] payload;    // Mensaje
+    rand bit [width-1:width-8] erronea;
     rand int retardo;               
     int max_retardo;
 
+    constraint dir_erronea {erronea > devices;}
     constraint const_retardo {retardo < max_retardo; retardo > 0;}
     constraint direccion {receptor < devices; receptor >=0; receptor != origen;}
     constraint dispositivo {origen < devices; origen >= 0;}
 
-    function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0, int ret = 0, int max_ret = 0);
+    function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0, int ret = 0, int max_ret = 0, bit dir_er = 0);
         this.dato = dto;
         this.origen = org;
         this.receptor = rec;
         this.payload = pay;
         this.retardo = ret;
         this.max_retardo = retardo;
+        this.erronea=dir_er;
         
     endfunction
 
