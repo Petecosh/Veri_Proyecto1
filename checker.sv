@@ -93,7 +93,7 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                             paquete_sb.tiempo_final = paquete_chkr.tiempo;
                                             paquete_sb.dato = paquete_chkr.dato;      // Colocar el dato
                                             paquete_sb.origen = index[j].origen;             // Colocar origen
-                                            $display("[%g] broad what acc1 %b", $time,(paquete_chkr.dato[width-1:width-8]);
+                                            $display("[%g] broad what acc1 %b", $time,paquete_chkr.dato[width-1:width-8]);
                                             if (paquete_chkr.dato[width-1:width-8] == broadcast) begin 
                                                 paquete_sb.tipo = "Broadcast";        // Colocar tipo
                                             end else begin
