@@ -15,7 +15,7 @@ module test_bench;
     reg clk;
     parameter width = 16;
     parameter devices = 4;
-    constraint const_devices {0 < devices < 8;}
+    constraint const_devices {0 < devices; devices < 8;}
     parameter bits = 1;
     parameter broadcast = {8{1'b1}};
     test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
