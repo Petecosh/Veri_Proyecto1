@@ -1,4 +1,4 @@
-class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16);
+class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
     tipo_mbx_agnt_drv #(.devices(drvrs), .width(width), .broadcast(broadcast)) agnt_drv_mbx;                                    // Mailbox Agente -> Driver
     tipo_mbx_drv_chkr #(.width(width)) drv_chkr_mbx;                                    // Mailbox Driver -> Checker
     bit [width-1:0] emul_fifo_i[$];                                    // Emulación Fifo Driver -> DUT
