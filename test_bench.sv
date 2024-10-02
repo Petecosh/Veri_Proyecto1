@@ -1,7 +1,15 @@
 `timescale 1ns/1ps
 
+parameter broadcast = {8'b0000_0110};
 
-
+`include "paquetes.sv"
+`include "driver.sv"
+`include "agente.sv"
+`include "Library.sv"
+`include "checker.sv"
+`include "scoreboard.sv"
+`include "ambiente.sv"
+`include "test.sv"
 
 module test_bench;
 
@@ -11,14 +19,6 @@ module test_bench;
     parameter bits = 1;
     parameter broadcast = {8'b0000_0110};
 
-    `include "paquetes.sv"
-    `include "driver.sv"
-    `include "agente.sv"
-    `include "Library.sv"
-    `include "checker.sv"
-    `include "scoreboard.sv"
-    `include "ambiente.sv"
-    `include "test.sv"
     test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
 
     bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if(.clk(clk));   // Interfaz
