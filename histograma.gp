@@ -1,5 +1,5 @@
 # Set up terminal and output file
-set terminal png
+set terminal png font ",8"
 set output 'histogram.png'
 
 # Set up title and labels
@@ -25,6 +25,6 @@ set xrange [-50:STATS_max+50]      # Set x-axis range based on the max value
 
 # Set xtics to the appropriate bins
 set xtics 100                   # Set xtics to every 100 units
-
+set ytics 20
 # Plot using the 4th column and smooth frequency
 plot 'output.csv' using (floor($4/100)*100+50):(1) smooth freq with boxes title "Cantidad"
