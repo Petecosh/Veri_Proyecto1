@@ -11,22 +11,23 @@
 module test_bench;
 
     reg clk;
-    int width;
-    int devices;
+    int w;
+    int d;
     parameter bits = 1;
     parameter broadcast = {8'b1000_1111};
     class RandomParams;
-        rand int width;
-        rand int devices;
+        rand int w;
+        rand int d;
 
         // Restricciones para los valores randomizados (1 a 32)
-        constraint c_width { width inside {[16:32]}; }
-        constraint c_devices { devices inside {[1:32]}; }
+        constraint c_width { w inside {[16:32]}; }
+        constraint c_devices { d inside {[1:32]}; }
     endclass
 
     // Instancia de la clase
     RandomParams params = new();
-
+    parameter width = w;
+    parameter devices = d;
     test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
 
     bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if(.clk(clk));   // Interfaz
