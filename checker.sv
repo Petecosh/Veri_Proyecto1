@@ -46,7 +46,6 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                             1'b0: begin
 
                                 $display("[%g] Checker recibe: org = %h, dato%h", $time, paquete_chkr.origen, paquete_chkr.dato);
-                                
                                 if (paquete_chkr.dato[width-1:width-8] == broadcast) begin
                                     for (int i = 0; i < devices-1; i++) begin
                                         index[con_index] = paquete_chkr;  

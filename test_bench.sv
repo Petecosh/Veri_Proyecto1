@@ -11,10 +11,10 @@
 module test_bench;
 
     reg clk;
-    parameter width = 16;
-    parameter devices = 6;
+    parameter width = 32;
+    parameter devices = 5;
     parameter bits = 1;
-    parameter broadcast = {8{1'b1}};
+    parameter broadcast = {8'b1111_1111};
 
     test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
 
@@ -57,7 +57,7 @@ module test_bench;
 
     always @(posedge clk) begin
 
-        if ($time > 1000000) begin
+        if ($time > 2000000) begin
             $display("[%g] Testbench: Tiempo limite alcanzado", $time);
             $finish;
         end
