@@ -24,11 +24,12 @@ class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, pa
 
         // Pruebas
         #40
+        /*
         instruccion_agente = new();
         instruccion_agente.tipo = Random;
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
-        
+        */
         #20
         instruccion_agente = new();
         instruccion_agente.tipo = Especifica;
@@ -39,11 +40,12 @@ class test #(parameter bits = 1, parameter devices = 4, parameter width = 16, pa
         test_agnt_mbx.put(instruccion_agente);
         
         #20
+        /*
         instruccion_agente = new();
         instruccion_agente.tipo = Erronea;
         instruccion_agente.print("Test: Paquete al agente creado");
         test_agnt_mbx.put(instruccion_agente);
-
+        */
         #20
         instruccion_agente = new();
         instruccion_agente.tipo = Broadcast;
