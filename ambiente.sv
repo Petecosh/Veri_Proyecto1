@@ -1,13 +1,13 @@
 class ambiente #(parameter bits = 1, parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
-    agente #(.devices(devices), .width(width), .broadcast(broadcast)) agente_inst;  // Instancia del agente
-    driver #(.bits(bits), .drvrs(devices), .width(width), .broadcast(broadcast)) driver_inst[devices];     // Instancias de los drivers
-    checkr #(.width(width), .devices(devices), .broadcast(broadcast)) checkr_inst;  // Instancia del checker
-    scoreboard #(.width(width), .devices(devices), .broadcast(broadcast)) scoreboard_inst;  // Instancia del scoreboard
+    agente #(.devices(devices), .width(width), .broadcast(broadcast)) agente_inst;                      // Instancia del agente
+    driver #(.bits(bits), .drvrs(devices), .width(width), .broadcast(broadcast)) driver_inst[devices];  // Instancias de los drivers
+    checkr #(.width(width), .devices(devices), .broadcast(broadcast)) checkr_inst;                      // Instancia del checker
+    scoreboard #(.width(width), .devices(devices), .broadcast(broadcast)) scoreboard_inst;              // Instancia del scoreboard
 
-    tipo_mbx_test_agnt #(.devices(devices), .width(width)) test_agnt_mbx;               // Mailbox test -> agente
-    tipo_mbx_agnt_drv #(.devices(devices), .width(width), .broadcast(broadcast)) agnt_drv_mbx[devices];        // Mailboxes agente -> drivers
-    tipo_mbx_drv_chkr #(.width(width)) drv_chkr_mbx[devices];        // Mailboxes drivers -> checker
-    tipo_mbx_chkr_sb #(.width(width)) chkr_sb_mbx;                   // Mailbox checker -> scoreboard
+    tipo_mbx_test_agnt #(.devices(devices), .width(width)) test_agnt_mbx;                               // Mailbox test -> agente
+    tipo_mbx_agnt_drv #(.devices(devices), .width(width), .broadcast(broadcast)) agnt_drv_mbx[devices]; // Mailboxes agente -> drivers
+    tipo_mbx_drv_chkr #(.width(width)) drv_chkr_mbx[devices];                                           // Mailboxes drivers -> checker
+    tipo_mbx_chkr_sb #(.width(width)) chkr_sb_mbx;                                                      // Mailbox checker -> scoreboard
 
     function new();
 

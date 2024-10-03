@@ -19,17 +19,17 @@ endinterface
 // Paquete Agente -> Driver
 class pck_agnt_drv #(parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
     bit [width-1:0] dato;
-    rand bit [devices-1:0] origen;   // Dispositivo origen
-    rand bit [width-1:width-8] receptor;         // Dispositivo destino
-    rand bit [width-9:0] payload;    // Mensaje
-    rand bit [width-1:width-8] erronea;
-    rand int retardo;               
-    int max_retardo;
+    rand bit [devices-1:0] origen;       // Dispositivo origen
+    rand bit [width-1:width-8] receptor; // Dispositivo destino
+    rand bit [width-9:0] payload;        // Mensaje
+    rand bit [width-1:width-8] erronea;  // Para aletorizar una direccion erronea
+    rand int retardo;                    // Retardo especifficado          
+    int max_retardo;                     // Retardo maximo para el constraint
 
-    constraint dir_erronea {erronea > devices; erronea != broadcast;}
-    constraint const_retardo {retardo < max_retardo; retardo > 0;}
-    constraint direccion {receptor < devices; receptor >=0; receptor != origen;}
-    constraint dispositivo {origen < devices; origen >= 0;}
+    constraint const_retardo {retardo < max_retardo; retardo > 0;}               // Constraint para aleatorizar retardo 
+    constraint direccion {receptor < devices; receptor >=0; receptor != origen;} // Constraint para aleatorizar destinatario valido
+    constraint dispositivo {origen < devices; origen >= 0;}                      // Constraint para aleatorizar origen valido
+    constraint dir_erronea {erronea > devices; erronea != broadcast;}            // Constraint para aleatorizar dirreccion erronea
 
     function new(bit[width-1:0] dto = 0, int org = 0, bit rec = 1, bit pay = 0, int ret = 10, int max_ret = 0, bit dir_er = 0);
         this.dato = dto;
@@ -92,12 +92,12 @@ endclass
 
 // Paquete Checker -> Scoreboard
 class pck_chkr_sb #(parameter width = 16);
-    bit [width-1:0] dato;   // Dato enviado
-    int origen;             // Dispositivo origen
-    string tipo;            // Tipo de la transaccion (correcta, erronea, broadcast)
-    int tiempo_inicio;      // Tiempo inical para calcular retardo
-    int tiempo_final;       // Tiempo final para calcular retardo
-    int latencia;           // Valor final de retardo
+    bit [width-1:0] dato;                    // Dato enviado
+    int origen;                              // Dispositivo origen
+    string tipo;                             // Tipo de la transaccion (correcta, erronea, broadcast)
+    int tiempo_inicio;                       // Tiempo inical para calcular retardo
+    int tiempo_final;                        // Tiempo final para calcular retardo
+    int latencia;                            // Valor final de retardo
     pck_drv_chkr #(.width(width)) keys[$];   // Estos 2 son para revisar que no sobro ningun paquete
     pck_drv_chkr #(.width(width)) index[$];  //
 
@@ -133,9 +133,9 @@ endclass
 
 // Mailboxes
 
-typedef mailbox #(pck_agnt_drv #(.devices(6), .width(16), .broadcast ({8{1'b1}}))) tipo_mbx_agnt_drv;    // Mailbox agente -> driver
-typedef mailbox #(pck_drv_chkr #(.width(6))) tipo_mbx_drv_chkr;    // Mailbox driver -> checker
-typedef mailbox #(pck_chkr_sb #(.width(16))) tipo_mbx_chkr_sb;      // Mailbox checker -> scoreboard
-typedef mailbox #(pck_test_agnt #(.devices(6), .width(16))) tipo_mbx_test_agnt;  // Mailbox test -> agente
-typedef mailbox #(pck_test_sb) tipo_mbx_test_sb;      // Mailbox test -> scoreboard
+typedef mailbox #(pck_agnt_drv #(.devices(6), .width(16), .broadcast ({8{1'b1}}))) tipo_mbx_agnt_drv; // Mailbox agente -> driver
+typedef mailbox #(pck_drv_chkr #(.width(6))) tipo_mbx_drv_chkr;                                       // Mailbox driver -> checker
+typedef mailbox #(pck_chkr_sb #(.width(16))) tipo_mbx_chkr_sb;                                        // Mailbox checker -> scoreboard
+typedef mailbox #(pck_test_agnt #(.devices(6), .width(16))) tipo_mbx_test_agnt;                       // Mailbox test -> agente
+typedef mailbox #(pck_test_sb) tipo_mbx_test_sb;                                                      // Mailbox test -> scoreboard
 

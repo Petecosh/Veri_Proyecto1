@@ -1,16 +1,16 @@
 class agente #(parameter devices = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
-    pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente; // Instruccion que recibe el agente
-    pck_agnt_drv #(.devices(devices), .width(width),.broadcast(broadcast)) paquete_agnt_drv[devices];              // Paquete que se envia hacia los mbx de los drivers
-    pck_agnt_drv #(.devices(devices), .width(width),.broadcast(broadcast)) paquete_rand;                           // Paquete para randomizar
-    tipo_mbx_agnt_drv #(.devices(devices), .width(width),.broadcast(broadcast)) agnt_drv_mbx[devices];                              // Mailboxes del agente a los drivers
+    pck_test_agnt #(.devices(devices), .width(width)) instruccion_agente;                              // Instruccion que recibe el agente
+    pck_agnt_drv #(.devices(devices), .width(width),.broadcast(broadcast)) paquete_agnt_drv[devices];  // Paquete que se envia hacia los mbx de los drivers
+    pck_agnt_drv #(.devices(devices), .width(width),.broadcast(broadcast)) paquete_rand;               // Paquete para randomizar
+    tipo_mbx_agnt_drv #(.devices(devices), .width(width),.broadcast(broadcast)) agnt_drv_mbx[devices]; // Mailboxes del agente a los drivers
 
-    int num_transacciones;                                                // Numero de transacciones
-    tipo_mbx_test_agnt #(.devices(devices), .width(width)) test_agnt_mbx;                                     // Mailbox del test al agente
-    int max_retardo;                                                      // Retardo maximo
+    int num_transacciones;                                                                             // Numero de transacciones
+    tipo_mbx_test_agnt #(.devices(devices), .width(width)) test_agnt_mbx;                              // Mailbox del test al agente
+    int max_retardo;                                                                                   // Retardo maximo
 
     function new();
-        num_transacciones = 500;                 // Se define la cantidad de transacciones
-        max_retardo = 10;                        // Se define 10 como el retardo maximo
+        num_transacciones = 500;  // Se define la cantidad de transacciones
+        max_retardo = 10;         // Se define 10 como el retardo maximo
     endfunction
 
     task run();
@@ -50,14 +50,14 @@ class agente #(parameter devices = 4, parameter width = 16, parameter broadcast 
 
                     
 
-                    Erronea: begin                                                                    // Si la instruccion es erronea a proposito
+                    Erronea: begin                                                              // Si la instruccion es erronea a proposito
                         for (int j = 0; j < max_retardo; j++) begin
                             paquete_rand = new();
-                            paquete_rand.max_retardo = max_retardo;                                                         // Inicializar un paquete random
-                            paquete_rand.randomize();                                                     // El paquete se randomiza
-                            paquete_rand.dato = { paquete_rand.erronea, paquete_rand.payload};                        // El identificador erroneo se concatena con el payload
-                            paquete_agnt_drv[paquete_rand.origen] = new();                                // Inicializar el paquete agente -> driver
-                            paquete_agnt_drv[paquete_rand.origen] = paquete_rand;                         // Asociar el contenido random al paquete agente -> driver
+                            paquete_rand.max_retardo = max_retardo;                             // Inicializar un paquete random
+                            paquete_rand.randomize();                                           // El paquete se randomiza
+                            paquete_rand.dato = { paquete_rand.erronea, paquete_rand.payload};  // El identificador erroneo se concatena con el payload
+                            paquete_agnt_drv[paquete_rand.origen] = new();                      // Inicializar el paquete agente -> driver
+                            paquete_agnt_drv[paquete_rand.origen] = paquete_rand;               // Asociar el contenido random al paquete agente -> driver
                             paquete_agnt_drv[paquete_rand.origen].print("Agente: Erronea Transaccion creada");
                             agnt_drv_mbx[paquete_rand.origen].put(paquete_agnt_drv[paquete_rand.origen]); // Se coloca en el mbx agente -> driver
                         end
@@ -76,7 +76,7 @@ class agente #(parameter devices = 4, parameter width = 16, parameter broadcast 
                         end
                     end
                     
-                    default: begin
+                    default: begin                                                             // Condicion default por si llega instruccion no valida
                         $display("[%g] Error Agente: Instruccion con tipo no valido", $time);
                         $finish;
                     end
