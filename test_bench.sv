@@ -23,7 +23,7 @@ module test_bench;
     always #5 clk = ~clk;   // Clock
 
     // Instancia del DUT
-    bs_ntrfs #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) uut(
+    bs_gnrtr_n_rbtr #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) uut(
         .clk(_if.clk),
         .reset(_if.reset),
         .pndng(_if.pndng),
