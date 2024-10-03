@@ -11,11 +11,6 @@
 module test_bench;
 
     reg clk;                          // Variable para el clock
-
-    pck_aleatorio paquete_aleatorio;  // Paquete aleatorio para devices y width
-    paquete_aleatorio = new();        // Inicializar el paquete
-    paquete_aleatorio.randomize();    // Aleatorizar los valores de devices y width
-
     parameter width = 32;             // Parametro del ancho del paquete
     parameter devices = 5;            // Parametro de cantidad de dispositivos en el DUT
     parameter bits = 1;           
@@ -41,6 +36,9 @@ module test_bench;
 
     initial begin
         clk = 0;                                                     // Clock en 0
+        pck_aleatorio paquete_aleatorio;  // Paquete aleatorio para devices y width
+        paquete_aleatorio = new();        // Inicializar el paquete
+        paquete_aleatorio.randomize();    // Aleatorizar los valores de devices y width
         $display("[%g] Devices = %0d, Width = %0d", $time, paquete_aleatorio.devices, paquete_aleatorio.width);
         test_inst = new();                                           // Inicializar la instancia del test
         $display("[%g] Test inicializado", $time);                   
