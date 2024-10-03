@@ -66,7 +66,6 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16, pa
             // Si DUT pide pop...
             @(negedge vif.clk);
             if (vif.pop[0][id]) begin
-                $display("[%g] broadcast monitor %h", $time, vif.broadcast[0][id]);
                 // Sale de FIFO in
                 paquete_chkr = new();                        // Crear un paquete driver -> checker
                 $display("[%g] Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);         
