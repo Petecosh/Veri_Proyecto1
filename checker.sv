@@ -61,7 +61,7 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                 end
 
                                 else begin                                                   // Si el identificador es un direccion invalida...
-                                    $display("[%g] Dato con direccion erronea: org = %h, dato =%h", $time,paquete_chkr.origen,paquete_chkr.dato);
+                                    $display("[%g] Dato con direccion erronea: org = %h, dato =%h", $time, paquete_chkr.origen, paquete_chkr.dato);
                                     Procesos_erroneos[con_err] = paquete_chkr.dato;          // Guardo el paquete dentro de los array diccionario
                                     
                                     paquete_sb = new();                                      // Inicializo paquete checker -> scoreboard
@@ -85,7 +85,7 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
 
                                     for (int j = 0; j < con_index; j++) begin              // Ciclo para recorrer el array diccionario
                                         if (keys[j].dato == paquete_chkr.dato) begin       // Si el paquete leido se encontro dentro del diccionario
-                                            $display("[%g] Dato checkeado: org = %h, dato%h", $time,index[j].origen,keys[j].dato);
+                                            $display("[%g] Dato checkeado: org = %h, dato%h", $time, index[j].origen, keys[j].dato);
 
                                             paquete_sb = new();                             // Inicializo paquete checker -> scoreboard
                                             paquete_sb.tiempo_inicio = index[j].tiempo;     // Colocar el tiempo inicial
