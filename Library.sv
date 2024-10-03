@@ -862,7 +862,7 @@ module ntrfs_cntrl_n_rbtr #(parameter pckg_sz = 32,
        rd_cmp_b = (s_cmp)?pckg_sz-1:ntrfs_id;
  
      rd_cmp_out = (rd_cmp_a == rd_cmp_b)?{1'b1}:{1'b0};   
-     bdcst = (D_in[pckg_sz-1:pckg_sz-8]=={8{1'b1}})?{1'b1}:{1'b0};
+     bdcst = (D_in[pckg_sz-1:pckg_sz-8]==broadcast)?{1'b1}:{1'b0};
 
     case(s_ds_r)
        2'b00:  cond_r = ~bs_grnt && bs_bsy;
