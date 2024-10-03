@@ -49,7 +49,7 @@ class scoreboard #(parameter width = 16, parameter devices = 4, parameter broadc
                             end else begin
                                 $display("[%g] Sobraron los siguientes mensajes", $time);
                                 for (int i = 0; i < keys.size(); i++) begin
-                                    $display("[%g] Dato = 0x%h Origen = %0h", $time, keys[i], index[i]);
+                                    $display("[%g] Dato = 0x%h Origen = %h", $time, keys[i], index[i]);
                                 end
                             end
 
