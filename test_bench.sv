@@ -12,9 +12,20 @@ module test_bench;
 
     reg clk;
     parameter width = 16;
-    parameter devices = 5;
-    parameter bits = 1;
+    parameter devices;
+    parameter bits;
     parameter broadcast = {8'b1000_1111};
+    class RandomParams;
+        rand parameter width;
+        rand parameter devices;
+
+        // Restricciones para los valores randomizados (1 a 32)
+        constraint c_width { width inside {[16:32]}; }
+        constraint c_devices { devices inside {[1:32]}; }
+    endclass
+
+    // Instancia de la clase
+    RandomParams params = new();
 
     test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
 
@@ -35,6 +46,7 @@ module test_bench;
     
 
     initial begin
+        $display("Randomized width: %0d, devices: %0d", width, devices);
         clk = 0;                                                     // Clock en 0
         test_inst = new();                                           // Inicializar la instancia del test
         $display("[%g] Test inicializado", $time);        
