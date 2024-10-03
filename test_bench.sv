@@ -32,7 +32,7 @@ module test_bench;
         .D_pop(_if.D_pop),
         .D_push(_if.D_push)
     );
-    $display("[%g] en testbench broad%h", $time, broadcast);
+    $display("[%g] en testbench broad%h", $time, broadcast)
 
     initial begin
         clk = 0;                                                     // Clock en 0
