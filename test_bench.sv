@@ -32,12 +32,13 @@ module test_bench;
         .D_pop(_if.D_pop),
         .D_push(_if.D_push)
     );
-    $display("[%g] en testbench broad%h", $time, broadcast)
+    
 
     initial begin
         clk = 0;                                                     // Clock en 0
         test_inst = new();                                           // Inicializar la instancia del test
-        $display("[%g] Test inicializado", $time);                   
+        $display("[%g] Test inicializado", $time);        
+        $display("[%g] en testbench broad %h", $time, broadcast);           
         test_inst._if = _if;                                         // Asociar la interfaz de afuera con la interfaz dentro del test
         for (int i = 0; i < devices; i++) begin                      // Ciclo para conectar las instancias de los drivers a la interfaz
             test_inst.ambiente_inst.driver_inst[i].vif = _if;
