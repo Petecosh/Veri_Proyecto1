@@ -136,8 +136,8 @@ class pck_aleatorio;
     rand int devices;
     rand int width;
 
-    constraint const_devices {4 <= devices; devices <= 8;}  // Constraint para aleatorizar dispositivos del DUT
-    constraint const_width {16 <= width; width <= 32;}      // Constraint para aleatorizar ancho del mensaje
+    constraint const_devices {5 <= devices; devices <= 8;}  // Constraint para aleatorizar dispositivos del DUT
+    constraint const_width {18 <= width; width <= 32;}      // Constraint para aleatorizar ancho del mensaje
 
     function new(int dvcs = 4, int wth = 16);
         this.devices = dvcs;
