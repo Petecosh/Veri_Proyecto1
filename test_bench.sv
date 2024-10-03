@@ -12,8 +12,8 @@ module test_bench;
 
     reg clk;
     parameter width = 16;
-    parameter devices;
-    parameter bits;
+    parameter devices=0;
+    parameter bits=0;
     parameter broadcast = {8'b1000_1111};
     class RandomParams;
         rand parameter width;
