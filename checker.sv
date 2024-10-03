@@ -44,8 +44,10 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                     case (paquete_chkr.accion)
                             
                             1'b0: begin
-
+                                $display("[%g] broadcast ac1 %h", $time, broadcast);
+                                $display("[%g] broadcast dato0 parametro %h", $time, paquete_chkr.dato[width-1:width-8]);
                                 $display("[%g] Checker recibe: org = %h, dato%h", $time, paquete_chkr.origen, paquete_chkr.dato);
+                                
                                 if (paquete_chkr.dato[width-1:width-8] == broadcast) begin
                                     for (int i = 0; i < devices-1; i++) begin
                                         index[con_index] = paquete_chkr;  
@@ -82,6 +84,8 @@ class checkr #(parameter width = 16, parameter devices = 4, parameter broadcast 
                                 if ((paquete_chkr.dato[width-1:width-8] == h) || (paquete_chkr.dato[width-1:width-8] == broadcast)) begin
 
                                     $display("[%g] Dato recibido en Driver correcto", $time);
+                                    $display("[%g] broadcast ac1 parametro %h", $time, broadcast);
+                                    $display("[%g] broadcast dato1 parametro %h", $time, paquete_chkr.dato[width-1:width-8]);
 
                                     for (int j = 0; j < con_index; j++) begin  
                                         if (keys[j].dato == paquete_chkr.dato)begin

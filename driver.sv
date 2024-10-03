@@ -28,7 +28,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16, pa
             $display("[%g] El driver espera por una transaccion", $time);
             agnt_drv_mbx.get(paquete_drv);                                 // Sacar mensaje del mailbox
             paquete_drv.print("Driver: Transaccion recibida");
-
+            
             while (espera < paquete_drv.retardo) begin                     // Si hay retardo, se espera hasta vencerlo
                 @(posedge vif.clk);
                 espera = espera + 1;
@@ -52,6 +52,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16, pa
                 paquete_chkr.tiempo = $time;                 // Tiempo final
                 paquete_chkr.dato = emul_fifo_o.pop_front(); // Sacar el dato de FIFO out
                 paquete_chkr.print("Monitor leyo un dato");
+                $display("[%g] broadcast monitor %h", $time, broadcast);
                 drv_chkr_mbx.put(paquete_chkr);              // Se coloca lo que se leyo hacia checker
             end
         end
@@ -72,6 +73,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16, pa
                 paquete_chkr.tiempo = ($time-(10*aux.pop_front()));                 // Tiempo inicial
                 paquete_chkr.dato = emul_fifo_i.pop_front(); // El dato enviado hacia el DUT se envia al checker tambien
                 paquete_chkr.origen = id;                    // Asignar el origen de acuerdo al identificador
+                $display("[%g] broadcast driver %h", $time, broadcast);
                 drv_chkr_mbx.put(paquete_chkr);              // Se coloca lo que se escribio hacia el checker
                 
             end
