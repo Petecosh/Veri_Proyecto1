@@ -11,13 +11,13 @@
 module test_bench;
 
     reg clk;
-    parameter width = 16;
-    parameter devices=0;
-    parameter bits=0;
+    int width;
+    int devices;
+    parameter bits = 1;
     parameter broadcast = {8'b1000_1111};
     class RandomParams;
-        rand parameter width;
-        rand parameter devices;
+        rand int width;
+        rand int devices;
 
         // Restricciones para los valores randomizados (1 a 32)
         constraint c_width { width inside {[16:32]}; }
