@@ -11,28 +11,27 @@
 module test_bench;
 
     reg clk;
-    int w;
-    int d;
+    reg reset;
+    int width;
+    int devices;
     parameter bits = 1;
-    parameter broadcast = {8'b1000_1111};
+    parameter broadcast = 8'b1000_1111;
+
+    // Clase para randomizar los parámetros
     class RandomParams;
-        rand int w;
-        rand int d;
+        rand int width;
+        rand int devices;
 
         // Restricciones para los valores randomizados (1 a 32)
-        constraint c_width { w inside {[16:32]}; }
-        constraint c_devices { d inside {[1:32]}; }
+        constraint c_width { width inside {[1:32]}; }
+        constraint c_devices { devices inside {[1:32]}; }
     endclass
 
     // Instancia de la clase
     RandomParams params = new();
-    parameter width = w;
-    parameter devices = d;
-    test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
 
-    bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if(.clk(clk));   // Interfaz
-
-    always #5 clk = ~clk;   // Clock
+    // Clock generation
+    always #5 clk = ~clk;
 
     // Instancia del DUT
     bs_gnrtr_n_rbtr #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) uut(
@@ -44,37 +43,55 @@ module test_bench;
         .D_pop(_if.D_pop),
         .D_push(_if.D_push)
     );
-    
+
+    // Interfaz
+    bus_if #(.bits(bits), .drvrs(devices), .pckg_sz(width), .broadcast(broadcast)) _if(.clk(clk));   
 
     initial begin
-        $display("Randomized width: %0d, devices: %0d", width, devices);
-        clk = 0;                                                     // Clock en 0
-        test_inst = new();                                           // Inicializar la instancia del test
-        $display("[%g] Test inicializado", $time);        
-        $display("[%g] en testbench broad %h", $time, broadcast);           
-        test_inst._if = _if;                                         // Asociar la interfaz de afuera con la interfaz dentro del test
-        for (int i = 0; i < devices; i++) begin                      // Ciclo para conectar las instancias de los drivers a la interfaz
+        // Inicialización
+        clk = 0;
+        reset = 1;
+
+        // Randomizar los parámetros width y devices
+        if (params.randomize()) begin
+            width = params.width;
+            devices = params.devices;
+            $display("Randomized width: %0d, devices: %0d", width, devices);
+        end else begin
+            $display("Error al randomizar los parámetros.");
+        end
+
+        // Instancia del test (con los parámetros randomizados)
+        test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;        
+
+        // Asignación de la interfaz
+        test_inst._if = _if;
+
+        for (int i = 0; i < devices; i++) begin
             test_inst.ambiente_inst.driver_inst[i].vif = _if;
         end
-        
+
+        // Ejecutar el test
         fork
             test_inst.run();       // Correr el test
         join_none
 
-
         // Reset
         _if.reset = 1;
-        #20
-        _if.reset = 0;
-        
-    end
+        #20 _if.reset = 0;
 
-    always @(posedge clk) begin
-
+        // Tiempo límite para finalizar el test
         if ($time > 2000000) begin
-            $display("[%g] Testbench: Tiempo limite alcanzado", $time);
+            $display("[%g] Testbench: Tiempo límite alcanzado", $time);
             $finish;
         end
     end
     
+    always @(posedge clk) begin
+        if ($time > 2000000) begin
+            $display("[%g] Testbench: Tiempo límite alcanzado", $time);
+            $finish;
+        end
+    end
+
 endmodule
