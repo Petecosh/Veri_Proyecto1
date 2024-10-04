@@ -131,21 +131,6 @@ class pck_test_sb;
 
 endclass
 
-// Paquete para randomizar los dispositivos del DUT y el ancho del mensaje
-class pck_aleatorio;
-    rand int devices;
-    rand int width;
-
-    constraint const_devices {5 <= devices; devices <= 8;}  // Constraint para aleatorizar dispositivos del DUT
-    constraint const_width {18 <= width; width <= 32;}      // Constraint para aleatorizar ancho del mensaje
-
-    function new(int dvcs = 4, int wth = 16);
-        this.devices = dvcs;
-        this.width = wth;
-    endfunction
-
-endclass
-
 // Mailboxes
 
 typedef mailbox #(pck_agnt_drv #(.devices(6), .width(16), .broadcast ({8{1'b1}}))) tipo_mbx_agnt_drv; // Mailbox agente -> driver
