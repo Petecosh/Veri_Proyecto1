@@ -10,11 +10,11 @@
 
 module test_bench;
 
-    reg clk;
-    parameter width = 32;
-    parameter devices = 5;
-    parameter bits = 1;
-    parameter broadcast = {8'b1111_1111};
+    reg clk;                          // Variable para el clock
+    parameter width = 32;             // Parametro del ancho del paquete
+    parameter devices = 5;            // Parametro de cantidad de dispositivos en el DUT
+    parameter bits = 1;           
+    parameter broadcast = {8'b1111_1111};  // Parametro de identificador de broadcast
 
     test #(.bits(bits), .devices(devices), .width(width), .broadcast(broadcast)) test_inst;          // Instancia del test
 

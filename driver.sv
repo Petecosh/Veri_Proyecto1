@@ -1,13 +1,13 @@
 class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16, parameter broadcast = {8{1'b1}});
-    tipo_mbx_agnt_drv #(.devices(drvrs), .width(width), .broadcast(broadcast)) agnt_drv_mbx;                                    // Mailbox Agente -> Driver
-    tipo_mbx_drv_chkr #(.width(width)) drv_chkr_mbx;                                    // Mailbox Driver -> Checker
-    bit [width-1:0] emul_fifo_i[$];                                    // Emulación Fifo Driver -> DUT
-    int             aux[$];                                            // Queue para guardar retardos
-    bit [width-1:0] emul_fifo_o[$];                                    // Emulación FIFO DUT -> Driver
+    tipo_mbx_agnt_drv #(.devices(drvrs), .width(width), .broadcast(broadcast)) agnt_drv_mbx;  // Mailbox Agente -> Driver
+    tipo_mbx_drv_chkr #(.width(width)) drv_chkr_mbx;                                          // Mailbox Driver -> Checker
+    bit [width-1:0] emul_fifo_i[$];                                                           // Emulación Fifo Driver -> DUT
+    int             aux[$];                                                                   // Queue para guardar retardos
+    bit [width-1:0] emul_fifo_o[$];                                                           // Emulación FIFO DUT -> Driver
     virtual bus_if #(.bits(bits), .drvrs(drvrs), .pckg_sz(width), .broadcast(broadcast)) vif; // Interfaz
-    int id;                                                            // Identificador
-    pck_drv_chkr #(.width(width)) paquete_chkr;                        // Paquete driver -> checker
-    int espera;                                                        // Variable para los retardos
+    int id;                                                                                   // Identificador
+    pck_drv_chkr #(.width(width)) paquete_chkr;                                               // Paquete driver -> checker
+    int espera;                                                                               // Variable para los retardos
 
     function new(input int ident);
         id = ident;            // Crear una variable ident, viene de un ciclo for que saca numero 0,1,2..
@@ -21,9 +21,9 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16, pa
     task escribir();
         forever begin
 
-            pck_agnt_drv #(.devices(drvrs), .width(width), .broadcast(broadcast)) paquete_drv;                     // Paquete que utiliza el driver
+            pck_agnt_drv #(.devices(drvrs), .width(width), .broadcast(broadcast)) paquete_drv; // Paquete que utiliza el driver
 
-            espera = 0;       // Siempre que pida escribir, ponga espera en 0
+            espera = 0;                                                    // Siempre que pida escribir, ponga espera en 0
 
             $display("[%g] El driver espera por una transaccion", $time);
             agnt_drv_mbx.get(paquete_drv);                                 // Sacar mensaje del mailbox
@@ -66,13 +66,13 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16, pa
             @(negedge vif.clk);
             if (vif.pop[0][id]) begin
                 // Sale de FIFO in
-                paquete_chkr = new();                        // Crear un paquete driver -> checker
+                paquete_chkr = new();                               // Crear un paquete driver -> checker
                 $display("[%g] Driver FIFO in: Dato que sale hacia el DUT 0x%h", $time, vif.D_pop[0][id]);         
-                paquete_chkr.accion = 1'b0;                  // Avisar que se trata de una escritura
-                paquete_chkr.tiempo = ($time-(10*aux.pop_front()));                 // Tiempo inicial
-                paquete_chkr.dato = emul_fifo_i.pop_front(); // El dato enviado hacia el DUT se envia al checker tambien
-                paquete_chkr.origen = id;                    // Asignar el origen de acuerdo al identificador
-                drv_chkr_mbx.put(paquete_chkr);              // Se coloca lo que se escribio hacia el checker
+                paquete_chkr.accion = 1'b0;                         // Avisar que se trata de una escritura
+                paquete_chkr.tiempo = ($time-(10*aux.pop_front())); // Tiempo inicial
+                paquete_chkr.dato = emul_fifo_i.pop_front();        // El dato enviado hacia el DUT se envia al checker tambien
+                paquete_chkr.origen = id;                           // Asignar el origen de acuerdo al identificador
+                drv_chkr_mbx.put(paquete_chkr);                     // Se coloca lo que se escribio hacia el checker
                 
             end
         end
@@ -84,7 +84,7 @@ class driver #(parameter bits = 1, parameter drvrs = 4, parameter width = 16, pa
             // Si DUT pide push
             @(posedge vif.clk);
             if (vif.push[0][id]) begin
-                emul_fifo_o.push_back(vif.D_push[0][id]);
+                emul_fifo_o.push_back(vif.D_push[0][id]);           // Meter dato en la FIFO de salida del DUT
                 $display("[%g] Driver FIFO out: DUT metio dato", $time);
             end
         end
