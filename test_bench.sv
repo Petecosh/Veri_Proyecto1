@@ -36,7 +36,6 @@ module test_bench;
 
     initial begin
         clk = 0;                                                     // Clock en 0
-        $display("[%g] Devices = %0d, Width = %0d", $time, paquete_aleatorio.devices, paquete_aleatorio.width);
         test_inst = new();                                           // Inicializar la instancia del test
         $display("[%g] Test inicializado", $time);                   
         test_inst._if = _if;                                         // Asociar la interfaz de afuera con la interfaz dentro del test
